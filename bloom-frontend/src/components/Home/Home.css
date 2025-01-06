@@ -1,99 +1,94 @@
 .home-container {
   font-family: Arial, sans-serif;
-  color: #333;
-  line-height: 1.6;
 }
 
-.home-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 2rem;
-  background-color: #4caf50;
-  color: #fff;
+h1 {
+  font-size: 2em;  /* You can adjust this value */
+  color:#8646e1;  /* Optional: Change the color to match the theme */
+  text-align: center;  /* Optional: Center the heading */
+  margin-top: 50px;  /* Optional: Add some spacing */
 }
 
-.logo {
-  font-size: 1.5rem;
-  font-weight: bold;
-}
-
-.nav-links a {
-  margin: 0 1rem;
-  color: #fff;
-  text-decoration: none;
-}
 
 .hero-section {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 2rem;
-  background-color: #f4f4f4;
+  background: #f0f0f0;
+  padding: 40px;
 }
 
 .hero-content {
   max-width: 50%;
 }
 
-.hero-content h1 {
-  font-size: 2.5rem;
-  color: #4caf50;
+.hero-buttons {
+  margin-top: 20px;
 }
 
-.hero-content .btn {
-  display: inline-block;
-  margin: 1rem 1rem 0 0;
-  padding: 0.5rem 1rem;
+.hero-buttons .btn {
+  margin-right: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
   text-decoration: none;
   border-radius: 5px;
 }
 
-.btn-primary {
-  background-color: #4caf50;
-  color: #fff;
+.hero-buttons .btn-primary {
+  background-color: #4CAF50;
+  color: white;
 }
 
-.btn-secondary {
-  background-color: #fff;
-  color: #4caf50;
-  border: 2px solid #4caf50;
+.hero-buttons .btn-secondary {
+  background-color:#8646e1; 
+  color: white;
 }
 
 .hero-image img {
-  max-width: 100%;
+  width: 100%;
+  height: auto;
   border-radius: 10px;
 }
 
 .about-section,
 .features-section {
-  padding: 2rem;
-  text-align: center;
+  padding: 40px;
+  background-color: #fff;
 }
 
-.about-section h2,
-.features-section h2 {
-  color: #4caf50;
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
 }
 
-.features-section ul {
-  list-style-type: none;
-  padding: 0;
+.feature-card {
+  background: #f4f4f4;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.features-section li {
-  margin: 0.5rem 0;
+.feature-card h3 {
+  margin-top: 0;
 }
 
 .footer {
-  background-color: #333;
-  color: #fff;
+  background: #333;
+  color: white;
+  padding: 20px;
   text-align: center;
-  padding: 1rem;
 }
 
-.footer .social-links a {
-  color: #4caf50;
-  margin: 0 0.5rem;
+.social-links a,
+.footer-links a {
+  color: white;
   text-decoration: none;
+  margin: 0 10px;
+}
+
+.social-links a:hover,
+.footer-links a:hover {
+  text-decoration: underline;
 }

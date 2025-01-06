@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";  // Import Link from react-router-dom
+import { Link } from "react-router-dom";
 import heroImage from "../../assets/images/image.png";
 import "./Home.css";
 
@@ -9,7 +9,7 @@ const Home = () => {
       {/* Hero Section */}
       <section className="hero-section">
         <div className="hero-content">
-          <h1>Welcome to BLOOM</h1>
+          <h1>Let's BLOOM Together!</h1>
           <p>Your mental health and wellbeing companion</p>
           <div className="hero-buttons">
             <Link to="/login" className="btn btn-primary">Login</Link>
@@ -20,6 +20,7 @@ const Home = () => {
           <img
             src={heroImage} // Image path from assets
             alt="Mental health and wellbeing"
+            className="hero-img" 
           />
         </div>
       </section>
@@ -33,17 +34,30 @@ const Home = () => {
           an AI chatbot, we aim to support individuals on their journey toward
           mental wellbeing.
         </p>
+        <Link to="/about" className="btn btn-primary">Learn More</Link> {/* CTA */}
       </section>
 
       {/* Features Section */}
       <section className="features-section" id="features">
         <h2>Key Features</h2>
-        <ul>
-          <li>AI-powered Chatbot for mental health support</li>
-          <li>Stress-relief exercises like meditation and breathing</li>
-          <li>Educational resources on mental health</li>
-          <li>Community stories for inspiration and encouragement</li>
-        </ul>
+        <div className="features-grid">
+          <div className="feature-card">
+            <h3>AI-powered Chatbot</h3>
+            <p>Get mental health support from our AI chatbot anytime, anywhere.</p>
+          </div>
+          <div className="feature-card">
+            <h3>Stress-relief Exercises</h3>
+            <p>Practice relaxation with meditation, deep breathing, and more.</p>
+          </div>
+          <div className="feature-card">
+            <h3>Educational Resources</h3>
+            <p>Access articles and videos to understand mental health better.</p>
+          </div>
+          <div className="feature-card">
+            <h3>Community Stories</h3>
+            <p>Be inspired by stories from others who’ve navigated mental health challenges.</p>
+          </div>
+        </div>
       </section>
 
       {/* Footer */}
@@ -53,6 +67,11 @@ const Home = () => {
           <a href="#facebook">Facebook</a>
           <a href="#twitter">Twitter</a>
           <a href="#instagram">Instagram</a>
+        </div>
+        <div className="footer-links">
+          <a href="#terms">Terms of Service</a>
+          <a href="#privacy">Privacy Policy</a>
+          <a href="#contact">Contact</a>
         </div>
       </footer>
     </div>

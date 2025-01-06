@@ -8,14 +8,29 @@
     color: white;
   }
   
-  .navbar .logo {
-    font-size: 24px;
-    font-weight: bold;
+  .navbar-logo .logo {
+    height: 100px;  /* Adjust the size as necessary */
+    width: auto;
+  }
+
+  .navbar-middle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;  /* This will fill the available space */
+  }
+  
+  .search-bar {
+    padding: 8px;
+    width: 500px;
+    font-size: 1em;
+    border-radius: 5px;
+    border: none;
   }
   
   .nav-links {
     display: flex;
-    gap: 20px;
+    gap: 60px;
   }
   
   .nav-links a {
@@ -25,7 +40,7 @@
   }
   
   .nav-links a:hover {
-    color: #ffcb05;  /* Highlight color */
+    color: #8646e1  /* Highlight color */
   }
   
   .logout-btn {

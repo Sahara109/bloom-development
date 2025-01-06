@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Link as ScrollLink } from 'react-scroll'; // Import from react-scroll
+import logo from "../../assets/images/Bloom_logo.png"; 
 import './Navbar.css';
 
 const Navbar = () => {
@@ -20,7 +21,20 @@ const Navbar = () => {
 
   return (
     <header className="navbar">
-      <div className="logo">BLOOM</div>
+      {/* Logo Section */}
+      <div className="navbar-logo">
+        <img src={logo} alt="BLOOM Logo" className="logo" />
+      </div>
+
+      {/* Middle Section (Search Bar or Empty Space) */}
+      <div className="navbar-middle">
+        <input
+          type="text"
+          placeholder="Search..."
+          className="search-bar"
+        />
+      </div>
+
       <nav className="nav-links">
         <Link to="/">Home</Link>
         <ScrollLink to="about" smooth={true} duration={500}>About Us</ScrollLink>
