@@ -6,6 +6,7 @@ import Profile from './components/Profile/Profile';
 import Navbar from './components/Navbar/Navbar';
 import Home from "./components/Home/Home";
 import About from './components/About/About';
+import Footer from './components/Home/Footer';  
 
 
 const App = () => {
@@ -19,6 +20,7 @@ const App = () => {
         <Route path="/profile" element={<Profile />} />
         <Route path="/about" element={<About />} />  {/* About page route */}
       </Routes>
+      <Footer /> {/* Place Footer here so it shows on all pages */}
     </Router>
   );
 };

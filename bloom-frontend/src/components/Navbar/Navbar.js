@@ -23,7 +23,9 @@ const Navbar = () => {
     <header className="navbar">
       {/* Logo Section */}
       <div className="navbar-logo">
-        <img src={logo} alt="BLOOM Logo" className="logo" />
+        <Link to="/"> {/* Wrap the logo with a Link to Home */}
+          <img src={logo} alt="BLOOM Logo" className="logo" />
+        </Link>
       </div>
 
       {/* Middle Section (Search Bar or Empty Space) */}

@@ -59,21 +59,6 @@ const Home = () => {
           </div>
         </div>
       </section>
-
-      {/* Footer */}
-      <footer className="footer">
-        <p>© 2025 BLOOM. All rights reserved.</p>
-        <div className="social-links">
-          <a href="#facebook">Facebook</a>
-          <a href="#twitter">Twitter</a>
-          <a href="#instagram">Instagram</a>
-        </div>
-        <div className="footer-links">
-          <a href="#terms">Terms of Service</a>
-          <a href="#privacy">Privacy Policy</a>
-          <a href="#contact">Contact</a>
-        </div>
-      </footer>
     </div>
   );
 };

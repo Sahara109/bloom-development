@@ -1,14 +1,14 @@
+/* Basic styles */
 .home-container {
   font-family: Arial, sans-serif;
 }
 
 h1 {
-  font-size: 2em;  /* You can adjust this value */
-  color:#8646e1;  /* Optional: Change the color to match the theme */
-  text-align: center;  /* Optional: Center the heading */
-  margin-top: 50px;  /* Optional: Add some spacing */
+  font-size: 2em;  /* Default font size for desktops */
+  color: #8646e1;
+  text-align: center;
+  margin-top: 50px;
 }
-
 
 .hero-section {
   display: flex;
@@ -41,7 +41,7 @@ h1 {
 }
 
 .hero-buttons .btn-secondary {
-  background-color:#8646e1; 
+  background-color: #8646e1;
   color: white;
 }
 
@@ -59,7 +59,7 @@ h1 {
 
 .features-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, 1fr); /* Two-column grid */
   gap: 20px;
 }
 
@@ -91,4 +91,70 @@ h1 {
 .social-links a:hover,
 .footer-links a:hover {
   text-decoration: underline;
+}
+
+/* --- Media Queries for Responsiveness --- */
+
+/* Tablet Screen (max-width: 1024px) */
+@media (max-width: 1024px) {
+  h1 {
+    font-size: 1.8em;  /* Slightly smaller font size */
+  }
+
+  .hero-section {
+    flex-direction: column;  /* Stack hero content vertically */
+    padding: 30px;  /* Reduced padding for tablet */
+  }
+
+  .hero-content {
+    max-width: 100%;
+    text-align: center;
+  }
+
+  .hero-buttons .btn {
+    margin: 10px 0;
+    font-size: 14px;
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr 1fr;  /* 2-column grid for tablet */
+  }
+
+  .footer {
+    padding: 15px;  /* Adjusted footer padding for tablet */
+  }
+}
+
+/* Mobile Screen (max-width: 768px) */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 1.5em;  /* Further reduced font size for mobile */
+  }
+
+  .hero-section {
+    padding: 20px;  /* Reduced padding for mobile */
+  }
+
+  .hero-content {
+    max-width: 100%;
+    text-align: center;
+  }
+
+  .hero-buttons .btn {
+    padding: 8px 16px;  /* Smaller button padding */
+    font-size: 14px;    /* Adjusted font size for mobile */
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr;  /* Single column layout for mobile */
+  }
+
+  .footer {
+    padding: 10px;  /* Adjusted footer padding for mobile */
+  }
+
+  .social-links a,
+  .footer-links a {
+    margin: 0 5px;  /* Reduced spacing for mobile */
+  }
 }

@@ -1,7 +1,9 @@
 import React from "react";
 import { FaRegSmile, FaBook, FaMusic, FaHandshake, FaRobot } from 'react-icons/fa'; // Import icons
+import 'font-awesome/css/font-awesome.min.css';
 import "./About.css";  // Create a separate CSS file for About Page styling
 import aboutImage from "../../assets/images/about-image.png";
+import storyImage from "../../assets/images/stories.png";
 import teamMember1 from "../../assets/images/team-member1.jpg";
 import teamMember2 from "../../assets/images/team-member2.png";
 
@@ -72,6 +74,24 @@ const About = () => {
           </div>
         </div>
       </section>
+    
+      <section className="inspire-section">
+        <div className="inspire-text">
+          <h2>Stories to Inspire You</h2>
+          <p>
+            When it comes to mental health, we all have our own unique stories to tell. But no matter what we are going through, there are other people experiencing it too.
+          </p>
+          <p>
+            Read, watch, and listen to stories from people about the signs and symptoms they experienced, how they got support, and what they do to stay well now.
+          </p>
+          <p>
+            Hearing their stories of recovery can help you imagine your own journey.
+          </p>
+        </div>
+        <div className="inspire-image">
+          <img src={storyImage} alt="Inspiring Stories" />
+        </div>
+      </section>
 
      {/* Meet the Team Section */}
      <section className="team-section">
@@ -93,7 +113,7 @@ const About = () => {
       {/* Call to Action Section */}
       <section className="cta-section">
         <p>Whether you are seeking information, looking for support, or just need a moment of calm, BLOOM is here for you. Join us on this journey towards better mental health and well-being. Become a part of BLOOM today!</p>
-        <button className="cta-button">Try BlOOM</button>
+        <button className="cta-button">Get Started</button>
       </section>
     </div>
   );
