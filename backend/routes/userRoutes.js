@@ -75,6 +75,12 @@ router.post('/login', async (req, res) => {
     }
 });
 
+// POST route to logout a user
+router.post('/logout', (req, res) => {
+    // Optionally invalidate token on the client side
+    res.status(200).json({ message: 'Logged out successfully' });
+});
+
 // GET route to fetch the user profile
 // Profile route to get user profile
 router.get('/profile', authMiddleware, async (req, res) => {
@@ -88,7 +94,5 @@ router.get('/profile', authMiddleware, async (req, res) => {
         res.status(500).json({ message: 'Error fetching user profile', error: error.message });
     }
 });
-
-
 
 module.exports = router;

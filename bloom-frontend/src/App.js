@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext';
 import Register from './components/Auth/Register';
 import Login from './components/Auth/Login';
 import Profile from './components/Profile/Profile';
@@ -13,6 +14,7 @@ const App = () => {
   return (
     <Router>
       <Navbar />
+      <AuthProvider>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/register" element={<Register />} />
@@ -20,6 +22,7 @@ const App = () => {
         <Route path="/profile" element={<Profile />} />
         <Route path="/about" element={<About />} />  {/* About page route */}
       </Routes>
+      </AuthProvider>
       <Footer /> {/* Place Footer here so it shows on all pages */}
     </Router>
   );

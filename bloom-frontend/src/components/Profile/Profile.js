@@ -1,43 +1,58 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import axios from 'axios';
+import { useAuth } from '../../context/AuthContext';
 
 const Profile = () => {
-  const [user, setUser] = useState(null);
+  const { auth, setAuth, logout } = useAuth();
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-
-    if (!token) {
-      alert('Please login first');
-      return;
-    }
-
     const fetchUserProfile = async () => {
+      if (!auth.isLoggedIn) {
+        return;
+      }
+
       try {
+        const token = localStorage.getItem('token'); // Retrieve the token from localStorage
         const response = await axios.get('http://localhost:5001/api/users/profile', {
           headers: {
-            'x-auth-token': token
-          }
+            Authorization: `Bearer ${token}`, // Add the token to the request header
+          },
         });
-        setUser(response.data);
+        setAuth((prev) => ({
+          ...prev,
+          user: response.data,
+        }));
       } catch (error) {
-        alert('Error: ' + error.response.data.message);
+        console.error('Error fetching profile:', error.response?.data?.message || error.message);
+        logout();
       }
     };
 
     fetchUserProfile();
-  }, []);
+  }, [auth.isLoggedIn, auth.token, logout, setAuth]);
 
-  if (!user) {
+  if (!auth.isLoggedIn) {
+    return <div>Please log in to view your profile.</div>;
+  }
+
+  if (!auth.user) {
     return <div>Loading...</div>;
   }
 
   return (
     <div>
       <h2>User Profile</h2>
-      <p>Name: {user.name}</p>
-      <p>Email: {user.email}</p>
-      <p>Profile Picture: <img src={user.profilePicture} alt="Profile" /></p>
+      <p>Name: {auth.user.name}</p>
+      <p>Email: {auth.user.email}</p>
+      <p>
+        Profile Picture:{' '}
+        {auth.user.profilePicture ? (
+          <img src={auth.user.profilePicture} alt="Profile" style={{ width: '100px', height: '100px' }} />
+        ) : (
+          'No profile picture available'
+        )}
+      </p>
+      <button onClick={logout}>Logout</button>
     </div>
   );
 };
