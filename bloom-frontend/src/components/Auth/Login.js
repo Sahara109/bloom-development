@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import { useAuth } from '../../context/AuthContext';
 import axios from 'axios';
 
@@ -7,6 +8,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
   const { login } = useAuth(); // Use login function from AuthContext
+  const navigate = useNavigate(); // Initialize navigate
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -17,15 +19,17 @@ const Login = () => {
         email,
         password,
       });
-      const token = response.data.token;
+      const { token, user } = response.data; // Extract token and user from response
 
-      // Store the JWT token in localStorage
-      localStorage.setItem('token', token);
+      // Store the JWT token and user details in localStorage
+      localStorage.setItem('authToken', token);
+      localStorage.setItem('user', JSON.stringify(user));
 
       // Use the login function from AuthContext to update the auth state
-      login(token);
+      login(token, user);
 
-      alert('Login successful');
+      // Redirect to Landing page
+      navigate('/landing');
     } catch (error) {
       setError(error.response?.data?.message || 'Something went wrong');
     }

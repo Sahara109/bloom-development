@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useContext, useEffect } from 'react';
 
 // Create the context
 const AuthContext = createContext();
@@ -10,6 +10,26 @@ export const AuthProvider = ({ children }) => {
     token: null,
     user: null,
   });
+
+  // Fetch auth state from localStorage when the component mounts
+  useEffect(() => {
+    const storedToken = localStorage.getItem('authToken');
+    const storedUser = localStorage.getItem('user');
+
+    try {
+      if (storedToken && storedUser) {
+        setAuth({
+          isLoggedIn: true,
+          token: storedToken,
+          user: JSON.parse(storedUser), // Ensure this is valid JSON
+        });
+      }
+    } catch (error) {
+      console.error("Error parsing stored user data:", error);
+      localStorage.removeItem('authToken');
+      localStorage.removeItem('user');
+    }
+  }, []);
 
   const login = (token, user) => {
     setAuth({ isLoggedIn: true, token, user });
