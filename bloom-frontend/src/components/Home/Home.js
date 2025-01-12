@@ -39,7 +39,7 @@ const Home = () => {
 
       {/* Features Section */}
       <section className="features-section" id="features">
-        <h2>Key Features</h2>
+        <h2>Our Key Features</h2>
         <div className="features-grid">
           <div className="feature-card">
             <h3>AI-powered Chatbot</h3>
