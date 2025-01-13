@@ -18,7 +18,7 @@ app.use('/api/users', userRoutes);
 
 // Basic Route
 app.get('/', (req, res) => {
-    res.send('Welcome to the BLOOM API');
+    res.send('Welcome to BLOOM API');
 });
 
 // MongoDB Connection
