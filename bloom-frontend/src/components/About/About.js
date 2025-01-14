@@ -95,7 +95,7 @@ const About = () => {
 
      {/* Meet the Team Section */}
      <section className="team-section">
-        <h2>Meet the Team</h2>
+        <h2>Meet Our Team</h2>
         <div className="team-members">
           <div className="team-member">
             <img src={teamMember1} alt="Team member 1" className="team-img" />
