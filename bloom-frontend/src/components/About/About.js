@@ -16,7 +16,7 @@ const About = () => {
         <p>
           BLOOM is dedicated to supporting individuals on their journey toward mental wellbeing. 
           With resources, personalized exercises, and an AI-powered chatbot, we aim to make mental health care accessible for everyone. 
-          Whether you're looking for stress-relief exercises, educational resources, or community support, BLOOM has got you covered!
+          Whether you're looking for stress-relief exercises, educational resources, or community support, BLOOM has got you covered.
         </p>
       </section>
 
