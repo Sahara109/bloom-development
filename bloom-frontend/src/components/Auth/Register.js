@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import './Register.css'; // Import CSS for styling
+import backgroundImage from "../../assets/images/background2.png"; // Adjust image path accordingly
 
 const Register = () => {
   const [name, setName] = useState('');
@@ -13,7 +15,7 @@ const Register = () => {
       const response = await axios.post('http://localhost:5001/api/users/register', {
         name,
         email,
-        password
+        password,
       });
       alert(response.data.message); // Show success message
     } catch (error) {
@@ -22,31 +24,50 @@ const Register = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Register</h2>
-      <input
-        type="text"
-        placeholder="Name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        required
-      />
-      <input
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        required
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        required
-      />
-      <button type="submit">Register</button>
-    </form>
+    <div className="register-page" style={{ backgroundImage: `url(${backgroundImage})` }}>
+      <div className="register-container">
+        <form onSubmit={handleSubmit} className="register-form">
+          <h2 className="register-title">Create Account</h2>
+          <div className="form-group">
+            <label htmlFor="name" className="form-label">Name:</label>
+            <input
+              type="text"
+              id="name"
+              placeholder="Enter your name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+              className="form-input"
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="email" className="form-label">Email:</label>
+            <input
+              type="email"
+              id="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              className="form-input"
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="password" className="form-label">Password:</label>
+            <input
+              type="password"
+              id="password"
+              placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              className="form-input"
+            />
+          </div>
+          <button type="submit" className="register-button">Register</button>
+        </form>
+      </div>
+    </div>
   );
 };
 
