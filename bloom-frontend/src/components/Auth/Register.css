@@ -54,7 +54,7 @@
   }
   
   .register-button {
-    background-color: #5c6bc0;
+    background-color: #8646e1;
     color: white;
     padding: 14px;
     border: none;
@@ -65,7 +65,7 @@
   }
   
   .register-button:hover {
-    background-color: #3e4c8d;
+    background-color: #4CAF50;
   }
   
   .error-message {
