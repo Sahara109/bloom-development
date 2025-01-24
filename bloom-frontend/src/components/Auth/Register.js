@@ -7,9 +7,15 @@ const Register = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState('');
+  const [error, setError] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true); // Show loading indicator
+    setMessage('');
+    setError('');
 
     try {
       const response = await axios.post('http://localhost:5001/api/users/register', {
@@ -17,9 +23,15 @@ const Register = () => {
         email,
         password,
       });
-      alert(response.data.message); // Show success message
-    } catch (error) {
-      alert('Error: ' + error.response.data.message); // Show error message
+
+      setMessage(response.data.message); // Show success message
+      setName(''); // Clear name field
+      setEmail(''); // Clear email field
+      setPassword(''); // Clear password field
+    } catch (err) {
+      setError(err.response?.data?.message || 'An error occurred. Please try again.'); // Show error message
+    } finally {
+      setLoading(false); // Hide loading indicator
     }
   };
 
@@ -28,6 +40,19 @@ const Register = () => {
       <div className="register-container">
         <form onSubmit={handleSubmit} className="register-form">
           <h2 className="register-title">Create Account</h2>
+
+          {/* Success or Error Messages */}
+          {message && (
+            <p className="success-message" aria-live="polite">
+              {message}
+            </p>
+          )}
+          {error && (
+            <p className="error-message" aria-live="polite">
+              {error}
+            </p>
+          )}
+
           <div className="form-group">
             <label htmlFor="name" className="form-label">Name:</label>
             <input
@@ -64,7 +89,9 @@ const Register = () => {
               className="form-input"
             />
           </div>
-          <button type="submit" className="register-button">Register</button>
+          <button type="submit" className="register-button" disabled={loading}>
+            {loading ? 'Registering...' : 'Register'}
+          </button>
         </form>
       </div>
     </div>

@@ -51,59 +51,64 @@ h1 {
   border-radius: 10px;
 }
 
-
 /* da da */
 
+/* Circular image */
+.panic-img {
+  width: 500px; /* Adjust size to your preference */
+  height: 500px;
+  border-radius: 50%; /* Makes the image circular */
+  object-fit: cover; /* Ensures the image is properly cropped inside the circle */
+  border: 5px solid #8646e1; /* Optional border for emphasis */
+  margin: 0 auto; /* Center the image if needed */
+}
+
+/* Spacious section */
 .panic-section {
   display: flex;
   align-items: center;
   justify-content: space-between;
   background-color: #f7f7f7;
-  padding: 40px;
-  margin-top: 20px;
+  padding: 60px; /* Increased padding */
+  margin-top: 40px; /* More space above the section */
+  gap: 20px; /* Add spacing between flex items */
 }
 
-.panic-image {
-  flex: 1;
-  margin-right: 20px;
-}
-
-.panic-img {
-  width: 100%;
-  border-radius: 10px;
-}
-
+/* Adjust the content area for better spacing */
 .panic-content {
   flex: 2;
+  padding: 20px; /* Add padding inside the content */
 }
 
 .panic-content h2 {
-  font-size: 1.8em;
-  color: #8646e1;
-  margin-bottom: 10px;
+  font-size: 2.4em; /* Increase the size of the heading */
+  color:#4CAF50;
+  margin-bottom: 20px; /* Add some extra space below the heading */
 }
 
 .panic-content p {
-  font-size: 1.1em;
-  line-height: 1.6;
+  font-size: 1.3em; /* Increase the size of the paragraph text */
+  line-height: 1.8; /* Adjust line spacing for better readability */
   color: #333;
-  margin-bottom: 10px;
+  margin-bottom: 15px; /* Add space between paragraphs */
 }
 
 .panic-content em {
   font-style: italic;
   color: #555;
+  font-size: 1.2em; /* Slightly increase the size for emphasized text */
 }
 
-/* Adjust for smaller screens */
+/* Adjustments for smaller screens */
 @media (max-width: 768px) {
   .panic-section {
-    flex-direction: column;
+    flex-direction: column; /* Stack items vertically on smaller screens */
+    padding: 30px; /* Reduced padding for smaller screens */
+    gap: 10px; /* Adjust gap for smaller space */
   }
 
-  .panic-image {
-    margin-right: 0;
-    margin-bottom: 20px;
+  .panic-img {
+    margin-bottom: 20px; /* Add spacing below the image */
   }
 }
 

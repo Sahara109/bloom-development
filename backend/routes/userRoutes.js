@@ -3,41 +3,11 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const authMiddleware = require('../middleware/authMiddleware');
+const { registerUser } = require('../controllers/usercontroller'); // Import the controller
 const router = express.Router();
 
-// POST route to register a user
-router.post('/register', async (req, res) => {
-    const { name, email, password } = req.body;
-
-    // Check if any field is missing
-    if (!name || !email || !password) {
-        return res.status(400).json({ message: 'Please provide all required fields: name, email, and password' });
-    }
-
-    // Check if the user already exists
-    const userExists = await User.findOne({ email });
-    if (userExists) {
-        return res.status(400).json({ message: 'User already exists' });
-    }
-
-    // Hash the password
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
-
-    // Create the new user
-    const newUser = new User({
-        name,
-        email,
-        password: hashedPassword
-    });
-
-    try {
-        await newUser.save(); // Save the user in the database
-        res.status(201).json({ message: 'User registered successfully' });
-    } catch (error) {
-        res.status(500).json({ message: 'Error registering user', error: error.message });
-    }
-});
+// Route for user registration (using the controller)
+router.post('/register', registerUser);
 
 // POST route to login a user
 router.post('/login', async (req, res) => {
