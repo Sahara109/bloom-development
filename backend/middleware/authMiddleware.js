@@ -14,8 +14,10 @@ const authMiddleware = (req, res, next) => {
         req.user = decoded; // Attach the decoded user to the request object
         next(); // Proceed to the next middleware/route
     } catch (err) {
-        res.status(401).json({ message: 'Token is not valid' });
+        res.status(401).json({ message: 'Token is not valid', error: err });
     }
 };
+
+
 
 module.exports = authMiddleware;

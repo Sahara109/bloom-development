@@ -3,8 +3,27 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const authMiddleware = require('../middleware/authMiddleware');
+const isAdmin = require('../middleware/adminMiddleware');
 const { registerUser } = require('../controllers/usercontroller'); // Import the controller
 const router = express.Router();
+
+router.post('/create-user', isAdmin, async (req, res) => {
+    // Only an admin can create a new user
+    const { name, email, password } = req.body;
+
+    try {
+        // Hash the password before saving
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        const newUser = new User({ name, email, password: hashedPassword });
+        await newUser.save();
+
+        res.status(201).json({ message: 'User created successfully', user: newUser });
+    } catch (error) {
+        res.status(500).json({ message: 'Error creating user', error });
+    }
+});
+
 
 // Route for user registration (using the controller)
 router.post('/register', registerUser);
@@ -13,37 +32,30 @@ router.post('/register', registerUser);
 router.post('/login', async (req, res) => {
     const { email, password } = req.body;
 
-    // Validate input fields
     if (!email || !password) {
         return res.status(400).json({ message: 'Please provide both email and password' });
     }
 
     try {
-        // Check if the user exists
         const user = await User.findOne({ email });
         if (!user) {
             return res.status(400).json({ message: 'Invalid email or password' });
         }
 
-        // Check if the password is correct
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
             return res.status(400).json({ message: 'Invalid email or password' });
         }
 
-        // Generate JWT token
-        const payload = {
-            userId: user._id,
-            name: user.name
-        };
+        const payload = { userId: user._id, name: user.name };
         const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
 
-        // Send the login success response with the token
         res.json({ message: 'Login successful', token });
     } catch (error) {
-        res.status(500).json({ message: 'Error logging in user', error: error.message });
+        res.status(500).json({ message: 'Error logging in', error: error.message });
     }
 });
+
 
 // POST route to logout a user
 router.post('/logout', (req, res) => {
