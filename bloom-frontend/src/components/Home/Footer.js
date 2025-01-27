@@ -19,7 +19,7 @@ const Footer = () => {
 
         {/* Footer Links */}
         <div className="footer-links">
-          <a href="#terms">Terms of Service</a>
+          <a href="#terms">Terms of Services</a>
           <a href="#privacy">Privacy Policy</a>
           <a href="#contact">Contact</a>
         </div>
