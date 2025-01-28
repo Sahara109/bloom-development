@@ -7,7 +7,7 @@ const Footer = () => {
       <div className="footer-container">
         {/* Branding and Copyright */}
         <div className="footer-branding">
-          <p>© 2025 BLOOM. All rights reserved.</p>
+          <p>© 2025 BLOOM. All Rights Reserved.</p>
         </div>
 
         {/* Social Media Links */}
