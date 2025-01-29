@@ -8,7 +8,7 @@ const Profile = () => {
     const token = localStorage.getItem('token');
 
     if (!token) {
-      alert('Please login first');
+      alert('Please login at first');
       return;
     }
 
