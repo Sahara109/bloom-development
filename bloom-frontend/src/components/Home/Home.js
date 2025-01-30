@@ -51,7 +51,7 @@ const Home = () => {
           </div>
           <div className="feature-card">
             <h3>Educational Resources</h3>
-            <p>Access articles and videos to understand mental health better.</p>
+            <p>Access articles, videos and journals to understand mental health better.</p>
           </div>
           <div className="feature-card">
             <h3>Community Stories</h3>

@@ -11,7 +11,7 @@ router.post('/register', async (req, res) => {
 
     // Check if any field is missing
     if (!name || !email || !password) {
-        return res.status(400).json({ message: 'Please provide all required fields: name, email, and password' });
+        return res.status(400).json({ message: 'Please do provide all required fields: name, email, and password' });
     }
 
     // Check if the user already exists
