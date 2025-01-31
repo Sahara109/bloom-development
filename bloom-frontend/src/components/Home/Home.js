@@ -55,7 +55,7 @@ const Home = () => {
           </div>
           <div className="feature-card">
             <h3>Community Stories</h3>
-            <p>Be inspired by stories from others who’ve navigated mental health challenges.</p>
+            <p>Be inspired by stories from others who have navigated mental health challenges.</p>
           </div>
         </div>
       </section>
