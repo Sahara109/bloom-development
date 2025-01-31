@@ -5,7 +5,7 @@ const authenticateUser = require('../middleware/authMiddleware');
 const router = express.Router();
 
 // Video routes
-router.post('/create', authenticateUser, createVideo);
+router.post('/', authenticateUser, createVideo);
 router.get('/', getVideos);
 router.get('/:id', getVideoById);
 router.put('/:id', authenticateUser, updateVideo);
