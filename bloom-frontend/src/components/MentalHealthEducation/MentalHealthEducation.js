@@ -7,12 +7,12 @@ const MentalHealthEducation = () => {
   const [videos, setVideos] = useState([]); // State for videos
 
   useEffect(() => {
-    // Get token from localStorage
     const token = localStorage.getItem("authToken");
-
+  
     if (token) {
       console.log("Fetching articles...");
-
+  
+      // Fetch articles
       axios
         .get("http://localhost:5001/api/articles", {
           headers: { Authorization: `Bearer ${token}` },
@@ -24,24 +24,25 @@ const MentalHealthEducation = () => {
         .catch((error) => {
           console.error("Error fetching articles", error);
         });
+  
+      // Fetch videos with Authorization Header
+      console.log("Fetching videos...");
+      axios
+        .get("http://localhost:5001/api/videos", {
+          headers: { Authorization: `Bearer ${token}` }, // Added Authorization Header
+        })
+        .then((response) => {
+          console.log("Videos fetched:", response.data);
+          setVideos(response.data);
+        })
+        .catch((error) => {
+          console.error("Error fetching videos:", error);
+        });
     } else {
       console.log("No token found in localStorage");
     }
-
-    // Fetch videos
-    console.log("Fetching videos...");
-
-    axios
-      .get("http://localhost:5001/api/videos")
-      .then((response) => {
-        console.log("Videos fetched:", response.data);
-        setVideos(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching videos", error);
-      });
   }, []);
-
+  
   console.log("Current videos state:", videos); // Debugging state
 
   return (

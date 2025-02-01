@@ -13,7 +13,6 @@ import Landing from './components/Landing/Landing';
 import MentalHealthEducation from './components/MentalHealthEducation/MentalHealthEducation';  
 
 
-
 const App = () => {
   return (
     <AuthProvider>
