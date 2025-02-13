@@ -3,15 +3,24 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 30px;
-  background-color: #4caf50;
-  color: white;
+  padding: 10px 30px;
+  background-color:#D1C4E9;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  color: #ffffff;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
 /* Logo Styling */
 .navbar-logo .logo {
-  height: 100px;  /* Adjust the size as necessary */
+  height: 100px;
   width: auto;
+  transition: transform 0.3s ease;
+}
+
+.navbar-logo .logo:hover {
+  transform: scale(1.05);
 }
 
 /* Navbar Middle (Search Bar and Links) */
@@ -19,47 +28,76 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-grow: 1;  /* This will fill the available space */
+  flex-grow: 1;
+  margin: 0 20px;
 }
 
 /* Search Bar */
 .search-bar {
-  padding: 8px;
-  width: 500px;
+  padding: 8px 15px;
+  width: 400px;
   font-size: 1em;
-  border-radius: 5px;
+  border-radius: 20px;
   border: none;
+  outline: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: box-shadow 0.3s ease;
+}
+
+.search-bar:focus {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 /* Navbar Links */
 .nav-links {
   display: flex;
-  gap: 60px;
+  gap: 40px;
+  align-items: center;
 }
 
 .nav-links a {
   text-decoration: none;
-  color: white;
+  color: #000000;
   font-weight: bold;
+  transition: color 0.3s ease;
+  position: relative;
+}
+
+.nav-links a::after {
+  content: '';
+  display: block;
+  width: 0;
+  height: 2px;
+  background: #8646e1;
+  transition: width 0.3s;
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+}
+
+.nav-links a:hover::after {
+  width: 100%;
 }
 
 .nav-links a:hover {
-  color: #8646e1;  /* Highlight color */
+  color: #8646e1;
 }
 
 /* Logout Button */
 .logout-btn {
-  background-color: #ff4c4c;
+  background-color: #e74c3c;
   color: white;
   border: none;
-  padding: 8px 15px;
+  padding: 8px 20px;
   cursor: pointer;
   font-weight: bold;
-  border-radius: 5px;
+  border-radius: 20px;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .logout-btn:hover {
-  background-color: #ff1a1a;
+  background-color: #c0392b;
 }
 
 /* --- Media Queries for Responsiveness --- */
@@ -67,30 +105,29 @@
 /* Tablet and smaller screens (max-width: 1024px) */
 @media (max-width: 1024px) {
   .navbar {
+    flex-direction: column;
+    align-items: center;
     padding: 15px;
   }
 
   .search-bar {
     width: 300px;
+    margin-bottom: 10px;
   }
 
   .nav-links {
     gap: 20px;
   }
 
-  .navbar-middle {
-    flex-direction: column;  /* Stack items vertically */
-  }
-
   .navbar-logo .logo {
-    height: 80px;  /* Smaller logo for tablet screens */
+    height: 70px;
   }
 }
 
 /* Mobile Screens (max-width: 768px) */
 @media (max-width: 768px) {
   .navbar {
-    flex-direction: column;  /* Stack navbar vertically */
+    flex-direction: column;
     align-items: center;
     padding: 10px;
   }
@@ -101,20 +138,20 @@
   }
 
   .search-bar {
-    width: 80%;  /* Wider search bar on mobile */
+    width: 80%;
     margin-bottom: 10px;
   }
 
   .nav-links {
     display: flex;
-    flex-direction: column;  /* Stack links vertically */
-    gap: 10px;
+    flex-direction: column;
+    gap: 15px;
     align-items: center;
     margin-top: 20px;
   }
 
   .logout-btn {
-    width: 100%;  /* Full-width logout button */
+    width: 80%;
     margin-top: 10px;
   }
 }

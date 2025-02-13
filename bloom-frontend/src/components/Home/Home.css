@@ -38,12 +38,23 @@ h1 {
 .hero-buttons .btn-primary {
   background-color: #4CAF50;
   color: white;
+  transition: background-color 0.3s ease;
+}
+
+.hero-buttons .btn-primary:hover {
+  background-color: #8646e1;
 }
 
 .hero-buttons .btn-secondary {
   background-color: #8646e1;
   color: white;
+  transition: background-color 0.3s ease;
 }
+
+.hero-buttons .btn-secondary:hover {
+  background-color: #4CAF50;
+}
+
 
 .hero-image img {
   width: 100%;

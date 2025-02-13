@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+import { HashRouter as Router, Route, Routes} from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import Register from './components/Auth/Register';
@@ -12,6 +12,10 @@ import Footer from './components/Home/Footer';
 import Landing from './components/Landing/Landing';
 import MentalHealthEducation from './components/MentalHealthEducation/MentalHealthEducation';  
 
+
+
+import MindfulExercises from "./components/MindfulExercises/MindfulExercises";
+import CommunitySupport from "./components/CommunitySupport/CommunitySupport";
 
 const App = () => {
   return (
@@ -26,6 +30,8 @@ const App = () => {
           <Route path="/mental-health-education" element={<MentalHealthEducation />} /> {/* Add this route */}
           <Route path="/profile" element={<ProtectedRoute Component={Profile} />} />
           <Route path="/about" element={<About />} />
+          <Route path="/mindful-exercises" element={<MindfulExercises />} />
+          <Route path="/community-support" element={<CommunitySupport />} />
           <Route path="*" element={<div>404: Page Not Found</div>} />
         </Routes>
         <Footer />

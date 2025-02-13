@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import React from "react";
 import { FaRegSmile, FaBook, FaMusic, FaHandshake, FaRobot } from 'react-icons/fa'; // Import icons
 import 'font-awesome/css/font-awesome.min.css';
@@ -8,6 +9,7 @@ import teamMember1 from "../../assets/images/team-member1.jpg";
 import teamMember2 from "../../assets/images/team-member2.png";
 
 const About = () => {
+  const navigate = useNavigate(); // Initialize navigate
   return (
       <div className="about-container">
       {/* About Us Section */}
@@ -113,7 +115,8 @@ const About = () => {
       {/* Call to Action Section */}
       <section className="cta-section">
         <p>Whether you are seeking information, looking for support, or just need a moment of calm, BLOOM is here for you. Join us on this journey towards better mental health and well-being. Become a part of BLOOM today!</p>
-        <button className="cta-button">Get Started</button>
+        <button className="cta-button" onClick={() => navigate('/login')}>Get Started</button>
+
       </section>
     </div>
   );
