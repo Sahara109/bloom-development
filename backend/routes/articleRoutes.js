@@ -1,15 +1,17 @@
 const express = require('express');
 const { createArticle, getArticles, getArticleById, updateArticle, deleteArticle } = require('../controllers/articleController');
 const authenticateUser = require('../middleware/authMiddleware');
+const isAdmin = require('../middleware/adminMiddleware');
 
 const router = express.Router();
 
-// Article routes
+// Admin-only routes for articles
+router.post('/', authenticateUser, isAdmin, createArticle);
+router.put('/:id', authenticateUser, isAdmin, updateArticle);
+router.delete('/:id', authenticateUser, isAdmin, deleteArticle);
 
-router.post('/', authenticateUser, createArticle);
+// Public routes
 router.get('/', getArticles);
 router.get('/:id', getArticleById);
-router.put('/:id', authenticateUser, updateArticle);
-router.delete('/:id', authenticateUser, deleteArticle);
 
 module.exports = router;

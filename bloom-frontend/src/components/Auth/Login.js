@@ -17,22 +17,24 @@ const Login = () => {
     e.preventDefault();
     setError(null);
     setLoading(true); // Start loading
-
+  
     try {
       const response = await axios.post('http://localhost:5001/api/users/login', {
         email,
         password,
       });
-
+  
+      console.log(response.data);  // Check the API response here
+      
       const { token, user } = response.data;
-
+  
       // Save token and user data to local storage
       localStorage.setItem('authToken', token);
       localStorage.setItem('user', JSON.stringify(user));
-
+  
       // Authenticate user in context
       login(token, user);
-
+  
       // Redirect to landing page
       navigate('/landing');
     } catch (err) {
@@ -41,6 +43,7 @@ const Login = () => {
       setLoading(false); // Stop loading
     }
   };
+  
 
   return (
     <div className="login-page" style={{ backgroundImage: `url(${backgroundImage})` }}>
