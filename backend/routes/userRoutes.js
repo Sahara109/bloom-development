@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const authMiddleware = require('../middleware/authMiddleware');
 const isAdmin = require('../middleware/adminMiddleware');
-const { registerUser } = require('../controllers/usercontroller'); // Import the controller
+const { registerUser, loginUser } = require('../controllers/authController'); // Import the controller
 const router = express.Router();
 
 router.post('/create-user', isAdmin, async (req, res) => {
@@ -24,38 +24,11 @@ router.post('/create-user', isAdmin, async (req, res) => {
     }
 });
 
-
 // Route for user registration (using the controller)
 router.post('/register', registerUser);
 
 // POST route to login a user
-router.post('/login', async (req, res) => {
-    const { email, password } = req.body;
-
-    if (!email || !password) {
-        return res.status(400).json({ message: 'Please provide both email and password' });
-    }
-
-    try {
-        const user = await User.findOne({ email });
-        if (!user) {
-            return res.status(400).json({ message: 'Invalid email or password' });
-        }
-
-        const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) {
-            return res.status(400).json({ message: 'Invalid email or password' });
-        }
-
-        const payload = { userId: user._id, name: user.name };
-        const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
-
-        res.json({ message: 'Login successful', token });
-    } catch (error) {
-        res.status(500).json({ message: 'Error logging in', error: error.message });
-    }
-});
-
+router.post('/login', loginUser);
 
 // POST route to logout a user
 router.post('/logout', (req, res) => {
