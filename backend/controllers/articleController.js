@@ -1,4 +1,3 @@
-// controllers/articleController.js
 const Article = require('../models/Article');
 
 // Create a new article

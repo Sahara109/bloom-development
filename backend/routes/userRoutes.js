@@ -1,53 +1,25 @@
-const express = require('express');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const User = require('../models/User');
-const authMiddleware = require('../middleware/authMiddleware');
-const isAdmin = require('../middleware/adminMiddleware');
-const { registerUser, loginUser } = require('../controllers/authController'); // Import the controller
+const express = require("express");
+const asyncHandler = require("express-async-handler");
+// In routes/userRoutes.js
+const { registerUser, loginUser, getUserProfile, getUser, updateUser, deleteUser } = require("../controllers/usercontroller");
+
+const { protect } = require("../middleware/authMiddleware");
+
 const router = express.Router();
 
-router.post('/create-user', isAdmin, async (req, res) => {
-    // Only an admin can create a new user
-    const { name, email, password } = req.body;
+// Register user route
+router.post('/sign', asyncHandler(registerUser));
 
-    try {
-        // Hash the password before saving
-        const hashedPassword = await bcrypt.hash(password, 10);
+// Login route
+router.post('/login', asyncHandler(loginUser));
 
-        const newUser = new User({ name, email, password: hashedPassword });
-        await newUser.save();
+// Get User Profile (Protected Route)
+router.get("/profile", protect, asyncHandler(getUserProfile)); // Wrap the controller with asyncHandler
 
-        res.status(201).json({ message: 'User created successfully', user: newUser });
-    } catch (error) {
-        res.status(500).json({ message: 'Error creating user', error });
-    }
-});
 
-// Route for user registration (using the controller)
-router.post('/register', registerUser);
-
-// POST route to login a user
-router.post('/login', loginUser);
-
-// POST route to logout a user
-router.post('/logout', (req, res) => {
-    // Optionally invalidate token on the client side
-    res.status(200).json({ message: 'Logged out successfully' });
-});
-
-// GET route to fetch the user profile
-// Profile route to get user profile
-router.get('/profile', authMiddleware, async (req, res) => {
-    try {
-        const user = await User.findById(req.user.userId).select('-password'); // Exclude the password field
-        if (!user) {
-            return res.status(404).json({ message: 'User not found' });
-        }
-        res.json(user);  // Return the user data without the password
-    } catch (error) {
-        res.status(500).json({ message: 'Error fetching user profile', error: error.message });
-    }
-});
+// Additional routes
+router.get("/:id", protect, getUser);
+router.put("/:id", protect, updateUser);
+router.delete("/:id", protect, deleteUser);
 
 module.exports = router;

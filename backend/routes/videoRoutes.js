@@ -1,14 +1,14 @@
 const express = require('express');
 const { createVideo, getVideos, getVideoById, updateVideo, deleteVideo } = require('../controllers/videoController');
-const authenticateUser = require('../middleware/authMiddleware');
+const {protect} = require('../middleware/authMiddleware');
 
 const router = express.Router();
 
 // Video routes
-router.post('/', authenticateUser, createVideo);
+router.post('/', protect, createVideo);
 router.get('/', getVideos);
 router.get('/:id', getVideoById);
-router.put('/:id', authenticateUser, updateVideo);
-router.delete('/:id', authenticateUser, deleteVideo);
+router.put('/:id', protect, updateVideo);
+router.delete('/:id', protect, deleteVideo);
 
 module.exports = router;

@@ -18,19 +18,16 @@ const Register = () => {
     setError('');
 
     try {
-      const response = await axios.post('http://localhost:5001/api/users/register', {
-        name,
-        email,
-        password,
-      });
-
+      const response = await axios.post('http://localhost:5001/api/users/sign', { name, email, password });
+    
       setMessage(response.data.message); // Show success message
       setName(''); // Clear name field
       setEmail(''); // Clear email field
       setPassword(''); // Clear password field
     } catch (err) {
       setError(err.response?.data?.message || 'An error occurred. Please try again.'); // Show error message
-    } finally {
+    }
+    finally {
       setLoading(false); // Hide loading indicator
     }
   };
