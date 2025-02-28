@@ -4,7 +4,7 @@ const User = require('../models/User');
 require('dotenv').config();
 
 const registerUser = async (req, res) => {
-    const { name, email, password } = req.body;
+    const { name, email, password, role = "user" } = req.body; // Default role to "user"
     if (!name || !email || !password) {
         return res.status(400).json({ message: 'All fields are required' });
     }
@@ -17,6 +17,7 @@ const registerUser = async (req, res) => {
             name,
             email,
             password,
+            role // Include the role when creating the new user
         });
         await newUser.save();
         res.status(201).json({ message: 'User registered successfully' });
@@ -82,7 +83,6 @@ const loginUser = async (req, res) => {
       console.error('Error logging in:', error); 
       res.status(500).json({ message: 'Error logging in' });
     }
-  };
-  
+};
 
 module.exports = { registerUser, loginUser };

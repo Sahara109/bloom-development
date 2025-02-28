@@ -1,5 +1,5 @@
 import React from 'react';
-import { HashRouter as Router, Route, Routes} from 'react-router-dom';
+import { HashRouter as Router, Route, Routes } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import Register from './components/Auth/Register';
@@ -10,11 +10,10 @@ import Home from './components/Home/Home';
 import About from './components/About/About';
 import Footer from './components/Home/Footer';
 import Landing from './components/Landing/Landing';
-import MentalHealthEducation from './components/MentalHealthEducation/MentalHealthEducation';  
+import MentalHealthEducation from './components/MentalHealthEducation/MentalHealthEducation';
 import AdminDashboard from './components/Admin/AdminDashboard';
-import AddArticle from './components/Admin/AddArticle'; // Correct path for AddArticle
-import UpdateArticle from './components/Admin/UpdateArticle'; // Correct path for UpdateArticle
-
+import AddArticle from './components/Admin/AddArticle';
+import UpdateArticle from './components/Admin/UpdateArticle';
 import MindfulExercises from "./components/MindfulExercises/MindfulExercises";
 import CommunitySupport from "./components/CommunitySupport/CommunitySupport";
 
@@ -34,13 +33,13 @@ const App = () => {
           <Route path="/mindful-exercises" element={<MindfulExercises />} />
           <Route path="/community-support" element={<CommunitySupport />} />
           <Route path="*" element={<div>404: Page Not Found</div>} />
-          
+
           {/* Protected route for admin */}
-          <Route path="/admin" element={<ProtectedRoute Component={AdminDashboard} isAdminRoute={true} />} />
+          <Route path="/admin" element={<ProtectedRoute Component={AdminDashboard} isAdminRoute />} />
           
           {/* Admin routes */}
-          <Route path="/admin/add-article" element={<AddArticle />} />
-          <Route path="/admin/update-article/:id" element={<UpdateArticle />} />
+          <Route path="/admin/add-article" element={<ProtectedRoute Component={AddArticle} isAdminRoute />} />
+          <Route path="/admin/update-article/:id" element={<ProtectedRoute Component={UpdateArticle} isAdminRoute />} />
         </Routes>
         <Footer />
       </Router>
