@@ -9,7 +9,7 @@ const Home = () => {
       {/* Hero Section */}
       <section className="hero-section">
         <div className="hero-content">
-          <h1>Let's BLOOM Together!!</h1>
+          <h1>Let's BLOOM Together!!!</h1>
           <p>Your mental health and wellbeing companion.</p>
           <div className="hero-buttons">
             <Link to="/login" className="btn btn-primary">Login</Link>
