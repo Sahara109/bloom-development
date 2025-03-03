@@ -1,4 +1,5 @@
 import React from 'react';
+import Modal from 'react-modal'
 import { HashRouter as Router, Route, Routes } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -16,6 +17,8 @@ import AddArticle from './components/Admin/AddArticle';
 import UpdateArticle from './components/Admin/UpdateArticle';
 import MindfulExercises from "./components/MindfulExercises/MindfulExercises";
 import CommunitySupport from "./components/CommunitySupport/CommunitySupport";
+
+Modal.setAppElement('#root');
 
 const App = () => {
   return (

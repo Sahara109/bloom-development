@@ -19,6 +19,10 @@ const userSchema = new mongoose.Schema({
     type: String, 
     enum: ['user', 'admin'], // The role can either be 'user' or 'admin'
     default: 'user', // Default value is 'user', but can be 'admin' if needed
+  },
+  profileImage: { 
+    type: String, // Store the URL/path to the profile image
+    default: '/images/default_avatar.png' // Default image if no profile picture is uploaded
   }
 });
 
