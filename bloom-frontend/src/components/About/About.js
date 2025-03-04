@@ -112,7 +112,7 @@ const About = () => {
       </section>
       {/* Call to Action Section */}
       <section className="cta-section">
-        <p>Whether you are seeking information; looking for support or just need a moment of calm, BLOOM is here for you. Join us on this journey towards better mental health and well-being. Become a part of BLOOM today!</p>
+        <p>Whether you are seeking information, looking for support or just need a moment of calm, BLOOM is here for you. Join us on this journey towards better mental health and well-being. Become a part of BLOOM today!</p>
         <button className="cta-button">Get Started</button>
       </section>
     </div>
