@@ -45,7 +45,7 @@ router.post('/login', async (req, res) => {
 
     // Validate input fields
     if (!email || !password) {
-        return res.status(400).json({ message: 'Please do provide both email and password' });
+        return res.status(400).json({ message: 'Please provide both email and password' });
     }
 
     try {
