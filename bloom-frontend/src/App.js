@@ -18,6 +18,7 @@ import UpdateArticle from './components/Admin/UpdateArticle';
 import MindfulExercises from "./components/MindfulExercises/MindfulExercises";
 import CommunitySupport from "./components/CommunitySupport/CommunitySupport";
 
+
 Modal.setAppElement('#root');
 
 const App = () => {
@@ -51,3 +52,4 @@ const App = () => {
 };
 
 export default App;
+

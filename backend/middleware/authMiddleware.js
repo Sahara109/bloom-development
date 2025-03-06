@@ -24,11 +24,10 @@ const protect = async (req, res, next) => {
     }
   }
 
+  // If no token is found
   if (!token) {
     return res.status(401).json({ message: 'Not authorized, no token' });
   }
-
-  next();
 };
 
 module.exports = { protect };

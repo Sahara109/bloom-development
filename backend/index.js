@@ -13,6 +13,7 @@ const articleRoutes = require("./routes/articleRoutes");
 const videoRoutes = require("./routes/videoRoutes");
 const exerciseRoutes = require("./routes/exerciseRoutes");
 const communitySupportRoutes = require("./routes/communitySupport");
+const profileRoutes = require("./routes/profileRoutes");
 
 dotenv.config();
 connectDB();
@@ -52,6 +53,7 @@ app.post('/uploadProfileImage', upload.single('profileImage'), (req, res) => {
     return res.status(400).json({ error: "No file uploaded." });
   }
 
+  // Assuming req.user contains the user ID
   User.findByIdAndUpdate(
     req.user?._id,
     { profileImage: `/uploads/${req.file.filename}` },
@@ -68,6 +70,7 @@ app.use("/api/articles", articleRoutes);
 app.use("/api/videos", videoRoutes);
 app.use("/api/exercises", exerciseRoutes);
 app.use('/api', communitySupportRoutes);
+app.use("/api/profile", profileRoutes);
 
 // Start the Server
 const PORT = process.env.PORT || 5001;

@@ -26,7 +26,7 @@ const registerUser = async (req, res) => {
       await newUser.save();
 
       // Generate token and return user data
-      const token = generateToken(newUser);
+      const token = generateToken(newUser._id);
       res.status(201).json({
           message: 'User registered successfully',
           token,
@@ -67,7 +67,7 @@ const loginUser = async (req, res) => {
       }
 
       // Generate token if password matches
-      const token = generateToken(user);
+      const token = generateToken(user._id);
       console.log('Generated token:', token);
 
       res.status(200).json({

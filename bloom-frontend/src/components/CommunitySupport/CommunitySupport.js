@@ -7,7 +7,7 @@ const CommunitySupport = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [stories, setStories] = useState([]);
   const [newStory, setNewStory] = useState({ name: '', story: '', image: null });
-  const [profileImage, setProfileImage] = useState('');  // State for profile image
+  const [profileImage, setProfileImage] = useState('');
 
   // Fetch stories from the backend
   useEffect(() => {
@@ -22,7 +22,7 @@ const CommunitySupport = () => {
     fetchStories();
 
     // Fetch user data (including profile image) when the component mounts
-    axios.get('http://localhost:5001/api/getUserData')
+    axios.get('http://localhost:5001/api/users/getUserData')
       .then((response) => {
         setProfileImage(response.data.profileImage); // Set the profile image URL
       })
