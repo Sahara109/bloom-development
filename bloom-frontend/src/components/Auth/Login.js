@@ -17,7 +17,7 @@ const Login = ({ setToken }) => {
       setToken(response.data.token); // Update parent component state
       alert('Login successful');
     } catch (error) {
-      alert('Error: ' + error.response.data.message); // Show the error message
+      alert('Error: ' + error.response.data.message); // Show the error message 
     }
   };
 
