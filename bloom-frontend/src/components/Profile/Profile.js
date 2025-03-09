@@ -89,7 +89,8 @@ const Profile = () => {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundImage: 'url(https://images.squarespace-cdn.com/content/v1/5d3be400566fab00019cc8c4/1705866888881-D8G79BU7M3D0XMQ4BLTG/childrens-mental-health.jpeg?format=1500w)',
+        backgroundImage:  'url("/images/image.png")'
+        ,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         '&:before': {
