@@ -5,7 +5,7 @@ import axios from 'axios';
 
 const CommunitySupport = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [stories, setStories] = useState([]);
+  const [stories, setStories] = useState([]); // Ensure stories is always an array
   const [newStory, setNewStory] = useState({ name: '', story: '', image: null });
   const [profileImage, setProfileImage] = useState('');
 
@@ -13,12 +13,21 @@ const CommunitySupport = () => {
   useEffect(() => {
     const fetchStories = async () => {
       try {
-        const response = await axios.get('http://localhost:5001/api/stories');
-        setStories(response.data);
+        const userEmail = localStorage.getItem("userEmail");
+
+        const response = await fetch(`/api/stories?userEmail=${userEmail}`);
+        const data = await response.json();
+
+        console.log("My Stories:", data.myStories);
+        console.log("Other Stories:", data.otherStories);
+
+        // Combine myStories and otherStories into one array and set it
+        setStories([...data.myStories, ...data.otherStories]); 
       } catch (error) {
-        console.error('Error fetching stories:', error);
+        console.error("Error fetching stories:", error);
       }
     };
+
     fetchStories();
 
     // Fetch user data (including profile image) when the component mounts
@@ -54,7 +63,7 @@ const CommunitySupport = () => {
             'Content-Type': 'multipart/form-data',
           },
         });
-        setStories([...stories, response.data]);
+        setStories([...stories, response.data]); // Add the new story to the list
         setNewStory({ name: '', story: '', image: null });
         setModalIsOpen(false);
       } catch (error) {

@@ -1,26 +1,34 @@
 const Story = require("../models/story");
 
-const getStories = async (req, res) => {
-  const stories = await Story.find({});
-  res.json(stories);
-};
+async function getStories(req, res) {
+  try {
+    const { userEmail } = req.query; // Get logged-in user's email from frontend
 
-const addStory = async (req, res) => {
-  const { name, story } = req.body;
-  let image = '';
-
-  if (req.file) {
-    image = `/uploads/${req.file.filename}`;
+    const stories = await Story.find(); // Fetch all stories from the database
+    res.json({
+      myStories: stories.filter(story => story.userEmail === userEmail) || [],
+      otherStories: stories.filter(story => story.userEmail !== userEmail) || []
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
+}
 
-  const newStory = new Story({
-    name,
-    story,
-    image,
-  });
+async function addStory(req, res) {
+  try {
+    const { title, content, userEmail } = req.body; // Get email from request
 
-  const savedStory = await newStory.save();
-  res.status(201).json(savedStory);
-};
+    const newStory = new Story({
+      title,
+      content,
+      userEmail
+    });
+
+    await newStory.save(); // Save the story to the database
+    res.status(201).json(newStory); // Return the added story in the response
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}
 
 module.exports = { getStories, addStory };
