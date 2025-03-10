@@ -38,7 +38,7 @@ const About = () => {
       <section className="mission-section">
         <h2>Our Mission</h2>
         <p>
-          Our mission at BLOOM is simple: to provide mental health support and resources for all. 
+          Our mission at BLOOM is simple: to provide mental health support and resources for everyone. 
           We do believe that mental wellbeing should be as prioritized as physical health, and we’re committed to helping people understand and manage their mental health better.
         </p>
       </section>
