@@ -5,39 +5,35 @@ import axios from 'axios';
 
 const CommunitySupport = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [stories, setStories] = useState([]); // Ensure stories is always an array
+  const [stories, setStories] = useState([]);
   const [newStory, setNewStory] = useState({ name: '', story: '', image: null });
   const [profileImage, setProfileImage] = useState('');
 
-  // Fetch stories from the backend
   useEffect(() => {
     const fetchStories = async () => {
       try {
-        const userEmail = localStorage.getItem("userEmail");
-
-        const response = await fetch(`/api/stories?userEmail=${userEmail}`);
-        const data = await response.json();
-
-        console.log("My Stories:", data.myStories);
-        console.log("Other Stories:", data.otherStories);
-
-        // Combine myStories and otherStories into one array and set it
-        setStories([...data.myStories, ...data.otherStories]); 
+        const response = await axios.get('http://localhost:5001/api/stories');
+        setStories(response.data);
       } catch (error) {
-        console.error("Error fetching stories:", error);
+        console.error('Error fetching stories:', error);
       }
     };
-
     fetchStories();
 
+    const token = localStorage.getItem('token'); // Assuming you store the token in localStorage
+
     // Fetch user data (including profile image) when the component mounts
-    axios.get('http://localhost:5001/api/users/getUserData')
-      .then((response) => {
-        setProfileImage(response.data.profileImage); // Set the profile image URL
-      })
-      .catch((err) => {
-        console.error('Error fetching user data:', err);
-      });
+    axios.get('http://localhost:5001/api/users/getUserData', {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+    .then((response) => {
+      setProfileImage(response.data.profileImage); // Set the profile image URL
+    })
+    .catch((err) => {
+      console.error('Error fetching user data:', err);
+    });
   }, []);
 
   // Handle image change
@@ -63,7 +59,7 @@ const CommunitySupport = () => {
             'Content-Type': 'multipart/form-data',
           },
         });
-        setStories([...stories, response.data]); // Add the new story to the list
+        setStories([...stories, response.data]);
         setNewStory({ name: '', story: '', image: null });
         setModalIsOpen(false);
       } catch (error) {
@@ -135,4 +131,3 @@ const CommunitySupport = () => {
 };
 
 export default CommunitySupport;
-clearImmediate
