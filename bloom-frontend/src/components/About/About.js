@@ -30,7 +30,7 @@ const About = () => {
         <h2>Our Vision</h2>
         <p>
           We here envision a beautiful world where mental health is much prioritized, where individuals feel empowered to take charge of their well-being, and where the stigma surrounding mental health is eradicated. 
-          At BLOOM, we unitedly strive to create a space where users can find solace, support, and inspiration.
+          At BLOOM, we unitedly strive to like create a space where users can find solace, support, and inspiration.
         </p>
       </section>
 
