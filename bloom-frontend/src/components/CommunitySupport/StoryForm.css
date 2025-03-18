@@ -1,0 +1,52 @@
+/* Story Form Styles */
+.story-form {
+    max-width: 600px;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .story-form h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .story-form label {
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+    display: block;
+  }
+  
+  .story-form input[type="text"],
+  .story-form textarea,
+  .story-form input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+  }
+  
+  .story-form textarea {
+    resize: vertical;
+  }
+  
+  .story-form button {
+    width: 100%;
+    padding: 12px;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .story-form button:hover {
+    background-color: #0056b3;
+  }
+  

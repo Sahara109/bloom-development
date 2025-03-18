@@ -71,6 +71,7 @@ app.use("/api/videos", videoRoutes);
 app.use("/api/exercises", exerciseRoutes);
 app.use('/api', communitySupportRoutes);
 app.use("/api/profile", profileRoutes);
+// app.use("/api/stories", communitySupportRoutes);
 
 // Start the Server
 const PORT = process.env.PORT || 5001;

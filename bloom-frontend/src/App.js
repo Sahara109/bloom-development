@@ -17,6 +17,9 @@ import AddArticle from './components/Admin/AddArticle';
 import UpdateArticle from './components/Admin/UpdateArticle';
 import MindfulExercises from "./components/MindfulExercises/MindfulExercises";
 import CommunitySupport from "./components/CommunitySupport/CommunitySupport";
+import StoryFeed from './components/CommunitySupport/StoryFeed';
+import StoryForm from './components/CommunitySupport/StoryForm';
+
 
 
 Modal.setAppElement('#root');
@@ -36,6 +39,8 @@ const App = () => {
           <Route path="/about" element={<About />} />
           <Route path="/mindful-exercises" element={<MindfulExercises />} />
           <Route path="/community-support" element={<CommunitySupport />} />
+          <Route path="/stories" element={<StoryFeed />} />  {/* Route for Story Feed */}
+          <Route path="/create-story" element={<StoryForm />} />  {/* Route for Story Form */}
           <Route path="*" element={<div>404: Page Not Found</div>} />
 
           {/* Protected route for admin */}

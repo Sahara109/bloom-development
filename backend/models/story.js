@@ -1,10 +1,11 @@
 const mongoose = require('mongoose');
 
 const storySchema = new mongoose.Schema({
-    title: String,
-    content: String,
-    userEmail: { type: String, required: true }, // Associate story with a user
-    date: { type: Date, default: Date.now }
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }, // Link to user
+    title: { type: String, required: true },
+    content: { type: String, required: true },
+    image: { type: String }, // Optional image
+    createdAt: { type: Date, default: Date.now }
 });
 
 module.exports = mongoose.model('Story', storySchema);
