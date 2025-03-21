@@ -11,7 +11,7 @@ const StoryForm = ({ onStoryAdded }) => {
         e.preventDefault();
         try {
             const storyData = { title, content, image };
-            await api.post("/stories", storyData); // Send POST request to /api/stories
+            await api.post("stories", storyData); // Send POST request to /api/stories
             onStoryAdded(); // Refresh the feed
         } catch (error) {
             console.error("Error posting story", error);
