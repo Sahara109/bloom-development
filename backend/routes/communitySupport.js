@@ -40,4 +40,19 @@ router.get('/stories', async (req, res) => {
   }
 });
 
+// Add this route to your existing router
+router.get('/stories/:id', async (req, res) => {
+  try {
+    const story = await Story.findById(req.params.id); // Find a story by its ID
+    if (!story) {
+      return res.status(404).json({ message: 'Story not found' }); // Return 404 if the story is not found
+    }
+    res.json(story); // Send the story as a response
+  } catch (error) {
+    console.error('Error fetching story:', error);
+    res.status(500).json({ message: 'Server error' }); // Handle any other errors
+  }
+});
+
+
 module.exports = router;

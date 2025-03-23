@@ -1,30 +1,35 @@
-import React from 'react';
-import Modal from 'react-modal'
-import { HashRouter as Router, Route, Routes } from 'react-router-dom';
-import { AuthProvider } from './context/AuthContext';
-import ProtectedRoute from './components/ProtectedRoute';
-import Register from './components/Auth/Register';
-import Login from './components/Auth/Login';
-import Profile from './components/Profile/Profile';
-import Navbar from './components/Navbar/Navbar';
-import Home from './components/Home/Home';
-import About from './components/About/About';
-import Footer from './components/Home/Footer';
-import Landing from './components/Landing/Landing';
-import MentalHealthEducation from './components/MentalHealthEducation/MentalHealthEducation';
-import AdminDashboard from './components/Admin/AdminDashboard';
-import AddArticle from './components/Admin/AddArticle';
-import UpdateArticle from './components/Admin/UpdateArticle';
+import React, { useState } from "react";
+import Modal from "react-modal";
+import { HashRouter as Router, Route, Routes } from "react-router-dom";
+import { AuthProvider } from "./context/AuthContext";
+import ProtectedRoute from "./components/ProtectedRoute";
+import Register from "./components/Auth/Register";
+import Login from "./components/Auth/Login";
+import Profile from "./components/Profile/Profile";
+import Navbar from "./components/Navbar/Navbar";
+import Home from "./components/Home/Home";
+import About from "./components/About/About";
+import Footer from "./components/Home/Footer";
+import Landing from "./components/Landing/Landing";
+import MentalHealthEducation from "./components/MentalHealthEducation/MentalHealthEducation";
+import AdminDashboard from "./components/Admin/AdminDashboard";
+import AddArticle from "./components/Admin/AddArticle";
+import UpdateArticle from "./components/Admin/UpdateArticle";
 import MindfulExercises from "./components/MindfulExercises/MindfulExercises";
 import CommunitySupport from "./components/CommunitySupport/CommunitySupport";
-import StoryFeed from './components/CommunitySupport/StoryFeed';
-import StoryForm from './components/CommunitySupport/StoryForm';
+import StoryFeed from "./components/CommunitySupport/StoryFeed";
+import StoryForm from "./components/CommunitySupport/StoryForm";
+import StoryDetail from './components/CommunitySupport/StoryDetail'; 
 
-
-
-Modal.setAppElement('#root');
+Modal.setAppElement("#root");
 
 const App = () => {
+  const [refresh, setRefresh] = useState(false);
+
+  const handleStoryAdded = () => {
+    setRefresh((prev) => !prev); // Toggle refresh state to trigger re-render
+  };
+
   return (
     <AuthProvider>
       <Router>
@@ -39,13 +44,24 @@ const App = () => {
           <Route path="/about" element={<About />} />
           <Route path="/mindful-exercises" element={<MindfulExercises />} />
           <Route path="/community-support" element={<CommunitySupport />} />
-          <Route path="/stories" element={<StoryFeed />} />  {/* Route for Story Feed */}
-          <Route path="/create-story" element={<StoryForm />} />  {/* Route for Story Form */}
+
+          {/* Routes for Community Stories */}
+          <Route
+            path="/stories"
+            element={<StoryFeed key={refresh} />} // Force re-render when refresh changes
+          />
+          <Route
+            path="/create-story"
+            element={<StoryForm onStoryAdded={handleStoryAdded} />} // Trigger refresh when a story is added
+          />
+
+          <Route path="/story/:id" element={<StoryDetail />} />
+
           <Route path="*" element={<div>404: Page Not Found</div>} />
 
           {/* Protected route for admin */}
           <Route path="/admin" element={<ProtectedRoute Component={AdminDashboard} isAdminRoute />} />
-          
+
           {/* Admin routes */}
           <Route path="/admin/add-article" element={<ProtectedRoute Component={AddArticle} isAdminRoute />} />
           <Route path="/admin/update-article/:id" element={<ProtectedRoute Component={UpdateArticle} isAdminRoute />} />
@@ -57,4 +73,3 @@ const App = () => {
 };
 
 export default App;
-
