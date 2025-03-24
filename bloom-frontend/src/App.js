@@ -20,6 +20,8 @@ import CommunitySupport from "./components/CommunitySupport/CommunitySupport";
 import StoryFeed from "./components/CommunitySupport/StoryFeed";
 import StoryForm from "./components/CommunitySupport/StoryForm";
 import StoryDetail from './components/CommunitySupport/StoryDetail'; 
+import Chatbot from "./components/Chatbot-AI/Chatbot_bl";
+
 
 Modal.setAppElement("#root");
 
@@ -44,6 +46,7 @@ const App = () => {
           <Route path="/about" element={<About />} />
           <Route path="/mindful-exercises" element={<MindfulExercises />} />
           <Route path="/community-support" element={<CommunitySupport />} />
+          
 
           {/* Routes for Community Stories */}
           <Route
@@ -66,6 +69,9 @@ const App = () => {
           <Route path="/admin/add-article" element={<ProtectedRoute Component={AddArticle} isAdminRoute />} />
           <Route path="/admin/update-article/:id" element={<ProtectedRoute Component={UpdateArticle} isAdminRoute />} />
         </Routes>
+   
+        <Chatbot /> {/* Place it outside <Routes> */}
+
         <Footer />
       </Router>
     </AuthProvider>
