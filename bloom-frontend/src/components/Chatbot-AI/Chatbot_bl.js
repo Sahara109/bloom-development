@@ -1,40 +1,24 @@
 import { useEffect } from "react";
+import { useAuth } from "../../context/AuthContext"; // Import AuthContext
 
 const Chatbot = () => {
-  useEffect(() => {
-    (function () {
-      if (!window.chatbase || window.chatbase("getState") !== "initialized") {
-        window.chatbase = (...args) => {
-          if (!window.chatbase.q) {
-            window.chatbase.q = [];
-          }
-          window.chatbase.q.push(args);
-        };
-        window.chatbase = new Proxy(window.chatbase, {
-          get(target, prop) {
-            if (prop === "q") {
-              return target.q;
-            }
-            return (...args) => target(prop, ...args);
-          },
-        });
-      }
-      const onLoad = function () {
-        const script = document.createElement("script");
-        script.src = "https://www.chatbase.co/embed.min.js";
-        script.id = "b2pHVilN9qmmY4tv0mW-j"; // Your chatbot ID
-        script.domain = "www.chatbase.co";
-        document.body.appendChild(script);
-      };
-      if (document.readyState === "complete") {
-        onLoad();
-      } else {
-        window.addEventListener("load", onLoad);
-      }
-    })();
-  }, []);
+  const { auth } = useAuth(); // Get auth state from context
 
-  return null; // This component does not render anything, just loads the chatbot
+  useEffect(() => {
+    if (!auth.isLoggedIn) return; // Only load chatbot if user is logged in
+
+    const script = document.createElement("script");
+    script.src = "https://www.chatbase.co/embed.min.js";
+    script.id = "b2pHVilN9qmmY4tv0mW-j"; // Your chatbot ID
+    script.domain = "www.chatbase.co";
+    document.body.appendChild(script);
+
+    return () => {
+      document.body.removeChild(script); // Cleanup script when user logs out
+    };
+  }, [auth.isLoggedIn]); // Re-run effect when login state changes
+
+  return null;
 };
 
 export default Chatbot;
