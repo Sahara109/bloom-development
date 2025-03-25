@@ -9,7 +9,10 @@ const router = express.Router();
 router.post('/register', async (req, res) => {
     const { name, email, password } = req.body;
 
-    
+    // Check if any field is missing
+    if (!name || !email || !password) {
+        return res.status(400).json({ message: 'Please provide all required fields: name, email, and password' });
+    }
 
     // Check if the user already exists
     const userExists = await User.findOne({ email });
