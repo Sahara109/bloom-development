@@ -11,7 +11,7 @@ router.post('/register', async (req, res) => {
 
     // Check if any field is missing
     if (!name || !email || !password) {
-        return res.status(400).json({ message: 'Please do provide all required fields: name, email, and password' });
+        return res.status(400).json({ message: 'Please provide all required fields: name, email, and password' });
     }
 
     // Check if the user already exists
@@ -31,7 +31,12 @@ router.post('/register', async (req, res) => {
         password: hashedPassword
     });
 
-    
+    try {
+        await newUser.save(); // Save the user in the database
+        res.status(201).json({ message: 'User registered successfully' });
+    } catch (error) {
+        res.status(500).json({ message: 'Error registering user', error: error.message });
+    }
 });
 
 // POST route to login a user
