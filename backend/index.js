@@ -18,7 +18,7 @@ app.use('/api/users', userRoutes);
 
 // Basic Route
 app.get('/', (req, res) => {
-    res.send('Welcome to the BLOOM API');
+    res.send('Welcome to our BLOOM API');
 });
 
 // MongoDB Connection
@@ -26,7 +26,7 @@ const PORT = process.env.PORT || 5001;  // Use the port from the .env file or de
 const mongoURI = process.env.MONGO_URI || 'mongodb://localhost:27017/bloom';
 
 mongoose.connect(mongoURI)
-    .then(() => console.log('MongoDB connected successfully'))
+    .then(() => console.log('MongoDB has been connected successfully'))
     .catch(err => console.error('MongoDB connection error:', err));
 
 // Start the server

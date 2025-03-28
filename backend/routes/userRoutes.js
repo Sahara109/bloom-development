@@ -11,13 +11,13 @@ router.post('/register', async (req, res) => {
 
     // Check if any field is missing
     if (!name || !email || !password) {
-        return res.status(400).json({ message: 'Please provide all required fields: name, email, and password' });
+        return res.status(400).json({ message: 'Please do provide all required fields: name, email, and password' });
     }
 
     // Check if the user already exists
     const userExists = await User.findOne({ email });
     if (userExists) {
-        return res.status(400).json({ message: 'This User does already exist' });
+        return res.status(400).json({ message: 'This User already exists' });
     }
 
     // Hash the password
