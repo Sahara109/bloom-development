@@ -20,7 +20,7 @@ const App = () => {
         <Route path="/profile" element={<Profile />} />
         <Route path="/about" element={<About />} />  {/* About page route */}
       </Routes>
-      <Footer /> {/* Place Footer here so it shows on all pages */}
+      <Footer /> {/* Place the Footer here so it shows on all pages */}
     </Router>
   );
 };

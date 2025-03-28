@@ -26,14 +26,14 @@ const StoryForm = ({ onStoryAdded }) => {
         },
       });
   
-      setMessage("Story submitted successfully! 🎉");
+      setMessage("Story has been submitted successfully! 🎉");
       setTitle(""); // Clear form after submission
       setContent("");
       setImage(null);
       
       onStoryAdded(); // **Trigger a re-fetch of stories**
     } catch (error) {
-      setMessage("Failed to submit story.");
+      setMessage("Failed to submit the story.");
     }
   };
   
