@@ -18,7 +18,7 @@ app.use('/api/users', userRoutes);
 
 // Basic Route
 app.get('/', (req, res) => {
-    res.send('Welcome to our BLOOM API');
+    res.send('Welcome to BLOOM API');
 });
 
 // MongoDB Connection
@@ -29,7 +29,3 @@ mongoose.connect(mongoURI)
     .then(() => console.log('MongoDB has been connected successfully'))
     .catch(err => console.error('MongoDB connection error:', err));
 
-// Start the server
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
