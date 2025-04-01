@@ -10,7 +10,7 @@ const CommunitySupport = () => {
 
     return (
         <div>
-            <h2>Community Support</h2>
+            <h2>Community Support System</h2>
             <StoryForm onStoryAdded={() => setRefresh(!refresh)} />
             <StoryFeed refresh={refresh} />
         </div>
