@@ -19,14 +19,16 @@ const Login = () => {
     setLoading(true); // Start loading
   
     try {
-      const response = await axios.post('http://localhost:5001/api/users/login', {
-        email,
-        password,
-      });
-  
-      console.log(response.data);  // Check the API response here
+      const response = await axios.post('http://localhost:5001/api/users/login', { email, password });
+      
+      console.log("🛠 Backend response user data:", response.data.user);
       
       const { token, user } = response.data;
+      
+      // Check if role exists
+      if (!user.role) {
+        console.error("❌ Role missing in backend response:", user);
+      }
   
       // Save token and user data to local storage
       localStorage.setItem('authToken', token);
@@ -38,13 +40,13 @@ const Login = () => {
       // Redirect to landing page
       navigate('/landing');
     } catch (err) {
+      console.error("❌ Login failed", err);
       setError(err.response?.data?.message || 'Something went wrong. Please try again.');
     } finally {
       setLoading(false); // Stop loading
     }
   };
   
-
   return (
     <div className="login-page" style={{ backgroundImage: `url(${backgroundImage})` }}>
       <div className="login-container">

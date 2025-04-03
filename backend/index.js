@@ -14,6 +14,9 @@ const videoRoutes = require("./routes/videoRoutes");
 const exerciseRoutes = require("./routes/exerciseRoutes");
 const communitySupportRoutes = require("./routes/communitySupport");
 const profileRoutes = require("./routes/profileRoutes");
+const adminRoutes = require("./routes/adminRoutes");
+
+
 
 dotenv.config();
 connectDB();
@@ -72,6 +75,8 @@ app.use("/api/exercises", exerciseRoutes);
 app.use('/api', communitySupportRoutes);
 app.use("/api/profile", profileRoutes);
 // app.use("/api/stories", communitySupportRoutes);
+
+app.use("/api/admin", adminRoutes);
 
 // Start the Server
 const PORT = process.env.PORT || 5001;

@@ -15,13 +15,16 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const storedToken = localStorage.getItem('authToken');
     const storedUser = localStorage.getItem('user');
-
+  
     try {
       if (storedToken && storedUser) {
+        const parsedUser = JSON.parse(storedUser);
+        console.log("Retrieved user from localStorage:", parsedUser); // ✅ Log user data
+  
         setAuth({
           isLoggedIn: true,
           token: storedToken,
-          user: JSON.parse(storedUser), // Ensure this is valid JSON
+          user: parsedUser,
         });
       }
     } catch (error) {
@@ -30,12 +33,16 @@ export const AuthProvider = ({ children }) => {
       localStorage.removeItem('user');
     }
   }, []);
+  
 
   const login = (token, user) => {
+    console.log("Logging in user:", user); // ✅ Log user role during login
+  
     setAuth({ isLoggedIn: true, token, user });
     localStorage.setItem('authToken', token);
     localStorage.setItem('user', JSON.stringify(user));
   };
+  
 
   const logout = () => {
     setAuth({ isLoggedIn: false, token: null, user: null });
