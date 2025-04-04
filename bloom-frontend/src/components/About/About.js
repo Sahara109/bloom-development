@@ -12,7 +12,7 @@ const About = () => {
       <div className="about-container">
       {/* About Us Section */}
       <section className="about-section">
-        <h1>Welcome To BLOOM !!</h1>
+        <h1>Welcome To BLOOM !!!</h1>
         <p>
           BLOOM is dedicated to supporting individuals on their journey toward mental wellbeing. 
           With resources, personalized exercises, and an AI-powered chatbot, we aim to make mental health care accessible for everyone. 
