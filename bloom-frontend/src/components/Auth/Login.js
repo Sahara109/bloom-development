@@ -36,9 +36,13 @@ const Login = () => {
   
       // Authenticate user in context
       login(token, user);
-  
-      // Redirect to landing page
-      navigate('/landing');
+
+      // Redirect based on user role
+      if (user.role === 'admin') {
+        navigate('/admin');
+      } else {
+        navigate('/landing');
+      }
     } catch (err) {
       console.error("❌ Login failed", err);
       setError(err.response?.data?.message || 'Something went wrong. Please try again.');

@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate for redirection
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useAuth } from "../../context/AuthContext"; // Import auth context
+import { useAuth } from "../../context/AuthContext";
 
 const AdminDashboard = () => {
-  const { auth } = useAuth(); // Get authenticated user
+  const { auth } = useAuth();
   const navigate = useNavigate();
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -12,12 +12,16 @@ const AdminDashboard = () => {
 
   useEffect(() => {
     if (!auth?.user || auth.user.role !== "admin") {
-      navigate("/"); // Redirect non-admins to home
+      navigate("/");
       return;
     }
 
     axios
-      .get("/api/admin/users")
+      .get("http://localhost:5001/api/admin/users", {
+        headers: {
+          Authorization: `Bearer ${auth.token}`,
+        },
+      })
       .then((res) => {
         setUsers(res.data);
         setLoading(false);
@@ -32,7 +36,11 @@ const AdminDashboard = () => {
     if (!window.confirm("Are you sure you want to delete this user?")) return;
 
     try {
-      await axios.delete(`/api/admin/users/${id}`);
+      await axios.delete(`http://localhost:5001/api/admin/users/${id}`, {
+        headers: {
+          Authorization: `Bearer ${auth.token}`,
+        },
+      });
       setUsers(users.filter((user) => user._id !== id));
     } catch (err) {
       alert("Error deleting user!");
@@ -41,7 +49,11 @@ const AdminDashboard = () => {
 
   const makeAdmin = async (id) => {
     try {
-      await axios.put(`/api/admin/users/${id}`, { role: "admin" });
+      await axios.put(`http://localhost:5001/api/admin/users/${id}`, { role: "admin" }, {
+        headers: {
+          Authorization: `Bearer ${auth.token}`,
+        },
+      });
       setUsers(users.map((user) => (user._id === id ? { ...user, role: "admin" } : user)));
     } catch (err) {
       alert("Error making user admin!");

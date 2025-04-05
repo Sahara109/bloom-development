@@ -62,12 +62,10 @@ const App = () => {
 
           <Route path="*" element={<div>404: Page Not Found</div>} />
 
-          {/* Protected route for admin */}
-          <Route path="/admin" element={<ProtectedRoute Component={AdminDashboard} isAdminRoute />} />
-
           {/* Admin routes */}
-          <Route path="/admin/add-article" element={<ProtectedRoute Component={AddArticle} isAdminRoute />} />
-          <Route path="/admin/update-article/:id" element={<ProtectedRoute Component={UpdateArticle} isAdminRoute />} />
+        <Route path="/admin/update-article/:id" element={<ProtectedRoute Component={UpdateArticle} isAdminRoute />} />
+        <Route path="/admin/add-article" element={<ProtectedRoute Component={AddArticle} isAdminRoute />} />
+        <Route path="/admin" element={<ProtectedRoute Component={AdminDashboard} isAdminRoute />} />
         </Routes>
    
         <Chatbot /> {/* Place it outside <Routes> */}

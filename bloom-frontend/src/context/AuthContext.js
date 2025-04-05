@@ -19,12 +19,15 @@ export const AuthProvider = ({ children }) => {
     try {
       if (storedToken && storedUser) {
         const parsedUser = JSON.parse(storedUser);
-        console.log("Retrieved user from localStorage:", parsedUser); // ✅ Log user data
-  
+        console.log("Retrieved user from localStorage:", parsedUser);
+
         setAuth({
           isLoggedIn: true,
           token: storedToken,
-          user: parsedUser,
+          user: {
+            ...parsedUser,
+            role: parsedUser.role // Explicit role preservation
+          }
         });
       }
     } catch (error) {
@@ -33,16 +36,21 @@ export const AuthProvider = ({ children }) => {
       localStorage.removeItem('user');
     }
   }, []);
-  
 
   const login = (token, user) => {
-    console.log("Logging in user:", user); // ✅ Log user role during login
+    console.log("Logging in user:", user);
   
-    setAuth({ isLoggedIn: true, token, user });
+    setAuth({ 
+      isLoggedIn: true, 
+      token, 
+      user: {
+        ...user,
+        role: user.role // Ensure role is explicitly preserved
+      }
+    });
     localStorage.setItem('authToken', token);
     localStorage.setItem('user', JSON.stringify(user));
   };
-  
 
   const logout = () => {
     setAuth({ isLoggedIn: false, token: null, user: null });
