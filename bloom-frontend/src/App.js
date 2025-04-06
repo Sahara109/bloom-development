@@ -12,15 +12,22 @@ import About from "./components/About/About";
 import Footer from "./components/Home/Footer";
 import Landing from "./components/Landing/Landing";
 import MentalHealthEducation from "./components/MentalHealthEducation/MentalHealthEducation";
-import AdminDashboard from "./components/Admin/AdminDashboard";
-import AddArticle from "./components/Admin/AddArticle";
-import UpdateArticle from "./components/Admin/UpdateArticle";
 import MindfulExercises from "./components/MindfulExercises/MindfulExercises";
 import CommunitySupport from "./components/CommunitySupport/CommunitySupport";
 import StoryFeed from "./components/CommunitySupport/StoryFeed";
 import StoryForm from "./components/CommunitySupport/StoryForm";
 import StoryDetail from './components/CommunitySupport/StoryDetail'; 
 import Chatbot from "./components/Chatbot-AI/Chatbot_bl";
+
+// Import admin components from components/Admin folder
+import AdminDashboard from './components/Admin/AdminDashboard';
+import ManageUsers from './components/Admin/ManageUsers';
+import ManageArticles from './components/Admin/ManageArticles';
+import ManageVideos from './components/Admin/ManageVideos';
+import ManageExercises from './components/Admin/ManageExercises';
+import ManageCommunityStories from './components/Admin/ManageCommunityStories';
+import AddArticle from "./components/Admin/AddArticle";
+import UpdateArticle from "./components/Admin/UpdateArticle";
 
 
 Modal.setAppElement("#root");
@@ -47,6 +54,7 @@ const App = () => {
           <Route path="/mindful-exercises" element={<MindfulExercises />} />
           <Route path="/community-support" element={<CommunitySupport />} />
           
+        
 
           {/* Routes for Community Stories */}
           <Route
@@ -63,9 +71,15 @@ const App = () => {
           <Route path="*" element={<div>404: Page Not Found</div>} />
 
           {/* Admin routes */}
-        <Route path="/admin/update-article/:id" element={<ProtectedRoute Component={UpdateArticle} isAdminRoute />} />
-        <Route path="/admin/add-article" element={<ProtectedRoute Component={AddArticle} isAdminRoute />} />
-        <Route path="/admin" element={<ProtectedRoute Component={AdminDashboard} isAdminRoute />} />
+          <Route path="/admin/dashboard" element={<ProtectedRoute Component={AdminDashboard} isAdminRoute />} />
+          <Route path="/admin/users" element={<ProtectedRoute Component={ManageUsers} isAdminRoute />} />
+          <Route path="/admin/articles" element={<ProtectedRoute Component={ManageArticles} isAdminRoute />} />
+          <Route path="/admin/videos" element={<ProtectedRoute Component={ManageVideos} isAdminRoute />} />
+          <Route path="/admin/exercises" element={<ProtectedRoute Component={ManageExercises} isAdminRoute />} />
+          <Route path="/admin/community-stories" element={<ProtectedRoute Component={ManageCommunityStories} isAdminRoute />} />
+          <Route path="/admin/update-article/:id" element={<ProtectedRoute Component={UpdateArticle} isAdminRoute />} />
+          <Route path="/admin/add-article" element={<ProtectedRoute Component={AddArticle} isAdminRoute />} />
+        
         </Routes>
    
         <Chatbot /> {/* Place it outside <Routes> */}
