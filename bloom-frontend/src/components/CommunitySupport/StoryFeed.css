@@ -1,0 +1,112 @@
+.story-feed {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    padding: 20px;
+  }
+  
+  .story-card {
+    width: 350px;
+    background: linear-gradient(135deg, #f8f9fa, #ffffff);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .story-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .story-title {
+    font-size: 1.2rem;
+    color: #333;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .story-description {
+    font-size: 1rem;
+    color: #555;
+  }
+  
+  .read-more {
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 0.9rem;
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .read-more:hover {
+    text-decoration: underline;
+  }
+  
+  .story-feed {
+    background-image: url('../../assets/images/story.png'); /* Relative path to the image in src */
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
+    min-height: 100vh;
+    padding: 20px;
+    color: #fff;
+    border-radius: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+  }
+  
+  /* Styling for the Story Cards */
+  .story-card {
+    width: 350px;
+    background: linear-gradient(135deg, #f8f9fa, #ffffff);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .story-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  /* Styling for Story Title */
+  .story-title {
+    font-size: 1.2rem;
+    color: #333;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  /* Styling for Story Description */
+  .story-description {
+    font-size: 1rem;
+    color: #555;
+  }
+  
+  /* Styling for the "Read More" Link */
+  .read-more {
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 0.9rem;
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .read-more:hover {
+    text-decoration: underline;
+  }
+  
+  /* Styling for the Page Heading */
+  h2 {
+    text-align: center;
+    color: #fff;
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+  
+  
