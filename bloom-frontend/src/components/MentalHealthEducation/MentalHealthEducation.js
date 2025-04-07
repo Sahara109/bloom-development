@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom"; // Import Link for routing
 import "./MentalHealthEducation.css"; // Optional CSS file for styling
 import bannerImage from "../../assets/images/mental-health-banner.png";
 
@@ -11,10 +12,10 @@ const MentalHealthEducation = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("authToken");
-  
+
     if (token) {
       console.log("Fetching articles...");
-  
+
       // Fetch articles
       axios
         .get("http://localhost:5001/api/articles", {
@@ -22,17 +23,22 @@ const MentalHealthEducation = () => {
         })
         .then((response) => {
           console.log("Articles fetched:", response.data);
-          setArticles(response.data);
+          // Add 'expanded' field to each article
+          const articlesWithState = response.data.map(article => ({
+            ...article,
+            expanded: false,
+          }));
+          setArticles(articlesWithState);
         })
         .catch((error) => {
           console.error("Error fetching articles", error);
         });
-  
-      // Fetch videos with Authorization Header
+
+      // Fetch videos
       console.log("Fetching videos...");
       axios
         .get("http://localhost:5001/api/videos", {
-          headers: { Authorization: `Bearer ${token}` }, // Added Authorization Header
+          headers: { Authorization: `Bearer ${token}` },
         })
         .then((response) => {
           console.log("Videos fetched:", response.data);
@@ -45,21 +51,21 @@ const MentalHealthEducation = () => {
       console.log("No token found in localStorage");
     }
   }, []);
-  
+
   const handleSeeMoreArticles = () => {
-    setVisibleArticles(prevCount => prevCount + 3); // Show 3 more articles
+    setVisibleArticles((prevCount) => prevCount + 3);
   };
 
   const handleSeeLessArticles = () => {
-    setVisibleArticles(3); // Collapse back to the initial number of articles
+    setVisibleArticles(3);
   };
 
   const handleSeeMoreVideos = () => {
-    setVisibleVideos(prevCount => prevCount + 3); // Show 3 more videos
+    setVisibleVideos((prevCount) => prevCount + 3);
   };
 
   const handleSeeLessVideos = () => {
-    setVisibleVideos(3); // Collapse back to the initial number of videos
+    setVisibleVideos(3);
   };
 
   return (
@@ -76,15 +82,22 @@ const MentalHealthEducation = () => {
         {articles.length === 0 ? (
           <p>No articles available at the moment.</p>
         ) : (
-          articles.slice(0, visibleArticles).map((article) => (
-            <div className="article" key={article._id}>
-              <h3>{article.title}</h3>
-              <p>{article.content}</p>
-              <small>
-                Published on: {new Date(article.createdAt).toLocaleString()}
-              </small>
-            </div>
-          ))
+          articles.slice(0, visibleArticles).map((article) => {
+            const preview = article.content.slice(0, 200);
+
+            return (
+              <div className="article" key={article._id}>
+                <h3>{article.title}</h3>
+                <p>{article.expanded ? article.content : `${preview}...`}</p>
+                <Link to={`/article/${article._id}`} className="read-more-btn">
+                  Read More →
+                </Link>
+                <small>
+                  Published on: {new Date(article.createdAt).toLocaleString()}
+                </small>
+              </div>
+            );
+          })
         )}
       </div>
 

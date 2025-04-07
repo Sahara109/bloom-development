@@ -12,6 +12,7 @@ import About from "./components/About/About";
 import Footer from "./components/Home/Footer";
 import Landing from "./components/Landing/Landing";
 import MentalHealthEducation from "./components/MentalHealthEducation/MentalHealthEducation";
+import ArticlePage from "./components/MentalHealthEducation/ArticlePage"; 
 import MindfulExercises from "./components/MindfulExercises/MindfulExercises";
 import CommunitySupport from "./components/CommunitySupport/CommunitySupport";
 import StoryFeed from "./components/CommunitySupport/StoryFeed";
@@ -49,6 +50,7 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/landing" element={<ProtectedRoute Component={Landing} />} />
           <Route path="/mental-health-education" element={<MentalHealthEducation />} />
+          <Route path="/article/:id" element={<ArticlePage />} /> {/* Define route for article page */}
           <Route path="/profile" element={<ProtectedRoute Component={Profile} />} />
           <Route path="/about" element={<About />} />
           <Route path="/mindful-exercises" element={<MindfulExercises />} />

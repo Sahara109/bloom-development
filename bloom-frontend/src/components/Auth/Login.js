@@ -39,7 +39,7 @@ const Login = () => {
 
       // Redirect based on user role
       if (user.role === 'admin') {
-        navigate('/admin');
+        navigate('/');
       } else {
         navigate('/landing');
       }

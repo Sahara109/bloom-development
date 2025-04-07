@@ -1,4 +1,3 @@
-// src/components/Admin/UpdateArticle.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
@@ -23,17 +22,33 @@ const UpdateArticle = ({ articleId }) => {
 
   const handleUpdateArticle = async (e) => {
     e.preventDefault();
+
+    // Get the token from localStorage or context
+    const token = localStorage.getItem('authToken'); // Or use context like useAuth()
+
+    if (!token) {
+      setMessage('You must be logged in to update an article.');
+      return;
+    }
+
     try {
-      await axios.put(`/api/articles/${articleId}`, {
-        title,
-        content,
-      });
+      await axios.put(
+        `/api/articles/${articleId}`,
+        {
+          title,
+          content,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Pass the token in the Authorization header
+          },
+        }
+      );
       setMessage('Article updated successfully!');
     } catch (error) {
       setMessage('Error updating article.');
     }
   };
-  
 
   return (
     <div>
