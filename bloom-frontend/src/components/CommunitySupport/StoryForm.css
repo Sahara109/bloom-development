@@ -1,0 +1,97 @@
+/* Story Form Styles */
+.story-form {
+  max-width: 600px;
+  margin: 30px auto;
+  padding: 25px 50px;
+  background: linear-gradient(135deg, #ebc3f5, #a2daf2);
+  border-radius: 10px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  font-family: 'Arial', sans-serif;
+}
+
+.story-form h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #333;
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+.story-form label {
+  font-size: 1.1rem;
+  margin-bottom: 5px;
+  display: block;
+  color: #555;
+}
+
+.story-form input[type="text"],
+.story-form textarea,
+.story-form input[type="file"] {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 18px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  color: #333;
+  background-color: #fff;
+  transition: border 0.3s ease, box-shadow 0.3s ease;
+}
+
+.story-form input[type="text"]:focus,
+.story-form textarea:focus,
+.story-form input[type="file"]:focus {
+  border-color: #007BFF;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
+  outline: none;
+}
+
+.story-form textarea {
+  resize: vertical;
+  min-height: 150px;
+}
+
+.story-form button {
+  width: 100%;
+  padding: 15px;
+  background-color:#6a11cb;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.story-form button:hover {
+  background-color: #9565c8;
+  transform: translateY(-2px);
+}
+
+.story-form .message {
+  text-align: center;
+  color: #28a745;
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+}
+
+.story-form input[type="file"] {
+  background-color: #f8f9fa;
+  padding: 12px;
+  font-size: 1rem;
+  border: 2px solid #ddd;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-bottom: 18px;
+}
+
+.story-form input[type="file"]:hover {
+  background-color: #e9ecef;
+}
+
+@media (max-width: 768px) {
+  .story-form {
+    padding: 20px;
+  }
+}
+
