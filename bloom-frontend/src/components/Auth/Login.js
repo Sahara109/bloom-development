@@ -16,7 +16,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
-    setLoading(true); // Start loading
+    setLoading(true);
   
     try {
       const response = await axios.post('http://localhost:5001/api/users/login', { email, password });
@@ -25,31 +25,26 @@ const Login = () => {
       
       const { token, user } = response.data;
       
-      // Check if role exists
       if (!user.role) {
         console.error("❌ Role missing in backend response:", user);
       }
   
-      // Save token and user data to local storage
       localStorage.setItem('authToken', token);
       localStorage.setItem('user', JSON.stringify(user));
   
-      // Authenticate user in context
       login(token, user);
-
-      // Redirect based on user role
-      if (user.role === 'admin') {
-        navigate('/');
-      } else {
-        navigate('/landing');
-      }
+  
+      // ✅ Redirect all users to homepage
+      navigate('/');
+  
     } catch (err) {
       console.error("❌ Login failed", err);
       setError(err.response?.data?.message || 'Something went wrong. Please try again.');
     } finally {
-      setLoading(false); // Stop loading
+      setLoading(false);
     }
   };
+  
   
   return (
     <div className="login-page" style={{ backgroundImage: `url(${backgroundImage})` }}>

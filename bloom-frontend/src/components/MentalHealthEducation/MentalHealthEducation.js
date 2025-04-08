@@ -77,7 +77,11 @@ const MentalHealthEducation = () => {
       </div>
 
       {/* Articles Section */}
-      <h2>Articles</h2>
+      <div className="section-header">
+        <h2>Articles for Mental Health</h2>
+        <p>Explore our collection of articles to learn about mental health and well-being. These articles offer valuable insights and guidance on maintaining good mental health.</p>
+      </div>
+
       <div className="articles-container">
         {articles.length === 0 ? (
           <p>No articles available at the moment.</p>
@@ -112,7 +116,11 @@ const MentalHealthEducation = () => {
       )}
 
       {/* Videos Section */}
-      <h2>Videos</h2>
+      <div className="section-header">
+        <h2>Videos for Mental Health</h2>
+        <p>Watch these informative and inspiring videos to help you understand mental health better. These videos provide expert advice and personal stories on mental health and well-being.</p>
+      </div>
+
       <div className="videos-container">
         {videos.length > 0 ? (
           videos.slice(0, visibleVideos).map((video) => (

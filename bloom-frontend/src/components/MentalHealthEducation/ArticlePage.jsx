@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import articleImage from "../../assets/images/article-banner.png"; // Add your article image path here
+import articleImage from "../../assets/images/article-banner.png"; 
+import { useNavigate } from "react-router-dom";
 
 const ArticlePage = () => {
   const { id } = useParams(); // Get article ID from the URL
+  const navigate = useNavigate();
   const [article, setArticle] = useState(null);
 
   useEffect(() => {
@@ -45,6 +47,12 @@ const ArticlePage = () => {
         Published on: {new Date(article.createdAt).toLocaleString()}
       </small>
 
+      <button onClick={() => navigate("/articles")} className="back-button">
+      ← Back to Articles
+    </button>
+
+
+
       <style jsx>{`
         .article-page-container {
           max-width: 900px;
@@ -79,6 +87,7 @@ const ArticlePage = () => {
           font-size: 1.2rem;
           color: #555;
           line-height: 1.6;
+          text-align: justify;
         }
 
         .article-page-container small {
@@ -87,6 +96,23 @@ const ArticlePage = () => {
           font-size: 0.9rem;
           color: #777;
         }
+
+      .back-button {
+      margin-top: 2rem;
+      padding: 0.6rem 1.2rem;
+      background-color: #6c63ff;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .back-button:hover {
+      background-color: #574fd6;
+    }
+
       `}</style>
     </div>
   );

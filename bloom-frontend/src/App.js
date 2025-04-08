@@ -28,6 +28,7 @@ import ManageVideos from './components/Admin/ManageVideos';
 import ManageExercises from './components/Admin/ManageExercises';
 import ManageCommunityStories from './components/Admin/ManageCommunityStories';
 import AddArticle from "./components/Admin/AddArticle";
+import ArticlesList from "./components/MentalHealthEducation/ArticlesList";
 import UpdateArticle from "./components/Admin/UpdateArticle";
 
 
@@ -51,6 +52,7 @@ const App = () => {
           <Route path="/landing" element={<ProtectedRoute Component={Landing} />} />
           <Route path="/mental-health-education" element={<MentalHealthEducation />} />
           <Route path="/article/:id" element={<ArticlePage />} /> {/* Define route for article page */}
+          <Route path="/articles" element={<ArticlesList />} />
           <Route path="/profile" element={<ProtectedRoute Component={Profile} />} />
           <Route path="/about" element={<About />} />
           <Route path="/mindful-exercises" element={<MindfulExercises />} />
