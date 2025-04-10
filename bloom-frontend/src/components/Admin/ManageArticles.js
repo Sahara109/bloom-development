@@ -1,88 +1,172 @@
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const User = require('../models/User');
-require('dotenv').config();
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import AddArticle from './AddArticle';
+import UpdateArticle from './UpdateArticle';
+import DeleteArticle from './DeleteArticle';
 
-const registerUser = async (req, res) => {
-    const { name, email, password, role = "user" } = req.body; // Default role to "user"
-    if (!name || !email || !password) {
-        return res.status(400).json({ message: 'All fields are required' });
-    }
-    try {
-        const existingUser = await User.findOne({ email });
-        if (existingUser) {
-            return res.status(400).json({ message: 'User already exists' });
-        }
-        const newUser = new User({
-            name,
-            email,
-            password,
-            role // Include the role when creating the new user
-        });
-        await newUser.save();
-        res.status(201).json({ message: 'User registered successfully' });
-    } catch (err) {
-        console.error('Error registering user:', err);
-        res.status(500).json({ message: 'Error registering user' });
-    }
-};
+// Set the base URL for Axios
+axios.defaults.baseURL = 'http://localhost:5001';
 
-const generateToken = (user) => {
-    const payload = {
-        id: user._id,
-        name: user.name,
-        email: user.email,
-        role: user.role
+const ManageArticles = () => {
+  const [articles, setArticles] = useState([]);
+  const [selectedArticle, setSelectedArticle] = useState(null);
+  const [message, setMessage] = useState('');
+
+  useEffect(() => {
+    const fetchArticles = async () => {
+      try {
+        const response = await axios.get('/api/articles');
+        setArticles(response.data);
+      } catch (error) {
+        console.error('Error fetching articles:', error);
+        setMessage('Error fetching articles.');
+      }
     };
-    return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
+
+    fetchArticles();
+  }, []);
+
+  const handleDeleteArticle = (articleId) => {
+    setArticles(articles.filter((article) => article._id !== articleId));
+  };
+
+  return (
+    <div style={styles.container}>
+      <h2 style={styles.heading}>📝 Manage Articles</h2>
+
+      {/* Add Article Form */}
+      <div style={styles.card}>
+        <AddArticle />
+      </div>
+
+      {/* Update Form (only when article selected) */}
+      {selectedArticle && (
+        <div style={styles.card}>
+          <h3 style={styles.subHeading}>Editing: {selectedArticle.title}</h3>
+          <UpdateArticle articleId={selectedArticle._id} />
+        </div>
+      )}
+
+      {/* Article Table */}
+      <div style={styles.card}>
+        <h3 style={styles.subHeading}>All Articles</h3>
+        <table style={styles.table}>
+          <thead>
+            <tr style={styles.theadRow}>
+              <th style={styles.th}>Title</th>
+              <th style={styles.th}>Content</th>
+              <th style={styles.th}>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {articles.length > 0 ? (
+              articles.map((article) => (
+                <tr key={article._id} style={styles.tbodyRow}>
+                  <td style={styles.td}>{article.title}</td>
+                  <td style={styles.td}>{article.content}</td>
+                  <td style={styles.td}>
+                    <button
+                      style={{ ...styles.button, ...styles.updateButton }}
+                      onClick={() => setSelectedArticle(article)}
+                    >
+                      ✏️ Update
+                    </button>
+                    <DeleteArticle
+                      articleId={article._id}
+                      onDelete={handleDeleteArticle}
+                    />
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="3" style={styles.emptyMsg}>No articles found.</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+
+      {message && <p style={styles.message}>{message}</p>}
+    </div>
+  );
 };
 
-const loginUser = async (req, res) => {
-    const { email, password } = req.body;
-  
-    console.log('Login attempt for email:', email);
-  
-    try {
-      // Check if user exists
-      const user = await User.findOne({ email });
-      console.log('User found:', user);
-  
-      if (!user) {
-        console.log('No user found with that email');
-        return res.status(400).json({ message: 'Invalid email or password' });
-      }
-  
-      // Compare password with hashed password in database
-      const match = await bcrypt.compare(password, user.password);
-      console.log('Password match:', match);
-  
-      if (!match) {
-        console.log('Password does not match');
-        return res.status(400).json({ message: 'Invalid email or password' });
-      }
-  
-      // Check if the user role is set
-      console.log('User role:', user.role);
-  
-      // Generate a JWT token if password matches
-      const token = generateToken(user);
-      console.log('Generated token:', token);
-  
-      // Send the token and user data back to the frontend
-      res.status(200).json({
-        message: 'Login successful',
-        token,
-        user: {
-          id: user._id,
-          name: user.name,
-          email: user.email,
-          role: user.role
-        }
-      });
-    } catch (error) {
-      console.error('Error logging in:', error); 
-      res.status(500).json({ message: 'Error logging in' });
-    }
+// Inline Styles
+const styles = {
+  container: {
+    padding: '2rem',
+    backgroundColor: '#f4f6f9',
+    minHeight: '100vh',
+    fontFamily: 'Segoe UI, sans-serif',
+  },
+  heading: {
+    fontSize: '2rem',
+    marginBottom: '1.5rem',
+    color: '#333',
+    textAlign: 'center',
+  },
+  subHeading: {
+    marginBottom: '1rem',
+    color: '#444',
+  },
+  card: {
+    backgroundColor: '#fff',
+    borderRadius: '12px',
+    padding: '1.5rem',
+    boxShadow: '0 6px 16px rgba(0, 0, 0, 0.08)',
+    marginBottom: '2rem',
+  },
+  table: {
+    width: '100%',
+    borderCollapse: 'separate',
+    borderSpacing: '0 10px',
+  },
+  theadRow: {
+    backgroundColor: '#6c63ff',
+    color: 'white',
+    textAlign: 'left',
+  },
+  th: {
+    padding: '12px',
+    fontWeight: '600',
+    borderTopLeftRadius: '8px',
+    borderTopRightRadius: '8px',
+  },
+  tbodyRow: {
+    backgroundColor: '#f9f9f9',
+    borderRadius: '8px',
+    transition: 'background-color 0.3s ease',
+  },
+  td: {
+    padding: '12px',
+    verticalAlign: 'top',
+  },
+  button: {
+    padding: '8px 12px',
+    fontSize: '0.85rem',
+    borderRadius: '6px',
+    border: 'none',
+    cursor: 'pointer',
+    fontWeight: 'bold',
+    marginRight: '8px',
+    transition: 'box-shadow 0.2s',
+  },
+  updateButton: {
+    backgroundColor: 'rgb(15, 167, 76)',
+    color: '#fff',
+  },
+  emptyMsg: {
+    textAlign: 'center',
+    padding: '1rem',
+    color: '#999',
+  },
+  message: {
+    marginTop: '1rem',
+    color: '#d33',
+    textAlign: 'center',
+  },
 };
 
-module.exports = { registerUser, loginUser };
+export default ManageArticles;
+
