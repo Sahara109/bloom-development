@@ -78,32 +78,34 @@ const MentalHealthEducation = () => {
 
       {/* Articles Section */}
       <div className="section-header">
-        <h2>Articles for Mental Health</h2>
+      <h2 style={{ color: "#4CAF50" }}>Articles for Mental Health</h2>
+
         <p>Explore our collection of articles to learn about mental health and well-being. These articles offer valuable insights and guidance on maintaining good mental health.</p>
       </div>
 
-      <div className="articles-container">
-        {articles.length === 0 ? (
-          <p>No articles available at the moment.</p>
-        ) : (
-          articles.slice(0, visibleArticles).map((article) => {
-            const preview = article.content.slice(0, 200);
+        <div className="articles-container">
+    {articles.length === 0 ? (
+      <p>No articles available at the moment.</p>
+    ) : (
+      articles.slice(0, visibleArticles).map((article) => {
+        const preview = article.content.slice(0, 200);
 
-            return (
-              <div className="article" key={article._id}>
-                <h3>{article.title}</h3>
-                <p>{article.expanded ? article.content : `${preview}...`}</p>
-                <Link to={`/article/${article._id}`} className="read-more-btn">
-                  Read More →
-                </Link>
-                <small>
-                  Published on: {new Date(article.createdAt).toLocaleString()}
-                </small>
-              </div>
-            );
-          })
-        )}
-      </div>
+        return (
+          <div className="article" key={article._id}>
+            <h3>{article.title}</h3>
+            <p>{article.expanded ? article.content : `${preview}...`}</p>
+            <Link to={`/article/${article._id}`} className="read-more-btn">
+              <span>📚 Read More →</span>
+            </Link>
+            <small>
+              Published on: {new Date(article.createdAt).toLocaleString()}
+            </small>
+          </div>
+        );
+      })
+    )}
+  </div>
+
 
       {visibleArticles < articles.length ? (
         <button onClick={handleSeeMoreArticles} className="see-more-btn">
@@ -117,7 +119,7 @@ const MentalHealthEducation = () => {
 
       {/* Videos Section */}
       <div className="section-header">
-        <h2>Videos for Mental Health</h2>
+      <h2 style={{ color: "#4CAF50" }}>Videos for Mental Health</h2>
         <p>Watch these informative and inspiring videos to help you understand mental health better. These videos provide expert advice and personal stories on mental health and well-being.</p>
       </div>
 

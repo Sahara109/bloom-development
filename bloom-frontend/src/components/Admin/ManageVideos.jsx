@@ -4,6 +4,9 @@ import AddVideo from './AddVideo';
 import UpdateVideo from './UpdateVideo';
 import DeleteVideo from './DeleteVideo';
 
+// Axios base URL setup if not already globally configured
+axios.defaults.baseURL = 'http://localhost:5001';
+
 const ManageVideos = () => {
   const [videos, setVideos] = useState([]);
   const [selectedVideo, setSelectedVideo] = useState(null);
@@ -15,6 +18,7 @@ const ManageVideos = () => {
         const response = await axios.get('/api/videos');
         setVideos(response.data);
       } catch (error) {
+        console.error('Error fetching videos:', error);
         setMessage('Error fetching videos.');
       }
     };
@@ -36,118 +40,139 @@ const ManageVideos = () => {
   };
 
   return (
-    <div className="manage-videos-container">
-      <h3 className="manage-videos-title"> 📹 Manage Your Videos</h3>
+    <div style={styles.container}>
+      <h2 style={styles.heading}>📹 Manage Videos</h2>
 
-      <AddVideo onVideoAdded={handleVideoAdded} />
+      {/* Add Video Form */}
+      <div style={styles.card}>
+        <AddVideo onVideoAdded={handleVideoAdded} />
+      </div>
 
+      {/* Update Video Form */}
       {selectedVideo && (
-        <UpdateVideo video={selectedVideo} onVideoUpdated={handleVideoUpdated} />
+        <div style={styles.card}>
+          <h3 style={styles.subHeading}>Editing: {selectedVideo.title}</h3>
+          <UpdateVideo video={selectedVideo} onVideoUpdated={handleVideoUpdated} />
+        </div>
       )}
 
-      <div className="videos-table-container">
-        <table className="videos-table">
+      {/* Video Table */}
+      <div style={styles.card}>
+        <h3 style={styles.subHeading}>All Videos</h3>
+        <table style={styles.table}>
           <thead>
-            <tr>
-              <th>Title</th>
-              <th>URL</th>
-              <th>Description</th>
-              <th>Actions</th>
+            <tr style={styles.theadRow}>
+              <th style={styles.th}>Title</th>
+              <th style={styles.th}>URL</th>
+              <th style={styles.th}>Description</th>
+              <th style={styles.th}>Actions</th>
             </tr>
           </thead>
           <tbody>
-            {videos.map((video) => (
-              <tr key={video._id}>
-                <td>{video.title}</td>
-                <td>{video.url}</td>
-                <td>{video.description || 'No description provided'}</td>
-                <td>
-                  <button className="update-button" onClick={() => setSelectedVideo(video)}>Update</button>
-                  <DeleteVideo videoId={video._id} onDelete={handleDeleteVideo} />
-                </td>
+            {videos.length > 0 ? (
+              videos.map((video) => (
+                <tr key={video._id} style={styles.tbodyRow}>
+                  <td style={styles.td}>{video.title}</td>
+                  <td style={styles.td}>{video.url}</td>
+                  <td style={styles.td}>{video.description || 'No description provided'}</td>
+                  <td style={styles.td}>
+                    <button
+                      style={{ ...styles.button, ...styles.updateButton }}
+                      onClick={() => setSelectedVideo(video)}
+                    >
+                      ✏️Update
+                    </button>
+                    <DeleteVideo videoId={video._id} onDelete={handleDeleteVideo} />
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="4" style={styles.emptyMsg}>No videos found.</td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
       </div>
 
-      {message && <p className="error-message">{message}</p>}
-
-      <style jsx>{`
-      .manage-videos-container {
-        padding: 2rem;
-        max-width: 1200px;
-        margin: auto;
-        background-color:rgb(246, 244, 250);
-        border-radius: 8px;
-      }
-
-      .manage-videos-title {
-        font-size: 2rem;
-        color: #333; 
-        text-align: center;
-        margin-bottom: 1.5rem;
-      }
-
-      .description-section {
-        font-size: 1.1rem;
-        color: #555;
-        margin-bottom: 2rem;
-        text-align: center;
-      }
-
-      .videos-table-container {
-        margin-top: 2rem;
-        overflow-x: auto;
-      }
-
-      .videos-table {
-        width: 100%;
-        border-collapse: collapse;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      }
-
-      .videos-table th, .videos-table td {
-        padding: 12px 20px;
-        text-align: left;
-        border-bottom: 1px solid #ddd;
-      }
-
-      .videos-table th {
-        color:rgb(124, 103, 242);
-        background-color: #f4f4f4;
-      }
-
-      .videos-table tr:hover {
-        background-color:rgb(249, 249, 249);
-      }
-
-      .update-button {
-        background-color: #4CAF50;
-        color: white;
-        border: none;
-        padding: 8px 15px;
-        margin-right: 10px;
-        cursor: pointer;
-        border-radius: 5px;
-        transition: background-color 0.3s;
-      }
-
-      .update-button:hover {
-        background-color: #45a049;
-      }
-
-      .error-message {
-        color: red;
-        font-size: 1.2rem;
-        text-align: center;
-      }
-
-    `}</style>
-
+      {message && <p style={styles.message}>{message}</p>}
     </div>
   );
 };
 
-export default ManageVideos;
+const styles = {
+  container: {
+    padding: '2rem',
+    backgroundColor: '#f4f6f9',
+    minHeight: '100vh',
+    fontFamily: 'Segoe UI, sans-serif',
+  },
+  heading: {
+    fontSize: '2rem',
+    marginBottom: '1.5rem',
+    color: '#333',
+    textAlign: 'center',
+  },
+  subHeading: {
+    marginBottom: '1rem',
+    color: '#444',
+  },
+  card: {
+    backgroundColor: '#fff',
+    borderRadius: '12px',
+    padding: '1.5rem',
+    boxShadow: '0 6px 16px rgba(0, 0, 0, 0.08)',
+    marginBottom: '2rem',
+  },
+  table: {
+    width: '100%',
+    borderCollapse: 'separate',
+    borderSpacing: '0 10px',
+  },
+  theadRow: {
+    backgroundColor: '#6c63ff',
+    color: 'white',
+    textAlign: 'left',
+  },
+  th: {
+    padding: '12px',
+    fontWeight: '600',
+    borderTopLeftRadius: '8px',
+    borderTopRightRadius: '8px',
+  },
+  tbodyRow: {
+    backgroundColor: '#f9f9f9',
+    borderRadius: '8px',
+    transition: 'background-color 0.3s ease',
+  },
+  td: {
+    padding: '12px',
+    verticalAlign: 'top',
+  },
+  button: {
+    padding: '8px 12px',
+    fontSize: '0.85rem',
+    borderRadius: '6px',
+    border: 'none',
+    cursor: 'pointer',
+    fontWeight: 'bold',
+    marginRight: '8px',
+    transition: 'box-shadow 0.2s',
+  },
+  updateButton: {
+    backgroundColor: '#4CAF50',
+    color: '#fff',
+  },
+  emptyMsg: {
+    textAlign: 'center',
+    padding: '1rem',
+    color: '#999',
+  },
+  message: {
+    marginTop: '1rem',
+    color: '#d33',
+    textAlign: 'center',
+  },
+};
 
+export default ManageVideos;

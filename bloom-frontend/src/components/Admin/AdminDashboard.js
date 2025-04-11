@@ -65,7 +65,7 @@ const AdminDashboard = () => {
 
   return (
     <div style={{ padding: "20px" }}>
-      <h2>Admin Dashboard</h2>
+      <h2 style={{ color: "grey" }}>Admin Dashboard</h2>
       <table border="1" cellPadding="10" style={{ width: "100%", borderCollapse: "collapse" }}>
         <thead>
           <tr style={{ background: "#ddd" }}>

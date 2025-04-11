@@ -1,12 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext"; // Import useAuth hook
+import { useAuth } from "../../context/AuthContext";
 import heroImage from "../../assets/images/image.png";
-import panicImage from "../../assets/images/panic_attack.png"; 
+import panicImage from "../../assets/images/panic_attack.png";
 import "./Home.css";
 
 const Home = () => {
-  const { auth } = useAuth(); // Get auth state
+  const { auth } = useAuth();
 
   return (
     <div className="home-container">
@@ -15,13 +15,13 @@ const Home = () => {
         <div className="hero-content">
           <h1>Let's BLOOM Together !!</h1>
           <p>Your mental health and wellbeing companion.</p>
-          {!auth.isLoggedIn ? ( // Show login/signup only if user is not logged in
+          {!auth.isLoggedIn ? (
             <div className="hero-buttons">
               <Link to="/login" className="btn btn-primary">Login</Link>
               <Link to="/register" className="btn btn-secondary">Sign Up</Link>
             </div>
           ) : (
-            <p>Welcome back, {auth.user?.name || "User"}!</p> // Display welcome message when logged in
+            <p>Welcome back, {auth.user?.name || "User"}!</p>
           )}
         </div>
         <div className="hero-image">
@@ -66,18 +66,22 @@ const Home = () => {
           <div className="feature-card">
             <h3>AI-powered Chatbot</h3>
             <p>Get mental health support from our AI chatbot anytime, anywhere.</p>
+            
           </div>
           <div className="feature-card">
             <h3>Stress-relief Exercises</h3>
             <p>Practice relaxation with meditation, deep breathing, and more.</p>
+            <Link to="/mindful-exercises" className="btn btn-primary">Explore</Link>
           </div>
           <div className="feature-card">
             <h3>Educational Resources</h3>
             <p>Access articles and videos to understand mental health better.</p>
+            <Link to="/mental-health-education" className="btn btn-primary">Explore</Link>
           </div>
           <div className="feature-card">
             <h3>Community Stories</h3>
             <p>Be inspired by stories from others who’ve navigated mental health challenges.</p>
+            <Link to="/community-support" className="btn btn-primary">Explore</Link>
           </div>
         </div>
       </section>

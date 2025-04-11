@@ -29,6 +29,28 @@ router.post('/stories', protect, async (req, res) => {
   }
 });
 
+// Update route to approve or reject a story
+router.put('/stories/:id/approve', async (req, res) => {
+  const { id } = req.params;
+  const { approved } = req.body;
+
+  try {
+    const updatedStory = await Story.findByIdAndUpdate(
+      id,
+      { approved },
+      { new: true }
+    );
+
+    if (!updatedStory) {
+      return res.status(404).json({ message: "Story not found" });
+    }
+
+    res.json(updatedStory);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 // GET request to fetch all stories
 router.get('/stories', async (req, res) => {
   try {
@@ -39,6 +61,16 @@ router.get('/stories', async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 });
+
+router.get('/stories/approved', async (req, res) => {
+  try {
+    const approvedStories = await Story.find({ approved: true });
+    res.json(approvedStories);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 
 // Add this route to your existing router
 router.get('/stories/:id', async (req, res) => {
@@ -51,6 +83,17 @@ router.get('/stories/:id', async (req, res) => {
   } catch (error) {
     console.error('Error fetching story:', error);
     res.status(500).json({ message: 'Server error' }); // Handle any other errors
+  }
+});
+
+router.delete('/stories/:id', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    await Story.findByIdAndDelete(id);
+    res.status(200).json({ message: "Story deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 });
 

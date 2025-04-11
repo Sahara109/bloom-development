@@ -14,14 +14,13 @@ router.get("/", async (req, res) => {
 
 // Add a new exercise
 router.post("/", async (req, res) => {
-  const { title, description, category, duration, media } = req.body;
+  const { name, description, image, video } = req.body;
 
   const newExercise = new Exercise({
-    title,
+    name,
     description,
-    category,
-    duration,
-    media,
+    image,
+    video,
   });
 
   try {
@@ -29,6 +28,40 @@ router.post("/", async (req, res) => {
     res.status(201).json(savedExercise);
   } catch (err) {
     res.status(400).json({ message: err.message });
+  }
+});
+
+// Update an exercise
+router.put("/:id", async (req, res) => {
+  const { id } = req.params;
+  const { name, description, image, video } = req.body;
+
+  try {
+    const updatedExercise = await Exercise.findByIdAndUpdate(
+      id,
+      { name, description, image, video },
+      { new: true }
+    );
+
+    if (!updatedExercise) {
+      return res.status(404).json({ message: "Exercise not found" });
+    }
+
+    res.json(updatedExercise);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+// Delete an exercise
+router.delete("/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    await Exercise.findByIdAndDelete(id);
+    res.status(200).json({ message: "Exercise deleted successfully" });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
 });
 

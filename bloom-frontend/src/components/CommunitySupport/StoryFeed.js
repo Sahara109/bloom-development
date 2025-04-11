@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import api from "../../api";
+import axiosInstance from "../../utils/axiosInstance";
 import "./StoryFeed.css";
 
 const StoryFeed = () => {
@@ -9,7 +9,7 @@ const StoryFeed = () => {
   useEffect(() => {
     const fetchStories = async () => {
       try {
-        const response = await api.get("http://localhost:5001/api/stories");
+        const response = await axiosInstance.get('/stories/approved');
         setStories(response.data);
       } catch (error) {
         console.error("Error fetching stories", error);

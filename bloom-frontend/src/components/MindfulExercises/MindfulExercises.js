@@ -21,7 +21,7 @@ const MindfulExercises = () => {
 
   return (
     <div>
-      <h2>Mindful Exercises</h2>
+      <h2 style={{ color: "grey" }}>Mindful Exercises</h2>
       <div style={containerStyle}>
         {exercises.map((exercise) => (
           <ExerciseCard key={exercise._id} {...exercise} />

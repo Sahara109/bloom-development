@@ -11,11 +11,13 @@ export const AuthProvider = ({ children }) => {
     user: null,
   });
 
+  const [loading, setLoading] = useState(true); // ✅ loading state
+
   // Fetch auth state from localStorage when the component mounts
   useEffect(() => {
     const storedToken = localStorage.getItem('authToken');
     const storedUser = localStorage.getItem('user');
-  
+
     try {
       if (storedToken && storedUser) {
         const parsedUser = JSON.parse(storedUser);
@@ -26,7 +28,7 @@ export const AuthProvider = ({ children }) => {
           token: storedToken,
           user: {
             ...parsedUser,
-            role: parsedUser.role // Explicit role preservation
+            role: parsedUser.role // Preserve role
           }
         });
       }
@@ -34,12 +36,14 @@ export const AuthProvider = ({ children }) => {
       console.error("Error parsing stored user data:", error);
       localStorage.removeItem('authToken');
       localStorage.removeItem('user');
+    } finally {
+      setLoading(false); // ✅ Done checking localStorage
     }
   }, []);
 
   const login = (token, user) => {
     console.log("Logging in user:", user);
-  
+
     setAuth({ 
       isLoggedIn: true, 
       token, 
@@ -48,6 +52,7 @@ export const AuthProvider = ({ children }) => {
         role: user.role // Ensure role is explicitly preserved
       }
     });
+
     localStorage.setItem('authToken', token);
     localStorage.setItem('user', JSON.stringify(user));
   };
@@ -59,7 +64,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ auth, setAuth, login, logout }}>
+    <AuthContext.Provider value={{ auth, setAuth, login, logout, loading }}>
       {children}
     </AuthContext.Provider>
   );
