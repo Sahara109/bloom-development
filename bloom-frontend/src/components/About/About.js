@@ -47,7 +47,7 @@ const About = () => {
       
       {/* Key Features Section */}
       <section className="features-container">
-        <h2>Key Features</h2>
+      <h2 style={{ color: "grey" }}>Key Features</h2>
         <div className="features-grid">
           <div className="feature-card">
             <FaRegSmile className="feature-icon" />

@@ -31,7 +31,8 @@ const Home = () => {
 
       {/* About Us Section */}
       <section className="about-section" id="about">
-        <h2>About Us</h2>
+      <h2 style={{ color: "grey" }}>About Us</h2>
+        
         <p>
           At BLOOM, we are dedicated to promoting mental health awareness and
           providing tools for a healthier mind. With resources, exercises, and
@@ -61,27 +62,32 @@ const Home = () => {
 
       {/* Features Section */}
       <section className="features-section" id="features">
-        <h2>Key Features</h2>
+        <h2 style={{ color: "grey" }}>Key Features</h2>
         <div className="features-grid">
           <div className="feature-card">
             <h3>AI-powered Chatbot</h3>
             <p>Get mental health support from our AI chatbot anytime, anywhere.</p>
-            
           </div>
           <div className="feature-card">
             <h3>Stress-relief Exercises</h3>
             <p>Practice relaxation with meditation, deep breathing, and more.</p>
-            <Link to="/mindful-exercises" className="btn btn-primary">Explore</Link>
+            {auth.isLoggedIn && (
+              <Link to="/mindful-exercises" className="btn btn-primary">Explore</Link>
+            )}
           </div>
           <div className="feature-card">
             <h3>Educational Resources</h3>
             <p>Access articles and videos to understand mental health better.</p>
-            <Link to="/mental-health-education" className="btn btn-primary">Explore</Link>
+            {auth.isLoggedIn && (
+              <Link to="/mental-health-education" className="btn btn-primary">Explore</Link>
+            )}
           </div>
           <div className="feature-card">
             <h3>Community Stories</h3>
             <p>Be inspired by stories from others who’ve navigated mental health challenges.</p>
-            <Link to="/community-support" className="btn btn-primary">Explore</Link>
+            {auth.isLoggedIn && (
+              <Link to="/community-support" className="btn btn-primary">Explore</Link>
+            )}
           </div>
         </div>
       </section>
