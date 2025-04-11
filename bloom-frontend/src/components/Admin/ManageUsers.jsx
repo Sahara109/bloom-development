@@ -186,3 +186,98 @@ const ManageUsers = () => {
     </div>
   );
 };
+
+const styles = {
+  container: {
+    padding: "40px",
+    fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+    backgroundColor: "#f0f4f8",
+    minHeight: "100vh",
+  },
+  title: {
+    textAlign: "center",
+    fontSize: "2.5rem",
+    marginBottom: "30px",
+    color: "#333",
+    fontWeight: "600",
+  },
+  searchInput: {
+    width: "100%",
+    padding: "12px",
+    marginBottom: "20px",
+    fontSize: "1rem",
+    borderRadius: "10px",
+    border: "1px solid #ccc",
+    outline: "none",
+  },
+  tableWrapper: {
+    overflowX: "auto",
+    backgroundColor: "#fff",
+    borderRadius: "16px",
+    boxShadow: "0 8px 20px rgba(0,0,0,0.1)",
+  },
+  table: {
+    width: "100%",
+    borderCollapse: "collapse",
+    borderRadius: "16px",
+  },
+  tableHeaderRow: {
+    backgroundColor: "#6c63ff",
+    color: "#fff",
+    textTransform: "uppercase",
+  },
+  th: {
+    padding: "16px",
+    textAlign: "left",
+    fontSize: "0.9rem",
+    letterSpacing: "0.5px",
+  },
+  td: {
+    padding: "16px",
+    borderBottom: "1px solid #e0e0e0",
+    fontSize: "0.95rem",
+  },
+  tableRow: {
+    backgroundColor: "#fff",
+    transition: "background-color 0.3s ease",
+  },
+  button: {
+    padding: "8px 14px",
+    border: "none",
+    borderRadius: "8px",
+    cursor: "pointer",
+    fontWeight: "600",
+    fontSize: "0.85rem",
+    marginRight: "10px",
+    transition: "box-shadow 0.3s ease",
+  },
+  makeAdminButton: {
+    backgroundColor: "#27ae60",
+    color: "#fff",
+  },
+  deleteButton: {
+    backgroundColor: "#e74c3c",
+    color: "#fff",
+  },
+  pagination: {
+    marginTop: "20px",
+    display: "flex",
+    justifyContent: "center",
+    gap: "8px",
+  },
+  pageButton: {
+    padding: "8px 12px",
+    backgroundColor: "#eee",
+    border: "none",
+    borderRadius: "6px",
+    cursor: "pointer",
+    fontWeight: "600",
+  },
+  activePageButton: {
+    backgroundColor: "#6c63ff",
+    color: "#fff",
+  },
+};
+
+export default ManageUsers;
+
