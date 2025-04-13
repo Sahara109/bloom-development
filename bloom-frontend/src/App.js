@@ -10,6 +10,9 @@ import Navbar from "./components/Navbar/Navbar";
 import Home from "./components/Home/Home";
 import About from "./components/About/About";
 import Footer from "./components/Home/Footer";
+import TermsOfService from './components/Home/TermsOfService';
+import PrivacyPolicy from './components/Home/PrivacyPolicy';
+import ContactUs from './components/Home/ContactUs';
 import Landing from "./components/Landing/Landing";
 import MentalHealthEducation from "./components/MentalHealthEducation/MentalHealthEducation";
 import ArticlePage from "./components/MentalHealthEducation/ArticlePage"; 
@@ -49,6 +52,9 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/terms-of-service" element={<TermsOfService />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/contact-us" element={<ContactUs />} />
           <Route path="/landing" element={<ProtectedRoute Component={Landing} />} />
           <Route path="/mental-health-education" element={<MentalHealthEducation />} />
           <Route path="/article/:id" element={<ArticlePage />} /> {/* Define route for article page */}
