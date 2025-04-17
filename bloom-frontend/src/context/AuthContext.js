@@ -63,8 +63,12 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem('user');
   };
 
+  if (loading) {
+    return <div>Loading...</div>; // You can replace this with a loading spinner or placeholder
+  }
+
   return (
-    <AuthContext.Provider value={{ auth, setAuth, login, logout, loading }}>
+    <AuthContext.Provider value={{ auth, setAuth, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

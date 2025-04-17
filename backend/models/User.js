@@ -23,7 +23,20 @@ const userSchema = new mongoose.Schema({
   profileImage: { 
     type: String, // Store the URL/path to the profile image
     default: '/images/default_avatar.png' // Default image if no profile picture is uploaded
-  }
+  },
+
+  isVerified: {
+    type: Boolean,
+    default: false,
+  },
+  otp: {
+    type: String,
+  },
+  otpExpiry: {
+    type: Date,
+  },
+  
+
 });
 
 // Hash password before saving

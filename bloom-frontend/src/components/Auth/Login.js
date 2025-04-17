@@ -4,6 +4,7 @@ import { useAuth } from '../../context/AuthContext';
 import axios from 'axios';
 import './Login.css'; // Import CSS for styling
 import backgroundImage from "../../assets/images/background2.png";
+import { Link } from 'react-router-dom';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -84,6 +85,11 @@ const Login = () => {
               className="form-input"
             />
           </div>
+
+         {/* Link to Forgot Password page */}
+          <p>
+            <Link to="/forgot-password">Forgot Password?</Link>
+          </p>
 
           {/* Loading Indicator */}
           <button type="submit" className="login-button" disabled={loading}>
