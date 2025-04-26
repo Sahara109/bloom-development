@@ -3,6 +3,7 @@ import axiosInstance from '../../utils/axiosInstance';
 import AddExercise from './AddExercise';
 import UpdateExercise from './UpdateExercise';
 import DeleteExercise from './DeleteExercise';
+import AdminLayout from "./AdminLayout";
 
 const ManageExercises = () => {
   const [exercises, setExercises] = useState([]);
@@ -41,6 +42,7 @@ const ManageExercises = () => {
   };
 
   return (
+    <AdminLayout>
     <div style={styles.container}>
       <h2 style={styles.heading}>💪 Manage Exercises</h2>
 
@@ -109,6 +111,7 @@ const ManageExercises = () => {
 
       {message && <p style={styles.message}>{message}</p>}
     </div>
+    </AdminLayout>
   );
 };
 

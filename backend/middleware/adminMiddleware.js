@@ -3,11 +3,14 @@ const User = require("../models/User");
 
 const isAdmin = async (req, res, next) => {
   try {
-    // Get the token from the headers
-    const token = req.headers.authorization.split(" ")[1];
-    if (!token) {
-      return res.status(401).json({ message: "No token provided" });
+    const authHeader = req.headers.authorization;
+
+    // Check if Authorization header exists and is a Bearer token
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      return res.status(401).json({ message: "No token provided or invalid format" });
     }
+
+    const token = authHeader.split(" ")[1];
 
     // Verify the token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
@@ -15,18 +18,17 @@ const isAdmin = async (req, res, next) => {
       return res.status(401).json({ message: "Invalid token" });
     }
 
-    // Get user from the DB
+    // Find user and check role
     const user = await User.findById(decoded.id);
     if (!user || user.role !== "admin") {
       return res.status(403).json({ message: "Access denied, not an admin" });
     }
 
-    // Attach user to request object
     req.user = user;
-    next(); // Proceed if admin
+    next();
   } catch (error) {
     console.error("Error in isAdmin middleware:", error);
-    res.status(500).json({ message: "Server error", error });
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 };
 

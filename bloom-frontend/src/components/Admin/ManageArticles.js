@@ -3,6 +3,7 @@ import axios from 'axios';
 import AddArticle from './AddArticle';
 import UpdateArticle from './UpdateArticle';
 import DeleteArticle from './DeleteArticle';
+import AdminLayout from "./AdminLayout";
 
 // Set the base URL for Axios
 axios.defaults.baseURL = 'http://localhost:5001';
@@ -31,6 +32,7 @@ const ManageArticles = () => {
   };
 
   return (
+    <AdminLayout>
     <div style={styles.container}>
       <h2 style={styles.heading}>📝 Manage Articles</h2>
 
@@ -89,6 +91,7 @@ const ManageArticles = () => {
 
       {message && <p style={styles.message}>{message}</p>}
     </div>
+    </AdminLayout>
   );
 };
 

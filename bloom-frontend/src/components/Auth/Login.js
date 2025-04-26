@@ -35,8 +35,12 @@ const Login = () => {
   
       login(token, user);
   
-      // ✅ Redirect all users to homepage
-      navigate('/');
+      // Redirect admin to admin dashboard, others to home
+      if (user.role === 'admin') {
+        navigate('/admin/dashboard');
+      } else {
+        navigate('/');
+      }
   
     } catch (err) {
       console.error("❌ Login failed", err);
@@ -45,8 +49,7 @@ const Login = () => {
       setLoading(false);
     }
   };
-  
-  
+    
   return (
     <div className="login-page" style={{ backgroundImage: `url(${backgroundImage})` }}>
       <div className="login-container">

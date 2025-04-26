@@ -15,6 +15,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  
   role: { 
     type: String, 
     enum: ['user', 'admin'], // The role can either be 'user' or 'admin'
@@ -35,7 +36,13 @@ const userSchema = new mongoose.Schema({
   otpExpiry: {
     type: Date,
   },
-  
+
+  resetPasswordToken: {
+    type: String,
+  },
+  resetPasswordExpires: {
+    type: Date,
+  },
 
 });
 

@@ -1,15 +1,19 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import './ResetPassword.css';
 
+const BACKEND = process.env.REACT_APP_BACKEND;
+
 const ResetPassword = () => {
+  const { token } = useParams();
+  const navigate = useNavigate();
+
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const { token } = useParams();
 
   const handleResetPassword = async (e) => {
     e.preventDefault();
@@ -24,12 +28,20 @@ const ResetPassword = () => {
     }
 
     try {
-      const res = await axios.post('http://localhost:5001/api/users/reset-password', {
-        token,
-        newPassword,
-      });
+      const res = await axios.post(
+        `${BACKEND}/api/users/reset-password`,
+        { token, newPassword },
+        { withCredentials: true }
+      );
       setMessage(res.data.message || 'Password has been reset successfully!');
+
+      // After 2 seconds, redirect to login page
+      setTimeout(() => {
+        navigate('/login');
+      }, 2000);
+
     } catch (err) {
+      console.error(err);
       setError(err.response?.data?.message || 'Error resetting password');
     } finally {
       setLoading(false);

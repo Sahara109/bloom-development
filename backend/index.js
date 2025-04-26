@@ -21,22 +21,38 @@ connectDB();
 
 const app = express();
 
-// Fix CORS Issues
+// ✅ Define allowed origins
+const allowedOrigins = [
+  "http://localhost:3000",
+  // "https://6fcd-110-44-124-75.ngrok-free.app",
+  // "https://0620-110-44-124-75.ngrok-free.app"
+  //"https://6625-103-225-244-60.ngrok-free.app"
+];
+
+// ✅ Apply CORS before all routes
 app.use(cors({
-  origin: "http://localhost:3000",
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin) || origin.endsWith(".ngrok-free.app")) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true,
   methods: "GET,POST,PUT,DELETE",
   allowedHeaders: "Content-Type, Authorization"
 }));
-
 app.use(express.json());
 
+
 // Serve static files from the uploads directory
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // File Upload Setup
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'uploads/');
+    cb(null, "uploads/");
   },
   filename: (req, file, cb) => {
     cb(null, Date.now() + path.extname(file.originalname));
@@ -45,11 +61,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 // Profile Image Upload Route
-app.post('/uploadProfileImage', upload.single('profileImage'), (req, res) => {
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
-  res.setHeader("Access-Control-Allow-Methods", "POST");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-
+app.post("/uploadProfileImage", upload.single("profileImage"), (req, res) => {
   if (!req.file) {
     return res.status(400).json({ error: "No file uploaded." });
   }
@@ -70,10 +82,10 @@ app.use("/api/user-management", userManagementRoutes);
 app.use("/api/articles", articleRoutes);
 app.use("/api/videos", videoRoutes);
 app.use("/api/exercises", exerciseRoutes);
-app.use('/api', communitySupportRoutes);
+app.use("/api", communitySupportRoutes);
 app.use("/api/profile", profileRoutes);
 app.use("/api/admin", adminRoutes);
 
 // Start the Server
 const PORT = process.env.PORT || 5001;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));

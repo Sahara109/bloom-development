@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './ForgotPassword.css';
 
+const BACKEND = process.env.REACT_APP_BACKEND;
+
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
@@ -15,9 +17,10 @@ const ForgotPassword = () => {
     setError('');
 
     try {
-      const res = await axios.post('http://localhost:5001/api/users/forgot-password', { email });
+      const res = await axios.post(`${BACKEND}/api/users/forgot-password`, { email });
       setMessage(res.data.message || 'Password reset link sent to your email');
     } catch (err) {
+      console.error(err);
       setError(err.response?.data?.message || 'Error sending password reset email');
     } finally {
       setLoading(false);

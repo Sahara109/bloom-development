@@ -11,7 +11,7 @@ const transporter = nodemailer.createTransport({
 
 const sendOTPEmail = async (to, otp) => {
   const mailOptions = {
-    from: `"Bloom Mental Care" <${process.env.EMAIL_USER}>`, // Friendly sender name
+    from: `"Bloom Mental Care" <${process.env.EMAIL_USER}>`, 
     to,
     subject: 'Your Bloom Mental Care OTP Code',
     text: `Hello,

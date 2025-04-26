@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axiosInstance from '../../utils/axiosInstance';
+import AdminLayout from "./AdminLayout";
 
 const ManageStories = () => {
   const [stories, setStories] = useState([]);
@@ -42,6 +43,7 @@ const ManageStories = () => {
   };
 
   return (
+    <AdminLayout>
     <div style={styles.container}>
       <h2 style={styles.heading}>📚 Manage Stories</h2>
 
@@ -100,6 +102,7 @@ const ManageStories = () => {
 
       {message && <p style={styles.message}>{message}</p>}
     </div>
+    </AdminLayout>
   );
 };
 

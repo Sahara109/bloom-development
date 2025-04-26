@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth } from "../../context/AuthContext";
+import AdminLayout from "./AdminLayout";
 
 const USERS_PER_PAGE = 5;
 
@@ -92,6 +93,7 @@ const ManageUsers = () => {
   if (error) return <p style={{ color: "red", textAlign: "center", marginTop: "2rem" }}>{error}</p>;
 
   return (
+    <AdminLayout>
     <div style={styles.container}>
       <h2 style={styles.title}>🌸 Manage Users</h2>
 
@@ -184,6 +186,7 @@ const ManageUsers = () => {
         `}
       </style>
     </div>
+    </AdminLayout>
   );
 };
 

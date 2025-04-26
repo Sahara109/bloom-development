@@ -3,6 +3,7 @@ import axios from 'axios';
 import AddVideo from './AddVideo';
 import UpdateVideo from './UpdateVideo';
 import DeleteVideo from './DeleteVideo';
+import AdminLayout from "./AdminLayout";
 
 // Axios base URL setup if not already globally configured
 axios.defaults.baseURL = 'http://localhost:5001';
@@ -40,6 +41,7 @@ const ManageVideos = () => {
   };
 
   return (
+    <AdminLayout>
     <div style={styles.container}>
       <h2 style={styles.heading}>📹 Manage Videos</h2>
 
@@ -97,6 +99,7 @@ const ManageVideos = () => {
 
       {message && <p style={styles.message}>{message}</p>}
     </div>
+    </AdminLayout>
   );
 };
 
