@@ -19,13 +19,20 @@ router.get("/users", isAdmin, async (req, res) => {
   }
 });
 
-// Delete a user
+// Delete a user with activity logging
 router.delete("/users/:id", isAdmin, async (req, res) => {
   try {
     const user = await User.findByIdAndDelete(req.params.id);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
+
+    // Log activity
+    await Activity.create({
+      description: `Admin ${req.user.email} deleted user ${user.email}`,
+      user: req.user._id,
+    });
+
     res.json({ message: "User deleted successfully" });
   } catch (err) {
     console.error('Error deleting user:', err);
@@ -56,16 +63,24 @@ router.get("/stats", isAdmin, async (req, res) => {
   try {
     const totalUsers = await User.countDocuments();
     const admins = await User.countDocuments({ role: "admin" });
-    const activeUsers = await User.countDocuments({ /* your active criteria here */ });
+
+    // Count users active in last 7 days
+    const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+    const activeUsers = await User.countDocuments({
+      lastActiveAt: { $gte: sevenDaysAgo },
+    });
+
     const newUsers = await User.countDocuments({
-      createdAt: { $gte: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000) },
+      createdAt: { $gte: sevenDaysAgo },
     });
 
     res.json({ totalUsers, admins, activeUsers, newUsers });
   } catch (err) {
+    console.error(err);
     res.status(500).json({ message: "Server error" });
   }
 });
+
 
 // Get recent activities
 router.get("/activities", isAdmin, async (req, res) => {
@@ -104,6 +119,22 @@ router.get("/growth", isAdmin, async (req, res) => {
     res.json({ dates, counts });
   } catch (err) {
     res.status(500).json({ message: "Server error" });
+  }
+});
+
+// Route to get count of new users created in last 24 hours
+router.get("/users/new/count", async (req, res) => {
+  try {
+    const oneDayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
+
+    const newUsersCount = await User.countDocuments({
+      createdAt: { $gte: oneDayAgo },
+    });
+
+    res.json({ newUsersCount });
+  } catch (error) {
+    console.error("Error fetching new users count:", error);
+    res.status(500).json({ error: "Internal server error" });
   }
 });
 

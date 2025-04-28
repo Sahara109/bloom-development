@@ -1,4 +1,3 @@
-// models/Activity.js
 const mongoose = require('mongoose');
 
 const activitySchema = new mongoose.Schema({
@@ -9,6 +8,11 @@ const activitySchema = new mongoose.Schema({
   date: {
     type: Date,
     default: Date.now,
+  },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: false,  // optional 
   },
 });
 

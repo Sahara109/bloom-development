@@ -89,32 +89,23 @@ const verifyOTP = async (req, res) => {
   }
 };
 
-// Login user (password + optional OTP for first-time login)
+// Login user 
 const loginUser = async (req, res) => {
-  const { email, password, otp } = req.body;
   try {
+    const { email, password } = req.body;
+    console.log('Login attempt:', email);
+
     const user = await User.findOne({ email });
     if (!user) {
+      console.log('User not found:', email);
       return res.status(400).json({ message: 'Invalid email or password' });
     }
 
     const isPasswordCorrect = await bcrypt.compare(password, user.password);
+    console.log('Password match:', isPasswordCorrect);
+
     if (!isPasswordCorrect) {
       return res.status(400).json({ message: 'Invalid email or password' });
-    }
-
-    // Require OTP if present (first login)
-    if (user.otp && user.otpExpiry) {
-      if (!otp) {
-        return res.status(400).json({ message: 'OTP required for first-time login' });
-      }
-      if (user.otp !== otp.trim() || user.otpExpiry < new Date()) {
-        return res.status(400).json({ message: 'Invalid or expired OTP' });
-      }
-      user.isVerified = true;
-      user.otp = null;
-      user.otpExpiry = null;
-      await user.save();
     }
 
     const token = generateToken(user._id);
@@ -133,6 +124,7 @@ const loginUser = async (req, res) => {
     res.status(500).json({ message: 'Error logging in' });
   }
 };
+
 
 // Get user profile (protected)
 const getUserProfile = async (req, res) => {

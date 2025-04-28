@@ -16,6 +16,9 @@ const communitySupportRoutes = require("./routes/communitySupport");
 const profileRoutes = require("./routes/profileRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 
+const { protect: authMiddleware } = require("./middleware/authMiddleware");
+const updateLastActive = require("./middleware/updateLastActive");
+
 dotenv.config();
 connectDB();
 
@@ -25,8 +28,6 @@ const app = express();
 const allowedOrigins = [
   "http://localhost:3000",
   // "https://6fcd-110-44-124-75.ngrok-free.app",
-  // "https://0620-110-44-124-75.ngrok-free.app"
-  //"https://6625-103-225-244-60.ngrok-free.app"
 ];
 
 // ✅ Apply CORS before all routes
@@ -76,8 +77,16 @@ app.post("/uploadProfileImage", upload.single("profileImage"), (req, res) => {
     .catch(err => res.status(500).json({ error: "Error updating profile image" }));
 });
 
+
 // Use Routes
 app.use("/api/users", userRoutes);
+
+// Auth middleware applied globally for routes needing authentication
+app.use(authMiddleware);
+
+// Update last active timestamp on every authenticated request
+app.use(updateLastActive);
+
 app.use("/api/user-management", userManagementRoutes);
 app.use("/api/articles", articleRoutes);
 app.use("/api/videos", videoRoutes);
@@ -85,6 +94,8 @@ app.use("/api/exercises", exerciseRoutes);
 app.use("/api", communitySupportRoutes);
 app.use("/api/profile", profileRoutes);
 app.use("/api/admin", adminRoutes);
+
+
 
 // Start the Server
 const PORT = process.env.PORT || 5001;

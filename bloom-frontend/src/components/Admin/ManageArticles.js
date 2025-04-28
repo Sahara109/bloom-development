@@ -4,6 +4,7 @@ import AddArticle from './AddArticle';
 import UpdateArticle from './UpdateArticle';
 import DeleteArticle from './DeleteArticle';
 import AdminLayout from "./AdminLayout";
+import axiosInstance from '../../utils/axiosInstance';
 
 // Set the base URL for Axios
 axios.defaults.baseURL = 'http://localhost:5001';
@@ -16,7 +17,7 @@ const ManageArticles = () => {
   useEffect(() => {
     const fetchArticles = async () => {
       try {
-        const response = await axios.get('/api/articles');
+        const response = await axiosInstance.get('/articles');
         setArticles(response.data);
       } catch (error) {
         console.error('Error fetching articles:', error);

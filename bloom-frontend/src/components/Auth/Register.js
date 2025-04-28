@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './Register.css';
 import backgroundImage from "../../assets/images/background2.png";
-import { useAuth } from '../../context/AuthContext'; // Adjust path accordingly
+import { useAuth } from '../../context/AuthContext'; 
 
 
 const Register = () => {

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import api from "../../api";
+import axiosInstance from "../../utils/axiosInstance";
 
 const StoryDetail = () => {
   const { id } = useParams();
@@ -11,7 +11,7 @@ const StoryDetail = () => {
   useEffect(() => {
     const fetchStory = async () => {
       try {
-        const response = await api.get(`/stories/${id}`);
+        const response = await axiosInstance.get(`/stories/${id}`);
         setStory(response.data);
       } catch (error) {
         console.error("Error fetching story:", error);

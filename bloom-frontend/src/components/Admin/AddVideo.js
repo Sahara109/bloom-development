@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useAuth } from '../../context/AuthContext'; // Assuming the path to the hook is correct
+import { useAuth } from '../../context/AuthContext'; // Assuming the path is correct
 
 const AddVideo = ({ onVideoAdded }) => {
   const [title, setTitle] = useState('');
   const [url, setUrl] = useState('');
-  const [description, setDescription] = useState(''); // New state for description
+  const [description, setDescription] = useState('');
   const [message, setMessage] = useState('');
-  const { auth } = useAuth(); // Using the useAuth hook to get the token
+  const { auth } = useAuth();
 
   const handleAddVideo = async (e) => {
     e.preventDefault();
@@ -19,20 +19,19 @@ const AddVideo = ({ onVideoAdded }) => {
 
     try {
       const response = await axios.post(
-        '/api/videos', 
-        { title, url, description }, // Include the description in the payload
+        '/api/videos',
+        { title, url, description },
         {
           headers: {
-            Authorization: `Bearer ${auth.token}`, // Include the Bearer token in the header
+            Authorization: `Bearer ${auth.token}`,
           },
         }
       );
-
       setMessage('✅ Video added successfully!');
       setTitle('');
       setUrl('');
-      setDescription(''); // Clear the description field after submission
-      onVideoAdded(response.data); // Notify parent component of the new video
+      setDescription('');
+      onVideoAdded(response.data);
     } catch (error) {
       console.error(error);
       setMessage('❌ Error adding video.');
@@ -65,6 +64,7 @@ const AddVideo = ({ onVideoAdded }) => {
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             required
+            rows={4}
             style={styles.textarea}
           />
           <button type="submit" style={styles.button}>
@@ -77,7 +77,7 @@ const AddVideo = ({ onVideoAdded }) => {
   );
 };
 
-// Styling
+
 const styles = {
   container: {
     padding: '2rem',
@@ -85,7 +85,7 @@ const styles = {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    background: '#f4f7fa',
+    background: 'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)',
   },
   card: {
     background: '#fff',
@@ -118,9 +118,8 @@ const styles = {
     fontSize: '1rem',
     borderRadius: '8px',
     border: '1px solid #ccc',
+    resize: 'vertical',
     transition: 'border 0.3s ease',
-    resize: 'vertical',  // Allow the user to resize the textarea
-    minHeight: '100px',  // Set a minimum height for the textarea
   },
   button: {
     padding: '0.75rem',

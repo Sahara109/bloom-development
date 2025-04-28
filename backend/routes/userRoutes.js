@@ -87,40 +87,31 @@ router.post('/reset-password', async (req, res) => {
   const { token, newPassword } = req.body;
 
   try {
-    // Hash the token
+    // Hash the token to find the user
     const hashedToken = crypto.createHash('sha256').update(token).digest('hex');
 
-    // Find the user
     const user = await User.findOne({
       resetPasswordToken: hashedToken,
       resetPasswordExpires: { $gt: Date.now() },
     });
 
     if (!user) {
-      console.log('Invalid or expired token:', token); // Debugging
+      console.log('Invalid or expired token:', token);
       return res.status(400).json({ message: 'Password reset token is invalid or has expired' });
     }
 
-    // Generate salt and hash the new password
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(newPassword, salt);
-
-    // Update user's password and clear reset token fields
-    user.password = hashedPassword;
+    user.password = newPassword; // plain text
     user.resetPasswordToken = undefined;
     user.resetPasswordExpires = undefined;
 
-    // Save the updated user
-    await user.save({ validateBeforeSave: false }); // Skip validation for password reset
+    await user.save(); // pre-save hook will hash password
 
-    console.log('Password reset successfully for user:', user.email); // Debugging
+    console.log('Password reset successfully for user:', user.email);
     res.status(200).json({ message: 'Password has been reset successfully!' });
   } catch (error) {
     console.error('Error resetting password:', error);
-    res.status(500).json({ message: 'Error resetting password' });
+    res.status(500).json({ message: 'Error resetting password', error: error.message });
   }
 });
-
-
 
 module.exports = router;

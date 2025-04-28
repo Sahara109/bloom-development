@@ -4,6 +4,7 @@ import AddVideo from './AddVideo';
 import UpdateVideo from './UpdateVideo';
 import DeleteVideo from './DeleteVideo';
 import AdminLayout from "./AdminLayout";
+import axiosInstance from '../../utils/axiosInstance';
 
 // Axios base URL setup if not already globally configured
 axios.defaults.baseURL = 'http://localhost:5001';
@@ -16,7 +17,7 @@ const ManageVideos = () => {
   useEffect(() => {
     const fetchVideos = async () => {
       try {
-        const response = await axios.get('/api/videos');
+        const response = await axiosInstance.get('/videos');
         setVideos(response.data);
       } catch (error) {
         console.error('Error fetching videos:', error);

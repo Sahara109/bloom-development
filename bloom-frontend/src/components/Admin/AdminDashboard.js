@@ -97,7 +97,8 @@ const AdminDashboard = () => {
   return (
     <AdminLayout>
       <div style={{ padding: "20px" }}>
-        <h2>Admin Dashboard</h2>
+      <h2 style={{ color: 'black' }}>Admin Dashboard 👩🏻‍🔬</h2>
+
 
         {/* Stats */}
         <div style={{ display: "flex", gap: "20px", marginBottom: "30px" }}>

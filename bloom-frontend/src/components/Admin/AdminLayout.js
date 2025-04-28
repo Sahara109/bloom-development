@@ -1,4 +1,3 @@
-// src/components/Admin/AdminLayout.jsx
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -11,16 +10,23 @@ const AdminLayout = ({ children }) => {
   };
 
   return (
-    <div style={{ display: "flex", minHeight: "100vh" }}>
+    <>
       <aside
         style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
           width: "220px",
+          height: "100vh",
           backgroundColor: "#2c3e50",
           color: "white",
           padding: "20px",
           display: "flex",
           flexDirection: "column",
           gap: "15px",
+          boxSizing: "border-box",
+          overflowY: "auto",
+          zIndex: 1000,
         }}
       >
         <h2>Admin Panel</h2>
@@ -57,10 +63,19 @@ const AdminLayout = ({ children }) => {
         </button>
       </aside>
 
-      <main style={{ flexGrow: 1, padding: "20px", overflowY: "auto" }}>
+      <main
+        style={{
+          marginLeft: "220px", // push main content right to avoid overlap
+          padding: "20px",
+          minHeight: "100vh",
+          overflowY: "auto",
+          boxSizing: "border-box",
+          backgroundColor: "#f4f6f9",
+        }}
+      >
         {children}
       </main>
-    </div>
+    </>
   );
 };
 
