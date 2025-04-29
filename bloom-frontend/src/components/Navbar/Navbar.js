@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import logo from "../../assets/images/Bloom_logo.png";
 import "./Navbar.css";
@@ -7,10 +7,22 @@ import "./Navbar.css";
 const Navbar = () => {
   const { auth, logout } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleLogout = () => {
     logout();
     navigate("/login");
+  };
+
+  const handleFeatureClick = () => {
+    if (location.pathname === "/") {
+      const element = document.getElementById("features");
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    } else {
+      navigate("/#features");
+    }
   };
 
   return (
@@ -26,17 +38,25 @@ const Navbar = () => {
       </div>
 
       <nav className="nav-links">
-        {/* Show Home only if user is NOT admin */}
         {!(auth.isLoggedIn && auth.user.role === "admin") && <Link to="/">Home</Link>}
 
         {auth.isLoggedIn ? (
           <>
-            {/* For non-admin users */}
             {auth.user.role !== "admin" && (
               <>
                 <Link to="/mental-health-education">Educate Me</Link>
                 <Link to="/mindful-exercises">Mindful Exercises</Link>
                 <Link to="/community-support">Community Support</Link>
+
+                {/* Mood Dropdown */}
+                <div className="dropdown">
+                  <button className="dropbtn">Mood</button>
+                  <div className="dropdown-content">
+                    <Link to="/mood-check-in">Mood Check-In</Link>
+                    <Link to="/dashboard">Mood Dashboard</Link>
+                  </div>
+                </div>
+
                 <Link to="/profile">Profile</Link>
               </>
             )}
@@ -47,6 +67,7 @@ const Navbar = () => {
         ) : (
           <>
             <Link to="/about">About Us</Link>
+            <button className="nav-btn-link" onClick={handleFeatureClick}>Key Features</button>
             <Link to="/login">Login</Link>
             <Link to="/register">Sign Up</Link>
           </>

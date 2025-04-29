@@ -1,5 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import heroImage from "../../assets/images/image.png";
 import panicImage from "../../assets/images/panic_attack.png";
@@ -7,6 +9,16 @@ import "./Home.css";
 
 const Home = () => {
   const { auth } = useAuth();
+  const location = useLocation();
+
+useEffect(() => {
+  if (location.hash === "#features") {
+    const element = document.getElementById("features");
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  }
+}, [location]);
 
   return (
     <div className="home-container">
@@ -87,6 +99,13 @@ const Home = () => {
             <p>Be inspired by stories from others who’ve navigated mental health challenges.</p>
             {auth.isLoggedIn && (
               <Link to="/community-support" className="btn btn-primary">Explore</Link>
+            )}
+          </div>
+          <div className="feature-card">
+            <h3>Daily Mood Tracking</h3>
+            <p>Be able to track your mood regularly and take steps to see changes.</p>
+            {auth.isLoggedIn && (
+              <Link to="/mood-check-in" className="btn btn-primary">Explore</Link>
             )}
           </div>
         </div>

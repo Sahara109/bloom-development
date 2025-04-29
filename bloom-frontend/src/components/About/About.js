@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import React from "react";
-import { FaRegSmile, FaBook, FaMusic, FaHandshake, FaRobot } from 'react-icons/fa'; // Import icons
+import { FaRegSmile, FaBook, FaMusic, FaHandshake, FaRobot, FaBrain } from 'react-icons/fa'; // Import icons
 import 'font-awesome/css/font-awesome.min.css';
 import "./About.css";  // Create a separate CSS file for About Page styling
 import aboutImage from "../../assets/images/about-image.png";
@@ -50,7 +50,7 @@ const About = () => {
       <h2 style={{ color: "grey" }}>Key Features</h2>
         <div className="features-grid">
           <div className="feature-card">
-            <FaRegSmile className="feature-icon" />
+            <FaBrain className="feature-icon" />
             <h3>Meditate</h3>
             <p>Learn the life-changing skill of meditation.</p>
           </div>
@@ -74,6 +74,12 @@ const About = () => {
             <h3>AI Chatbot</h3>
             <p>Its available 24/7 at your service.</p>
           </div>
+          <div className="feature-card">
+          <FaRegSmile className="feature-icon" /> 
+          <h3>Mood Tracker</h3>
+          <p>Track your mood and see your progress over time.</p>
+        </div>
+
         </div>
       </section>
     

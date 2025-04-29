@@ -21,6 +21,8 @@ router.post("/", async (req, res) => {
     description,
     image,
     video,
+    steps, 
+    benefits, 
   });
 
   try {

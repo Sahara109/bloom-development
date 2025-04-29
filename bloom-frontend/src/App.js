@@ -24,6 +24,8 @@ import StoryFeed from "./components/CommunitySupport/StoryFeed";
 import StoryForm from "./components/CommunitySupport/StoryForm";
 import StoryDetail from './components/CommunitySupport/StoryDetail'; 
 import Chatbot from "./components/Chatbot-AI/Chatbot_bl";
+import MoodCheckIn from './components/MoodCheckIn';
+import MoodDashboard from './components/MoodDashboard';
 
 // Import admin components from components/Admin folder
 import AdminDashboard from './components/Admin/AdminDashboard';
@@ -67,6 +69,8 @@ const App = () => {
           <Route path="/about" element={<About />} />
           <Route path="/mindful-exercises" element={<MindfulExercises />} />
           <Route path="/community-support" element={<CommunitySupport />} />
+          <Route path="/mood-check-in" element={<MoodCheckIn />} />  
+          <Route path="/dashboard" element={<MoodDashboard />} />
           
         
 

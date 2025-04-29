@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import axios from 'axios';
-import './Login.css'; // Import CSS for styling
+import './Login.css';
 import backgroundImage from "../../assets/images/background2.png";
 import { Link } from 'react-router-dom';
 
@@ -18,30 +18,28 @@ const Login = () => {
     e.preventDefault();
     setError(null);
     setLoading(true);
-  
+
     try {
       const response = await axios.post('http://localhost:5001/api/users/login', { email, password });
       
       console.log("🛠 Backend response user data:", response.data.user);
-      
+
       const { token, user } = response.data;
-      
+
       if (!user.role) {
         console.error("❌ Role missing in backend response:", user);
       }
-  
-      localStorage.setItem('authToken', token);
-      localStorage.setItem('user', JSON.stringify(user));
-  
+
+      // ✅ Use the login function from AuthContext (it handles localStorage)
       login(token, user);
-  
-      // Redirect admin to admin dashboard, others to home
+
+      // Redirect based on role
       if (user.role === 'admin') {
         navigate('/admin/dashboard');
       } else {
         navigate('/');
       }
-  
+
     } catch (err) {
       console.error("❌ Login failed", err);
       setError(err.response?.data?.message || 'Something went wrong. Please try again.');
@@ -49,14 +47,13 @@ const Login = () => {
       setLoading(false);
     }
   };
-    
+
   return (
     <div className="login-page" style={{ backgroundImage: `url(${backgroundImage})` }}>
       <div className="login-container">
         <form onSubmit={handleSubmit} className="login-form">
           <h2 className="login-title">Welcome Back</h2>
 
-          {/* Error Message */}
           {error && (
             <p className="error-message" aria-live="assertive">
               {error}
@@ -89,12 +86,10 @@ const Login = () => {
             />
           </div>
 
-         {/* Link to Forgot Password page */}
           <p>
             <Link to="/forgot-password">Forgot Password?</Link>
           </p>
 
-          {/* Loading Indicator */}
           <button type="submit" className="login-button" disabled={loading}>
             {loading ? 'Logging in...' : 'Login'}
           </button>

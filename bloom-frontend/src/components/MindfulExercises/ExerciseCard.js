@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import Modal from "react-modal"; // If you installed react-modal
-import "./ExerciseCard.css"; // Ensure you have styles
+import Modal from "react-modal";
+import "./ExerciseCard.css";
 
-const ExerciseCard = ({ name, description, image, video }) => {
+const ExerciseCard = ({ name, description, image, video, steps, benefits }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   return (
@@ -22,19 +22,32 @@ const ExerciseCard = ({ name, description, image, video }) => {
       <Modal isOpen={modalIsOpen} onRequestClose={() => setModalIsOpen(false)} className="exercise-modal">
         <h2>{name}</h2>
         <p>{description}</p>
+        
+        {/* Displaying Steps */}
+        <h4>Steps:</h4>
+        <ul>
+          {steps.map((step, index) => (
+            <li key={index}>{step}</li>
+          ))}
+        </ul>
+        
+        {/* Displaying Benefits */}
+        <h4>Benefits:</h4>
+        <ul>
+          {benefits.map((benefit, index) => (
+            <li key={index}>{benefit}</li>
+          ))}
+        </ul>
+
+        {/* Local video player */}
         {video ? (
-        <iframe
-          width="100%"
-          height="315"
-          src={video}  // This should be the embed URL
-          title={name}
-          frameBorder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-        ></iframe>
-      ) : (
-        <p>Video not available</p>
-      )}
+          <video width="100%" height="auto" controls>
+            <source src={`/videos/${video}`} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        ) : (
+          <p>Video not available</p>
+        )}
 
         <button onClick={() => setModalIsOpen(false)} className="close-button">Close</button>
       </Modal>

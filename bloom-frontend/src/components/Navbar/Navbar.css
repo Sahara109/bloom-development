@@ -62,12 +62,45 @@
   background-color: #8646e1;
   transition: width 0.3s;
 }
+
 .nav-links a:hover::after {
   width: 100%;
 }
 .nav-links a:hover {
   color: #8646e1;
 }
+
+.nav-btn-link {
+  background: none;
+  border: none;
+  color: #000;
+  font-weight: 600;
+  cursor: pointer;
+  position: relative;
+  padding: 0;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.nav-btn-link::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background-color: #8646e1;
+  transition: width 0.3s;
+}
+
+.nav-btn-link:hover::after {
+  width: 100%;
+}
+
+.nav-btn-link:hover {
+  color: #8646e1;
+}
+
 
 /* Logout Button */
 .logout-btn {
