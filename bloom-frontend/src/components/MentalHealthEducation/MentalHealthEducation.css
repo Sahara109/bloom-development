@@ -109,3 +109,58 @@ iframe {
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
+.videos-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Adjust grid to fit the space */
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.video {
+  background: #FFF;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Ensures video is aligned properly */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 100%; /* Ensures the video section is of uniform size */
+}
+
+.video:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.video h3 {
+  color: #22223B;
+  font-size: 1.6em;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.video p {
+  color: #4A4E69;
+  line-height: 1.7;
+  font-size: 1rem;
+  margin-bottom: 10px; /* Adds space between description and video */
+}
+
+.video video {
+  width: 100%;
+  height: auto; /* Ensures video scales to fit */
+  max-height: 315px; /* Limits the height of the video */
+  border-radius: 10px;
+  margin-top: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.video iframe {
+  width: 100%;
+  max-height: 315px; /* Limits iframe height */
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}

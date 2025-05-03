@@ -5,12 +5,10 @@ const videoSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    description: {
-        type: String, // Add description field to store details about the video
-    },
+    description: String,
     url: {
         type: String,
-        required: true
+        required: true 
     },
     createdAt: {
         type: Date,

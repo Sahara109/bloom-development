@@ -4,7 +4,7 @@ import { useAuth } from '../../context/AuthContext'; // Assuming the path is cor
 
 const AddVideo = ({ onVideoAdded }) => {
   const [title, setTitle] = useState('');
-  const [url, setUrl] = useState('');
+  const [filename, setFilename] = useState('');
   const [description, setDescription] = useState('');
   const [message, setMessage] = useState('');
   const { auth } = useAuth();
@@ -20,7 +20,7 @@ const AddVideo = ({ onVideoAdded }) => {
     try {
       const response = await axios.post(
         '/api/videos',
-        { title, url, description },
+        { title, filename, description },
         {
           headers: {
             Authorization: `Bearer ${auth.token}`,
@@ -29,7 +29,7 @@ const AddVideo = ({ onVideoAdded }) => {
       );
       setMessage('✅ Video added successfully!');
       setTitle('');
-      setUrl('');
+      setFilename('');
       setDescription('');
       onVideoAdded(response.data);
     } catch (error) {
@@ -52,10 +52,10 @@ const AddVideo = ({ onVideoAdded }) => {
             style={styles.input}
           />
           <input
-            type="url"
-            placeholder="Video URL"
-            value={url}
-            onChange={(e) => setUrl(e.target.value)}
+            type="text"
+            placeholder="Video File Name (e.g., sample.mp4)"
+            value={filename}
+            onChange={(e) => setFilename(e.target.value)}
             required
             style={styles.input}
           />
@@ -76,7 +76,6 @@ const AddVideo = ({ onVideoAdded }) => {
     </div>
   );
 };
-
 
 const styles = {
   container: {

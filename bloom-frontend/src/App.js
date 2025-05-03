@@ -17,8 +17,10 @@ import PrivacyPolicy from './components/Home/PrivacyPolicy';
 import ContactUs from './components/Home/ContactUs';
 import Landing from "./components/Landing/Landing";
 import MentalHealthEducation from "./components/MentalHealthEducation/MentalHealthEducation";
+import VideoList from './components//MentalHealthEducation/VideoList';
 import ArticlePage from "./components/MentalHealthEducation/ArticlePage"; 
 import MindfulExercises from "./components/MindfulExercises/MindfulExercises";
+import ExerciseDetail from "./components/MindfulExercises/ExerciseDetail";
 import CommunitySupport from "./components/CommunitySupport/CommunitySupport";
 import StoryFeed from "./components/CommunitySupport/StoryFeed";
 import StoryForm from "./components/CommunitySupport/StoryForm";
@@ -64,13 +66,18 @@ const App = () => {
           <Route path="/landing" element={<ProtectedRoute Component={Landing} />} />
           <Route path="/mental-health-education" element={<MentalHealthEducation />} />
           <Route path="/article/:id" element={<ArticlePage />} /> {/* Define route for article page */}
+          <Route path="/mental-health-education/:id" element={<ArticlePage />} />
           <Route path="/articles" element={<ArticlesList />} />
+          <Route path="/videos" element={<VideoList />} />{/* Add a route for VideoList */}
           <Route path="/profile" element={<ProtectedRoute Component={Profile} />} />
           <Route path="/about" element={<About />} />
           <Route path="/mindful-exercises" element={<MindfulExercises />} />
+          <Route path="/exercise/:id" element={<ExerciseDetail />} />
+          <Route path="/mindful-exercises/:id" element={<ExerciseDetail />} />
           <Route path="/community-support" element={<CommunitySupport />} />
           <Route path="/mood-check-in" element={<MoodCheckIn />} />  
           <Route path="/dashboard" element={<MoodDashboard />} />
+          
           
         
 

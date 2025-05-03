@@ -5,29 +5,40 @@ const AddExercise = ({ onExerciseAdded }) => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [image, setImage] = useState('');
-  const [video, setVideo] = useState('');
+  const [video, setVideo] = useState(null); // File instead of URL
+  const [steps, setSteps] = useState('');
+  const [benefits, setBenefits] = useState('');
   const [message, setMessage] = useState('');
-
-  const convertToEmbedUrl = (url) => {
-    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
-    const match = url.match(regExp);
-    return (match && match[2].length === 11) ? `https://www.youtube.com/embed/${match[2]}` : url;
-  };
 
   const handleAddExercise = async (e) => {
     e.preventDefault();
+
+    if (video && !video.type.startsWith("video")) {
+      setMessage("❌ Please upload a valid video file.");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('name', name);
+    formData.append('description', description);
+    formData.append('image', image); // image is a URL or file path
+    formData.append('video', video); // file upload
+    formData.append('steps', steps);
+    formData.append('benefits', benefits);
+
     try {
-      const response = await axiosInstance.post('/exercises', {
-        name,
-        description,
-        image,
-        video: convertToEmbedUrl(video),
+      const response = await axiosInstance.post('/exercises', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
       });
       setMessage('✅ Exercise added successfully!');
       setName('');
       setDescription('');
       setImage('');
-      setVideo('');
+      setVideo(null);
+      setSteps('');
+      setBenefits('');
       onExerciseAdded(response.data);
     } catch (error) {
       console.error('Add exercise error:', error.response?.data);
@@ -39,7 +50,7 @@ const AddExercise = ({ onExerciseAdded }) => {
     <div style={styles.container}>
       <div style={styles.card}>
         <h2 style={styles.heading}>Add New Exercise</h2>
-        <form onSubmit={handleAddExercise} style={styles.form}>
+        <form onSubmit={handleAddExercise} style={styles.form} encType="multipart/form-data">
           <input
             type="text"
             placeholder="Exercise Name"
@@ -53,23 +64,36 @@ const AddExercise = ({ onExerciseAdded }) => {
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             required
-            rows={4}
+            rows={3}
             style={styles.textarea}
           />
           <input
             type="text"
-            placeholder="Image URL"
+            placeholder="Image URL or path"
             value={image}
             onChange={(e) => setImage(e.target.value)}
             style={styles.input}
           />
           <input
-            type="url"
-            placeholder="YouTube Video URL"
-            value={video}
-            onChange={(e) => setVideo(e.target.value)}
+            type="file"
+            accept="video/*"
+            onChange={(e) => setVideo(e.target.files[0])}
             required
             style={styles.input}
+          />
+          <textarea
+            placeholder="Steps (e.g., 1. Do this.\n2. Do that.)"
+            value={steps}
+            onChange={(e) => setSteps(e.target.value)}
+            rows={5}
+            style={styles.textarea}
+          />
+          <textarea
+            placeholder="Benefits (e.g., 1. Helps you relax.\n2. Improves focus.)"
+            value={benefits}
+            onChange={(e) => setBenefits(e.target.value)}
+            rows={4}
+            style={styles.textarea}
           />
           <button type="submit" style={styles.button}>
             ➕ Add Exercise
@@ -81,7 +105,6 @@ const AddExercise = ({ onExerciseAdded }) => {
   );
 };
 
-// Styling
 const styles = {
   container: {
     padding: '2rem',

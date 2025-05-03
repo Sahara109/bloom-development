@@ -3,12 +3,13 @@ const Video = require('../models/Video');
 
 // Create a new video
 const createVideo = async (req, res) => {
-    const { title, description, url } = req.body;
+    const { title, description, filename } = req.body; // changed from url to filename
+
     try {
         const newVideo = new Video({
             title,
             description,
-            url,
+            url: `/videos/${filename}`, // Build local path
         });
         await newVideo.save();
         res.status(201).json(newVideo);
@@ -16,6 +17,7 @@ const createVideo = async (req, res) => {
         res.status(500).json({ message: 'Error creating video', error });
     }
 };
+
 
 // Get all videos
 const getVideos = async (req, res) => {
