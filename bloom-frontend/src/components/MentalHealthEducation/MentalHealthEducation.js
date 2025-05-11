@@ -139,13 +139,13 @@ const MentalHealthEducation = () => {
       </div>
 
       <div className="videos-container">
-      {videos.length > 0 ? (
-        videos.slice(0, visibleVideos).map((video, index) => (
-          <div className="video" key={index}>
-            <h3>{video}</h3>
-            <p>Description of the video</p>
+            {videos.length > 0 ? (
+        videos.slice(0, visibleVideos).map((video) => (
+          <div className="video" key={video._id}>
+            <h3>{video.title}</h3>
+            <p>{video.description}</p>
             <video width="560" height="315" controls>
-              <source src={`http://localhost:5001/videos/${video}`} type="video/mp4" />
+              <source src={`http://localhost:5001${video.url}`} type="video/mp4" />
               Your browser does not support the video tag.
             </video>
           </div>
@@ -153,6 +153,7 @@ const MentalHealthEducation = () => {
       ) : (
         <p>No videos available at the moment.</p>
       )}
+
     </div>
 
 

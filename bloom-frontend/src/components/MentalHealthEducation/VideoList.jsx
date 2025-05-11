@@ -7,7 +7,7 @@ const VideoList = () => {
   useEffect(() => {
     axios.get('http://localhost:5001/api/videos')
       .then((response) => {
-        console.log('Fetched videos:', response.data);
+        console.log('Fetched videos:', response.data); // Check what the response contains
         setVideos(response.data); // Set the fetched data
       })
       .catch((error) => {
@@ -20,11 +20,11 @@ const VideoList = () => {
       <h1>Video List</h1>
       <div style={styles.videoList}>
         {videos.map((video, index) => (
-          <div key={index} style={styles.videoCard}>
-            <h2 style={styles.title}>{video.title}</h2> {/* Ensure `video.title` is a string */}
-            <p style={styles.description}>{video.description}</p> {/* Ensure `video.description` is a string */}
+          <div key={video._id} style={styles.videoCard}> {/* Use unique key here */}
+            <h2 style={styles.title}>{video.title}</h2> {/* Display title */}
+            <p style={styles.description}>{video.description}</p> {/* Display description */}
             <video width="320" height="240" controls style={styles.videoPlayer}>
-              <source src={`http://localhost:5001${video.url}`} type="video/mp4" />
+              <source src={`http://localhost:5001/${video.url}`} type="video/mp4" />
               Your browser does not support the video tag.
             </video>
           </div>

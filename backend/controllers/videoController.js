@@ -2,31 +2,40 @@
 const Video = require('../models/Video');
 
 // Create a new video
+// controllers/videoController.js
 const createVideo = async (req, res) => {
-    const { title, description, filename } = req.body; // changed from url to filename
+  try {
+    const { title, description } = req.body;
 
-    try {
-        const newVideo = new Video({
-            title,
-            description,
-            url: `/videos/${filename}`, // Build local path
-        });
-        await newVideo.save();
-        res.status(201).json(newVideo);
-    } catch (error) {
-        res.status(500).json({ message: 'Error creating video', error });
+    if (!req.file) {
+      return res.status(400).json({ message: 'No video file uploaded' });
     }
+
+    const newVideo = new Video({
+      title,
+      description,
+      url: `/videos2/${req.file.filename}`  // Use videos2 folder path here
+    });
+
+    await newVideo.save();
+    res.status(201).json(newVideo);
+
+  } catch (error) {
+    res.status(500).json({ message: 'Error creating video', error: error.message });
+  }
 };
 
 
+
 // Get all videos
+// controllers/videoController.js
 const getVideos = async (req, res) => {
-    try {
-        const videos = await Video.find();
-        res.status(200).json(videos);
-    } catch (error) {
-        res.status(500).json({ message: 'Error fetching videos', error });
-    }
+  try {
+    const videos = await Video.find({}, 'title description url createdAt');
+    res.status(200).json(videos);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching videos', error: error.message });
+  }
 };
 
 // Update a video

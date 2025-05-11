@@ -84,27 +84,28 @@ app.use("/videos", express.static(path.join(__dirname, "public/videos")));
 app.use("/api/search", searchRoutes);
 
 // Serve videos statically
-app.use('/videos', express.static(path.join(__dirname, 'videos2')));
+// app.use('/videos', express.static(path.join(__dirname, 'videos2')));
+app.use('/videos2', express.static(path.join(__dirname, 'videos2')));
 
 const fs = require('fs');
 
 // Route to get the list of available video files
-app.get('/api/videos', (req, res) => {
-  // Change the directory to the 'videos2' folder inside your backend
-  const videoDir = path.join(__dirname, 'videos2');
+// app.get('/api/videos', (req, res) => {
+//   // Change the directory to the 'videos2' folder inside your backend
+//   const videoDir = path.join(__dirname, 'videos2');
   
-  // Read files in the videos2 directory
-  fs.readdir(videoDir, (err, files) => {
-    if (err) {
-      return res.status(500).json({ error: 'Error reading video directory' });
-    }
+//   // Read files in the videos2 directory
+//   fs.readdir(videoDir, (err, files) => {
+//     if (err) {
+//       return res.status(500).json({ error: 'Error reading video directory' });
+//     }
     
-    // Filter to only return video files (you can add additional checks here)
-    const videoFiles = files.filter(file => file.endsWith('.mp4') || file.endsWith('.avi'));
+//     // Filter to only return video files (you can add additional checks here)
+//     const videoFiles = files.filter(file => file.endsWith('.mp4') || file.endsWith('.avi'));
     
-    res.json(videoFiles);  // Return the list of video file names
-  });
-});
+//     res.json(videoFiles);  // Return the list of video file names
+//   });
+// });
 
 // Serve the video files from the 'videos2' folder
 // app.use('/videos2', express.static(path.join(__dirname, 'videos2')));
