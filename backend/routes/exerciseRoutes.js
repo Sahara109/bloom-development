@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const multer = require('multer');
 const Exercise = require("../models/exerciseModel");
+const Activity = require("../models/Activity");
 const path = require("path");
 const fs = require('fs');
 
@@ -75,24 +76,34 @@ router.get("/:id", async (req, res) => {
 // Add a new exercise (with file upload)
 router.post("/", upload.single('video'), async (req, res) => {
   const { name, description, image, steps, benefits } = req.body;
-  const video = req.file ? req.file.filename : null; // e.g. "deep-breathing.mp4"
+  const video = req.file ? req.file.filename : null;
 
   const newExercise = new Exercise({
     name,
     description,
     image,
-    video, // just the filename!
+    video,
     steps: parseStepsOrBenefits(steps),
     benefits: parseStepsOrBenefits(benefits),
   });
 
   try {
     const savedExercise = await newExercise.save();
+
+    // Log activity
+    if (req.user) {
+      await Activity.create({
+        description: `Admin ${req.user.email} added exercise "${name}"`,
+        user: req.user._id,
+      });
+    }
+
     res.status(201).json(savedExercise);
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
 });
+
 
 // Update an exercise (with file upload)
 router.put("/:id", upload.single('video'), async (req, res) => {
@@ -100,7 +111,7 @@ router.put("/:id", upload.single('video'), async (req, res) => {
   const { name, description, image, steps, benefits } = req.body;
   let video = req.body.video;
   if (req.file) {
-    video = req.file.filename; // Overwrite if a new video is uploaded
+    video = req.file.filename;
   }
 
   try {
@@ -112,7 +123,7 @@ router.put("/:id", upload.single('video'), async (req, res) => {
         image,
         video,
         steps: parseStepsOrBenefits(steps),
-        benefits: parseStepsOrBenefits(benefits)
+        benefits: parseStepsOrBenefits(benefits),
       },
       { new: true }
     );
@@ -121,22 +132,44 @@ router.put("/:id", upload.single('video'), async (req, res) => {
       return res.status(404).json({ message: "Exercise not found" });
     }
 
+    // Log activity
+    if (req.user) {
+      await Activity.create({
+        description: `Admin ${req.user.email} updated exercise "${name}"`,
+        user: req.user._id,
+      });
+    }
+
     res.json(updatedExercise);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 });
 
+
 // Delete an exercise
 router.delete("/:id", async (req, res) => {
   const { id } = req.params;
 
   try {
-    await Exercise.findByIdAndDelete(id);
+    const deletedExercise = await Exercise.findByIdAndDelete(id);
+    if (!deletedExercise) {
+      return res.status(404).json({ message: "Exercise not found" });
+    }
+
+    // Log activity
+    if (req.user) {
+      await Activity.create({
+        description: `Admin ${req.user.email} deleted exercise "${deletedExercise.name}"`,
+        user: req.user._id,
+      });
+    }
+
     res.status(200).json({ message: "Exercise deleted successfully" });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 });
+
 
 module.exports = router;

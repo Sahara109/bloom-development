@@ -1,5 +1,6 @@
 // controllers/videoController.js
 const Video = require('../models/Video');
+const Activity = require('../models/Activity'); 
 
 // Create a new video
 // controllers/videoController.js
@@ -14,17 +15,22 @@ const createVideo = async (req, res) => {
     const newVideo = new Video({
       title,
       description,
-      url: `/videos2/${req.file.filename}`  // Use videos2 folder path here
+      url: `/videos2/${req.file.filename}`,
     });
 
     await newVideo.save();
-    res.status(201).json(newVideo);
 
+    // Log admin activity
+    await Activity.create({
+      description: `Admin added a new video titled "${title}"`,
+      user: req.user ? req.user._id : null,
+    });
+
+    res.status(201).json(newVideo);
   } catch (error) {
     res.status(500).json({ message: 'Error creating video', error: error.message });
   }
 };
-
 
 
 // Get all videos
@@ -40,29 +46,43 @@ const getVideos = async (req, res) => {
 
 // Update a video
 const updateVideo = async (req, res) => {
-    const { id } = req.params;
-    const { title, description, url } = req.body;
-    try {
-        const updatedVideo = await Video.findByIdAndUpdate(
-            id,
-            { title, description, url },
-            { new: true }
-        );
-        res.status(200).json(updatedVideo);
-    } catch (error) {
-        res.status(500).json({ message: 'Error updating video', error });
-    }
+  const { id } = req.params;
+  const { title, description, url } = req.body;
+  try {
+    const updatedVideo = await Video.findByIdAndUpdate(
+      id,
+      { title, description, url },
+      { new: true }
+    );
+
+    // Log admin activity
+    await Activity.create({
+      description: `Admin updated video with ID ${id}`,
+      user: req.user ? req.user._id : null,
+    });
+
+    res.status(200).json(updatedVideo);
+  } catch (error) {
+    res.status(500).json({ message: 'Error updating video', error });
+  }
 };
 
 // Delete a video
 const deleteVideo = async (req, res) => {
-    const { id } = req.params;
-    try {
-        await Video.findByIdAndDelete(id);
-        res.status(200).json({ message: 'Video deleted successfully' });
-    } catch (error) {
-        res.status(500).json({ message: 'Error deleting video', error });
-    }
+  const { id } = req.params;
+  try {
+    await Video.findByIdAndDelete(id);
+
+    // Log admin activity
+    await Activity.create({
+      description: `Admin deleted video with ID ${id}`,
+      user: req.user ? req.user._id : null,
+    });
+
+    res.status(200).json({ message: 'Video deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error deleting video', error });
+  }
 };
 
 // Get a single video by ID

@@ -40,30 +40,30 @@ const AdminDashboard = () => {
       navigate("/");
       return;
     }
-  
+
     const fetchDashboardData = async () => {
       try {
-        const token = auth.token;  // get the JWT token from auth context
-  
+        const token = auth.token;
+
         const headers = {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,  // send token in Authorization header
+          Authorization: `Bearer ${token}`,
         };
-  
+
         const [statsRes, activitiesRes, growthRes] = await Promise.all([
           fetch("/api/admin/stats", { headers }),
           fetch("/api/admin/activities", { headers }),
           fetch("/api/admin/growth", { headers }),
         ]);
-  
+
         if (!statsRes.ok || !activitiesRes.ok || !growthRes.ok) {
           throw new Error("Failed to fetch data");
         }
-  
+
         const statsData = await statsRes.json();
         const activitiesData = await activitiesRes.json();
         const growthData = await growthRes.json();
-  
+
         setStats(statsData);
         setActivities(activitiesData);
         setGrowthData(growthData);
@@ -73,14 +73,13 @@ const AdminDashboard = () => {
         setLoading(false);
       }
     };
-  
+
     fetchDashboardData();
   }, [auth, navigate]);
 
   if (loading) return <p>Loading dashboard...</p>;
   if (error) return <p style={{ color: "red" }}>Error: {error}</p>;
 
-  // Prepare chart data
   const chartData = {
     labels: growthData?.dates || [],
     datasets: [
@@ -97,8 +96,7 @@ const AdminDashboard = () => {
   return (
     <AdminLayout>
       <div style={{ padding: "20px" }}>
-      <h2 style={{ color: 'black' }}>Admin Dashboard 👩🏻‍🔬</h2>
-
+        <h2 style={{ color: 'black' }}>Admin Dashboard 👩🏻‍🔬</h2>
 
         {/* Stats */}
         <div style={{ display: "flex", gap: "20px", marginBottom: "30px" }}>
@@ -122,13 +120,12 @@ const AdminDashboard = () => {
 
         {/* Quick Actions */}
         <div style={{ marginBottom: "30px" }}>
-        <button
-        onClick={() => navigate("/admin/users")}
-        style={buttonStyle}
-      >
-  Go to Manage Users
-</button>
-
+          <button
+            onClick={() => navigate("/admin/users")}
+            style={buttonStyle}
+          >
+            Go to Manage Users
+          </button>
         </div>
 
         {/* Recent Activities */}
@@ -137,13 +134,40 @@ const AdminDashboard = () => {
           {activities.length === 0 ? (
             <p>No recent activity</p>
           ) : (
-            <ul>
-              {activities.map((act) => (
-                <li key={act._id}>
-                  {act.description} — {new Date(act.date).toLocaleString()}
-                </li>
-              ))}
-            </ul>
+            <div style={{ display: "flex", flexDirection: "column", gap: "15px" }}>
+              {activities.map((act) => {
+                // Determine border color based on action in description
+                let borderColor = '#4caf50'; // green for added by default
+
+                if (act.description.toLowerCase().includes('delete')) {
+                  borderColor = '#f44336'; // red
+                } else if (act.description.toLowerCase().includes('update')) {
+                  borderColor = '#ff9800'; // orange
+                } else if (act.description.toLowerCase().includes('add')) {
+                  borderColor = '#4caf50'; // green
+                }
+
+                return (
+                  <div
+                    key={act._id}
+                    style={{
+                      background: "#f9f9f9",
+                      borderLeft: `5px solid ${borderColor}`,
+                      padding: "15px 20px",
+                      borderRadius: "8px",
+                      boxShadow: "0 2px 4px rgba(0,0,0,0.05)",
+                    }}
+                  >
+                    <div style={{ fontSize: "16px", fontWeight: "bold", color: "#333" }}>
+                      {act.description}
+                    </div>
+                    <div style={{ fontSize: "14px", color: "#777", marginTop: "5px" }}>
+                      {new Date(act.date).toLocaleString()}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           )}
         </div>
 

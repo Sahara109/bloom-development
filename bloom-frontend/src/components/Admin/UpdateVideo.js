@@ -1,36 +1,56 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const UpdateVideo = ({ video, onVideoUpdated }) => {
   const [title, setTitle] = useState(video.title);
-  const [url, setUrl] = useState(video.url);
-  const [description, setDescription] = useState(video.description || ''); // Add description field
+  const [description, setDescription] = useState(video.description || '');
+  const [videoFile, setVideoFile] = useState(null);  // New file state
   const [message, setMessage] = useState('');
+
+  useEffect(() => {
+    setTitle(video.title);
+    setDescription(video.description || '');
+    setVideoFile(null); // reset file input on video change
+    setMessage('');
+  }, [video]);
+
+  const handleFileChange = (e) => {
+    setVideoFile(e.target.files[0]);
+  };
 
   const handleUpdateVideo = async (e) => {
     e.preventDefault();
 
     try {
-      const token = localStorage.getItem('authToken'); // Get the auth token from localStorage
+      const token = localStorage.getItem('authToken');
       if (!token) {
         setMessage('You must be logged in to update the video.');
         return;
       }
 
-      // Send the update request with the token in the headers
-      const updatedVideo = { title, url, description }; // Include description in the update
+      const formData = new FormData();
+      formData.append('title', title);
+      formData.append('description', description);
+
+      if (videoFile) {
+        formData.append('video', videoFile);  // the key depends on your backend multer config
+      }
+
       await axios.put(
         `/api/videos/${video._id}`,
-        updatedVideo,
+        formData,
         {
           headers: {
-            Authorization: `Bearer ${token}`, // Include the auth token in the header
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'multipart/form-data',  // important for file uploads
           },
         }
       );
 
       setMessage('Video updated successfully!');
-      onVideoUpdated({ ...video, title, url, description }); // Notify parent component of the update
+      // Optionally update parent with new info - you may want to fetch updated video from server here
+      onVideoUpdated({ ...video, title, description }); 
+      setVideoFile(null);  // reset file after upload
     } catch (error) {
       console.error('Error updating video:', error);
       setMessage('Error updating video. Please try again later.');
@@ -48,18 +68,16 @@ const UpdateVideo = ({ video, onVideoUpdated }) => {
           onChange={(e) => setTitle(e.target.value)}
           required
         />
-        <input
-          type="url"
-          placeholder="Video URL"
-          value={url}
-          onChange={(e) => setUrl(e.target.value)}
-          required
-        />
         <textarea
           placeholder="Video Description"
           value={description}
-          onChange={(e) => setDescription(e.target.value)} // Add a textarea for the description
+          onChange={(e) => setDescription(e.target.value)}
           required
+        />
+        <input 
+          type="file" 
+          accept="video/*" 
+          onChange={handleFileChange} 
         />
         <button type="submit">Update Video</button>
       </form>

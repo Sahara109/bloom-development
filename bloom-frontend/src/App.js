@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
-import { HashRouter as Router, Route, Routes } from "react-router-dom";
+import { HashRouter as Router, Route, Routes, useLocation } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Register from "./components/Auth/Register";
@@ -43,17 +43,21 @@ import UpdateArticle from "./components/Admin/UpdateArticle";
 
 Modal.setAppElement("#root");
 
-const App = () => {
+const AppContent = () => {
   const [refresh, setRefresh] = useState(false);
+  const location = useLocation();
 
   const handleStoryAdded = () => {
     setRefresh((prev) => !prev); // Toggle refresh state to trigger re-render
   };
 
+  const isAdminRoute = location.pathname.startsWith("/admin");
+
   return (
-    <AuthProvider>
-      <Router>
-        <Navbar />
+
+    <>
+       {!isAdminRoute && <Navbar />}
+
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/register" element={<Register />} />
@@ -93,7 +97,6 @@ const App = () => {
 
           <Route path="/story/:id" element={<StoryDetail />} />
 
-          <Route path="*" element={<div>404: Page Not Found</div>} />
 
           {/* Admin routes */}
           <Route path="/admin/dashboard" element={<ProtectedRoute Component={AdminDashboard} isAdminRoute />} />
@@ -105,11 +108,22 @@ const App = () => {
           <Route path="/admin/update-article/:id" element={<ProtectedRoute Component={UpdateArticle} isAdminRoute />} />
           <Route path="/admin/add-article" element={<ProtectedRoute Component={AddArticle} isAdminRoute />} />
         
+           {/* Fallback */}
+          <Route path="*" element={<div>404: Page Not Found</div>} />
+
         </Routes>
    
-        <Chatbot /> {/* Place it outside <Routes> */}
+       {!isAdminRoute && <Chatbot />}
+      {!isAdminRoute && <Footer />}
+    </>
+  );
+};
 
-        <Footer />
+const App = () => {
+  return (
+    <AuthProvider>
+      <Router>
+        <AppContent />
       </Router>
     </AuthProvider>
   );

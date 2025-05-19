@@ -6,19 +6,31 @@ const UpdateArticle = ({ articleId }) => {
   const [content, setContent] = useState('');
   const [message, setMessage] = useState('');
 
-  useEffect(() => {
-    const fetchArticle = async () => {
-      try {
-        const response = await axios.get(`/api/articles/${articleId}`);
-        setTitle(response.data.title);
-        setContent(response.data.content);
-      } catch (error) {
-        setMessage('Error fetching article.');
-      }
-    };
+useEffect(() => {
+  const fetchArticle = async () => {
+    const token = localStorage.getItem('authToken');
 
-    if (articleId) fetchArticle();
-  }, [articleId]);
+    if (!token) {
+      setMessage('You must be logged in to view this article.');
+      return;
+    }
+
+    try {
+      const response = await axios.get(`/api/articles/${articleId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setTitle(response.data.title);
+      setContent(response.data.content);
+    } catch (error) {
+      setMessage('Error fetching article.');
+    }
+  };
+
+  if (articleId) fetchArticle();
+}, [articleId]);
+
 
   const handleUpdateArticle = async (e) => {
     e.preventDefault();

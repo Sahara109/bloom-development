@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useAuth } from '../../context/AuthContext'; // Assuming the path is correct
+import { useAuth } from '../../context/AuthContext'; 
 
 const AddVideo = ({ onVideoAdded }) => {
   const [title, setTitle] = useState('');
-  const [filename, setFilename] = useState('');
+  const [file, setFile] = useState(null);
   const [description, setDescription] = useState('');
   const [message, setMessage] = useState('');
   const { auth } = useAuth();
@@ -17,23 +17,31 @@ const AddVideo = ({ onVideoAdded }) => {
       return;
     }
 
+    if (!file) {
+      setMessage('❌ Please select a video file to upload.');
+      return;
+    }
+
     try {
-      const response = await axios.post(
-        '/api/videos',
-        { title, filename, description },
-        {
-          headers: {
-            Authorization: `Bearer ${auth.token}`,
-          },
-        }
-      );
+      const formData = new FormData();
+      formData.append('title', title);
+      formData.append('description', description);
+      formData.append('video', file); // The key 'video' must match your backend's expected field name
+
+      const response = await axios.post('/api/videos', formData, {
+        headers: {
+          Authorization: `Bearer ${auth.token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
       setMessage('✅ Video added successfully!');
       setTitle('');
-      setFilename('');
       setDescription('');
+      setFile(null);
       onVideoAdded(response.data);
     } catch (error) {
-      console.error(error);
+      console.error('Upload error:', error.response || error.message);
       setMessage('❌ Error adding video.');
     }
   };
@@ -52,10 +60,9 @@ const AddVideo = ({ onVideoAdded }) => {
             style={styles.input}
           />
           <input
-            type="text"
-            placeholder="Video File Name (e.g., sample.mp4)"
-            value={filename}
-            onChange={(e) => setFilename(e.target.value)}
+            type="file"
+            accept="video/*"
+            onChange={(e) => setFile(e.target.files[0])}
             required
             style={styles.input}
           />

@@ -5,9 +5,33 @@ const AdminLayout = ({ children }) => {
   const navigate = useNavigate();
 
   const logout = () => {
-    // Clear auth data here if you have (e.g., localStorage.clear())
+    // Clear auth data here e.g., localStorage.clear())
     navigate("/login");
   };
+
+  const linkStyle = {
+    color: "white",
+    textDecoration: "none",
+    padding: "10px 15px",
+    borderRadius: "8px",
+    transition: "background-color 0.3s ease",
+    fontSize: "16px",
+  };
+
+  const linkHoverStyle = {
+    backgroundColor: "#9a79ad",
+  };
+
+  const [hoveredLink, setHoveredLink] = React.useState(null);
+
+  const navLinks = [
+    { to: "/admin/dashboard", label: "Dashboard" },
+    { to: "/admin/users", label: "Manage Users" },
+    { to: "/admin/articles", label: "Manage Articles" },
+    { to: "/admin/videos", label: "Manage Videos" },
+    { to: "/admin/exercises", label: "Manage Exercises" },
+    { to: "/admin/community-stories", label: "Community Stories" },
+  ];
 
   return (
     <>
@@ -16,48 +40,52 @@ const AdminLayout = ({ children }) => {
           position: "fixed",
           top: 0,
           left: 0,
-          width: "220px",
+          width: "240px",
           height: "100vh",
-          backgroundColor: "#2c3e50",
+          backgroundColor: "#604063",
           color: "white",
-          padding: "20px",
+          padding: "30px 20px",
           display: "flex",
           flexDirection: "column",
-          gap: "15px",
+          justifyContent: "space-between",
           boxSizing: "border-box",
-          overflowY: "auto",
           zIndex: 1000,
         }}
       >
-        <h2>Admin Panel</h2>
-        <Link to="/admin/dashboard" style={{ color: "white", textDecoration: "none" }}>
-          Dashboard
-        </Link>
-        <Link to="/admin/users" style={{ color: "white", textDecoration: "none" }}>
-          Manage Users
-        </Link>
-        <Link to="/admin/articles" style={{ color: "white", textDecoration: "none" }}>
-          Manage Articles
-        </Link>
-        <Link to="/admin/videos" style={{ color: "white", textDecoration: "none" }}>
-          Manage Videos
-        </Link>
-        <Link to="/admin/exercises" style={{ color: "white", textDecoration: "none" }}>
-          Manage Exercises
-        </Link>
-        <Link to="/admin/community-stories" style={{ color: "white", textDecoration: "none" }}>
-          Community Stories
-        </Link>
+        <div>
+          <h2 style={{ marginBottom: "30px", fontSize: "22px" }}>Admin Panel</h2>
+          <nav style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+            {navLinks.map((link, index) => (
+              <Link
+                key={index}
+                to={link.to}
+                style={{
+                  ...linkStyle,
+                  ...(hoveredLink === index ? linkHoverStyle : {}),
+                }}
+                onMouseEnter={() => setHoveredLink(index)}
+                onMouseLeave={() => setHoveredLink(null)}
+              >
+                {link.label}
+              </Link>
+            ))}
+          </nav>
+        </div>
+
         <button
           onClick={logout}
           style={{
-            marginTop: "auto",
             backgroundColor: "#e74c3c",
             border: "none",
             color: "white",
-            padding: "10px",
+            padding: "12px 20px",
+            borderRadius: "8px",
+            fontSize: "16px",
             cursor: "pointer",
+            transition: "background 0.3s ease",
           }}
+          onMouseEnter={(e) => (e.target.style.backgroundColor = "#c0392b")}
+          onMouseLeave={(e) => (e.target.style.backgroundColor = "#e74c3c")}
         >
           Logout
         </button>
@@ -65,12 +93,11 @@ const AdminLayout = ({ children }) => {
 
       <main
         style={{
-          marginLeft: "220px", // push main content right to avoid overlap
-          padding: "20px",
+          marginLeft: "240px", // Adjusted to new sidebar width
+          padding: "30px",
           minHeight: "100vh",
-          overflowY: "auto",
-          boxSizing: "border-box",
           backgroundColor: "#f4f6f9",
+          boxSizing: "border-box",
         }}
       >
         {children}
