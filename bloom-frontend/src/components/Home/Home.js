@@ -5,6 +5,8 @@ import { useLocation } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import heroImage from "../../assets/images/image.png";
 import panicImage from "../../assets/images/panic_attack.png";
+import QuoteCarousel from '../QuoteCarousel';
+import TestimonialCarousel from "../TestimonialCarousel";
 import "./Home.css";
 
 const Home = () => {
@@ -40,7 +42,7 @@ useEffect(() => {
           <img src={heroImage} alt="Mental health and wellbeing" className="hero-img" />
         </div>
       </section>
-
+   
       {/* About Us Section */}
       <section className="about-section" id="about">
       <h2 style={{ color: "grey" }}>About Us</h2>
@@ -71,6 +73,8 @@ useEffect(() => {
           <p><em>- Milli describes what a panic attack feels like</em></p>
         </div>
       </section>
+
+       <QuoteCarousel />
 
       {/* Features Section */}
       <section className="features-section" id="features">
@@ -110,6 +114,9 @@ useEffect(() => {
           </div>
         </div>
       </section>
+
+          {/* Testimonial Carousel */}
+           <TestimonialCarousel />
 
       {/* Important Message Section */}
       <section className="important-message-section">

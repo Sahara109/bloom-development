@@ -139,7 +139,9 @@ const MentalHealthEducation = () => {
       </div>
 
       <div className="videos-container">
-            {videos.length > 0 ? (
+      {loadingVideos ? (
+        <p>Loading videos...</p>
+      ) : videos.length > 0 ? (
         videos.slice(0, visibleVideos).map((video) => (
           <div className="video" key={video._id}>
             <h3>{video.title}</h3>
@@ -153,8 +155,8 @@ const MentalHealthEducation = () => {
       ) : (
         <p>No videos available at the moment.</p>
       )}
-
     </div>
+
 
 
       {visibleVideos < videos.length ? (

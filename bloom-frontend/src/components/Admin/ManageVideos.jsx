@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import AddVideo from './AddVideo';
 import UpdateVideo from './UpdateVideo';
-import DeleteVideo from './DeleteVideo';
 import AdminLayout from "./AdminLayout";
 import axiosInstance from '../../utils/axiosInstance';
+import { toKebabCase } from '../../utils/utils';  // import kebab-case utility
+import KebabMenu from './KebabMenu';  // <-- Import KebabMenu
 
-// Axios base URL setup if not already globally configured
 axios.defaults.baseURL = 'http://localhost:5001';
 
 const ManageVideos = () => {
@@ -43,63 +43,62 @@ const ManageVideos = () => {
 
   return (
     <AdminLayout>
-    <div style={styles.container}>
-      <h2 style={styles.heading}>📹 Manage Videos</h2>
+      <div style={styles.container}>
+        <h2 style={styles.heading}>📹 Manage Videos</h2>
 
-      {/* Add Video Form */}
-      <div style={styles.card}>
-        <AddVideo onVideoAdded={handleVideoAdded} />
-      </div>
-
-      {/* Update Video Form */}
-      {selectedVideo && (
+        {/* Add Video Form */}
         <div style={styles.card}>
-          <h3 style={styles.subHeading}>Editing: {selectedVideo.title}</h3>
-          <UpdateVideo video={selectedVideo} onVideoUpdated={handleVideoUpdated} />
+          <AddVideo onVideoAdded={handleVideoAdded} />
         </div>
-      )}
 
-      {/* Video Table */}
-      <div style={styles.card}>
-        <h3 style={styles.subHeading}>All Videos</h3>
-        <table style={styles.table}>
-          <thead>
-            <tr style={styles.theadRow}>
-              <th style={styles.th}>Title</th>
-              <th style={styles.th}>URL</th>
-              <th style={styles.th}>Description</th>
-              <th style={styles.th}>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {videos.length > 0 ? (
-              videos.map((video) => (
-                <tr key={video._id} style={styles.tbodyRow}>
-                  <td style={styles.td}>{video.title}</td>
-                  <td style={styles.td}>{video.url}</td>
-                  <td style={styles.td}>{video.description || 'No description provided'}</td>
-                  <td style={styles.td}>
-                    <button
-                      style={{ ...styles.button, ...styles.updateButton }}
-                      onClick={() => setSelectedVideo(video)}
-                    >
-                      ✏️Update
-                    </button>
-                    <DeleteVideo videoId={video._id} onDelete={handleDeleteVideo} />
-                  </td>
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="4" style={styles.emptyMsg}>No videos found.</td>
+        {/* Update Video Form */}
+        {selectedVideo && (
+          <div style={styles.card}>
+            <h3 style={styles.subHeading}>Editing: {selectedVideo.title}</h3>
+            <UpdateVideo video={selectedVideo} onVideoUpdated={handleVideoUpdated} />
+          </div>
+        )}
+
+        {/* Video Table */}
+        <div style={styles.card}>
+          <h3 style={styles.subHeading}>All Videos</h3>
+          <table style={styles.table}>
+            <thead>
+              <tr style={styles.theadRow}>
+                <th style={styles.th}>Title</th>
+                <th style={styles.th}>URL Slug</th> {/* New column for kebab-case slug */}
+                <th style={styles.th}>URL</th>
+                <th style={styles.th}>Description</th>
+                <th style={styles.th}>Actions</th>
               </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            <tbody>
+              {videos.length > 0 ? (
+                videos.map((video) => (
+                  <tr key={video._id} style={styles.tbodyRow}>
+                    <td style={styles.td}>{video.title}</td>
+                    <td style={styles.td}>{toKebabCase(video.title)}</td> {/* Show kebab-case slug */}
+                    <td style={styles.td}>{video.url}</td>
+                    <td style={styles.td}>{video.description || 'No description provided'}</td>
+                    <td style={styles.td}>
+                      <KebabMenu
+                        onEdit={() => setSelectedVideo(video)}
+                        onDelete={() => handleDeleteVideo(video._id)}
+                      />
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="5" style={styles.emptyMsg}>No videos found.</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
 
-      {message && <p style={styles.message}>{message}</p>}
-    </div>
+        {message && <p style={styles.message}>{message}</p>}
+      </div>
     </AdminLayout>
   );
 };
@@ -152,20 +151,6 @@ const styles = {
   td: {
     padding: '12px',
     verticalAlign: 'top',
-  },
-  button: {
-    padding: '8px 12px',
-    fontSize: '0.85rem',
-    borderRadius: '6px',
-    border: 'none',
-    cursor: 'pointer',
-    fontWeight: 'bold',
-    marginRight: '8px',
-    transition: 'box-shadow 0.2s',
-  },
-  updateButton: {
-    backgroundColor: '#4CAF50',
-    color: '#fff',
   },
   emptyMsg: {
     textAlign: 'center',

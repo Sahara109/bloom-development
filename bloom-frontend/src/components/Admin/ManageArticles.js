@@ -3,15 +3,17 @@ import axios from 'axios';
 import AddArticle from './AddArticle';
 import UpdateArticle from './UpdateArticle';
 import DeleteArticle from './DeleteArticle';
+import ArticleActions from './ArticleActions';
 import AdminLayout from "./AdminLayout";
 import axiosInstance from '../../utils/axiosInstance';
 
-// Set the base URL for Axios
 axios.defaults.baseURL = 'http://localhost:5001';
 
 const ManageArticles = () => {
   const [articles, setArticles] = useState([]);
   const [selectedArticle, setSelectedArticle] = useState(null);
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [message, setMessage] = useState('');
 
   useEffect(() => {
@@ -28,70 +30,113 @@ const ManageArticles = () => {
     fetchArticles();
   }, []);
 
-  const handleDeleteArticle = (articleId) => {
-    setArticles(articles.filter((article) => article._id !== articleId));
+  // Debug logs to track state
+  console.log('Current articles:', articles);
+  console.log('Selected article:', selectedArticle);
+
+  const handleOpenUpdate = (article) => {
+    setSelectedArticle(article);
+    setShowUpdateModal(true);
+  };
+
+  const handleOpenDelete = (article) => {
+    setSelectedArticle(article);
+    setShowDeleteModal(true);
+  };
+
+  const handleUpdateSuccess = (updatedArticle) => {
+    if (!updatedArticle || !updatedArticle._id) {
+      console.error('handleUpdateSuccess called with invalid article:', updatedArticle);
+      return;
+    }
+
+    setArticles((prev) =>
+      prev.map((article) =>
+        article && article._id === updatedArticle._id ? updatedArticle : article
+      )
+    );
+    setShowUpdateModal(false);
+    setSelectedArticle(null);
+  };
+
+  const handleDeleteSuccess = (deletedId) => {
+    if (!deletedId) {
+      console.error('handleDeleteSuccess called with invalid id:', deletedId);
+      return;
+    }
+
+    setArticles((prev) => prev.filter((article) => article && article._id !== deletedId));
+    setShowDeleteModal(false);
+    setSelectedArticle(null);
   };
 
   return (
     <AdminLayout>
-    <div style={styles.container}>
-      <h2 style={styles.heading}>📝 Manage Articles</h2>
+      <div style={styles.container}>
+        <h2 style={styles.heading}>📝 Manage Articles</h2>
 
-      {/* Add Article Form */}
-      <div style={styles.card}>
-        <AddArticle />
-      </div>
-
-      {/* Update Form (only when article selected) */}
-      {selectedArticle && (
+        {/* Add Article Form */}
         <div style={styles.card}>
-          <h3 style={styles.subHeading}>Editing: {selectedArticle.title}</h3>
-          <UpdateArticle articleId={selectedArticle._id} />
+          <AddArticle />
         </div>
-      )}
 
-      {/* Article Table */}
-      <div style={styles.card}>
-        <h3 style={styles.subHeading}>All Articles</h3>
-        <table style={styles.table}>
-          <thead>
-            <tr style={styles.theadRow}>
-              <th style={styles.th}>Title</th>
-              <th style={styles.th}>Content</th>
-              <th style={styles.th}>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {articles.length > 0 ? (
-              articles.map((article) => (
-                <tr key={article._id} style={styles.tbodyRow}>
-                  <td style={styles.td}>{article.title}</td>
-                  <td style={styles.td}>{article.content}</td>
-                  <td style={styles.td}>
-                    <button
-                      style={{ ...styles.button, ...styles.updateButton }}
-                      onClick={() => setSelectedArticle(article)}
-                    >
-                      ✏️ Update
-                    </button>
-                    <DeleteArticle
-                      articleId={article._id}
-                      onDelete={handleDeleteArticle}
-                    />
-                  </td>
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="3" style={styles.emptyMsg}>No articles found.</td>
+        {/* Article Table */}
+        <div style={styles.card}>
+          <h3 style={styles.subHeading}>All Articles</h3>
+          <table style={styles.table}>
+            <thead>
+              <tr style={styles.theadRow}>
+                <th style={styles.th}>Title</th>
+                <th style={styles.th}>Content</th>
+                <th style={styles.th}>Actions</th>
               </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            <tbody>
+              {articles.length > 0 ? (
+                articles.map((article) => 
+                  article && article._id ? (
+                    <tr key={article._id} style={styles.tbodyRow}>
+                      <td style={styles.td}>{article.title}</td>
+                      <td style={styles.td}>{article.content}</td>
+                      <td style={styles.td}>
+                        <ArticleActions
+                          article={article}
+                          onUpdate={() => handleOpenUpdate(article)}
+                          onDelete={() => handleOpenDelete(article)}
+                        />
+                      </td>
+                    </tr>
+                  ) : null
+                )
+              ) : (
+                <tr>
+                  <td colSpan="3" style={styles.emptyMsg}>No articles found.</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
 
-      {message && <p style={styles.message}>{message}</p>}
-    </div>
+        {/* Update Modal */}
+        {showUpdateModal && selectedArticle && selectedArticle._id && (
+          <UpdateArticle
+            articleId={selectedArticle._id}
+            onUpdateSuccess={handleUpdateSuccess}
+            onClose={() => setShowUpdateModal(false)}
+          />
+        )}
+
+        {/* Delete Modal */}
+        {showDeleteModal && selectedArticle && selectedArticle._id && (
+          <DeleteArticle
+            articleId={selectedArticle._id}
+            onDeleteSuccess={handleDeleteSuccess}
+            onClose={() => setShowDeleteModal(false)}
+          />
+        )}
+
+        {message && <p style={styles.message}>{message}</p>}
+      </div>
     </AdminLayout>
   );
 };
@@ -145,20 +190,6 @@ const styles = {
   td: {
     padding: '12px',
     verticalAlign: 'top',
-  },
-  button: {
-    padding: '8px 12px',
-    fontSize: '0.85rem',
-    borderRadius: '6px',
-    border: 'none',
-    cursor: 'pointer',
-    fontWeight: 'bold',
-    marginRight: '8px',
-    transition: 'box-shadow 0.2s',
-  },
-  updateButton: {
-    backgroundColor: 'rgb(15, 167, 76)',
-    color: '#fff',
   },
   emptyMsg: {
     textAlign: 'center',

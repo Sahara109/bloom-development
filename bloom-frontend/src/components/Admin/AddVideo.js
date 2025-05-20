@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useAuth } from '../../context/AuthContext'; 
+import { useAuth } from '../../context/AuthContext';
 
 const AddVideo = ({ onVideoAdded }) => {
   const [title, setTitle] = useState('');
@@ -12,7 +12,7 @@ const AddVideo = ({ onVideoAdded }) => {
   const handleAddVideo = async (e) => {
     e.preventDefault();
 
-    if (!auth || !auth.token) {
+    if (!auth?.token) {
       setMessage('❌ You must be logged in to add a video.');
       return;
     }
@@ -26,7 +26,7 @@ const AddVideo = ({ onVideoAdded }) => {
       const formData = new FormData();
       formData.append('title', title);
       formData.append('description', description);
-      formData.append('video', file); // The key 'video' must match your backend's expected field name
+      formData.append('video', file);
 
       const response = await axios.post('/api/videos', formData, {
         headers: {

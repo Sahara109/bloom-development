@@ -1,0 +1,50 @@
+.quote-carousel {
+  background: linear-gradient(135deg, #ffeaf4, #f0f8ff); /* softer pastel gradient */
+  padding: 2.5rem 3rem;
+  margin: 3rem auto;
+  max-width: 750px;
+  text-align: center;
+  border-radius: 2rem;
+  box-shadow: 0 12px 30px rgba(255, 182, 193, 0.3); /* pinkish soft shadow */
+  animation: fadeInMoveUp 1.2s ease forwards;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  position: relative;
+  overflow: hidden;
+}
+
+.quote-text {
+  font-size: 1.8rem;
+  color: #444;
+  font-style: italic;
+  line-height: 1.4;
+  transition: opacity 1s ease-in-out;
+  opacity: 1;
+  padding: 0 1rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* Add a subtle glowing underline for emphasis */
+.quote-text::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 3px;
+  background: #ffb6c1;
+  margin: 0.75rem auto 0 auto;
+  border-radius: 10px;
+  opacity: 0.6;
+  filter: drop-shadow(0 0 4px #ffb6c1);
+}
+
+/* Improved fade in and subtle upward movement */
+@keyframes fadeInMoveUp {
+  0% {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

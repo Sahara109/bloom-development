@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import axiosInstance from '../../utils/axiosInstance';
+import axios from 'axios';
 import AddExercise from './AddExercise';
 import UpdateExercise from './UpdateExercise';
-import DeleteExercise from './DeleteExercise';
-import AdminLayout from "./AdminLayout";
+import AdminLayout from './AdminLayout';
+import axiosInstance from '../../utils/axiosInstance';
+import { toKebabCase } from '../../utils/utils';  // kebab-case utility
+import KebabMenu from './KebabMenu';  // KebabMenu for actions
+
+axios.defaults.baseURL = 'http://localhost:5001';
 
 const ManageExercises = () => {
   const [exercises, setExercises] = useState([]);
@@ -16,8 +20,8 @@ const ManageExercises = () => {
         const response = await axiosInstance.get('/exercises');
         setExercises(response.data);
       } catch (error) {
-        setMessage(error.response?.data?.message || 'Error fetching exercises.');
-        console.error('Fetch error:', error.response?.data);
+        console.error('Error fetching exercises:', error);
+        setMessage('Error fetching exercises.');
       }
     };
 
@@ -29,88 +33,72 @@ const ManageExercises = () => {
   };
 
   const handleExerciseUpdated = (updatedExercise) => {
-    setExercises(
-      exercises.map((exercise) =>
-        exercise._id === updatedExercise._id ? updatedExercise : exercise
-      )
-    );
+    setExercises(exercises.map(ex => ex._id === updatedExercise._id ? updatedExercise : ex));
     setSelectedExercise(null);
   };
 
   const handleDeleteExercise = (exerciseId) => {
-    setExercises(exercises.filter((exercise) => exercise._id !== exerciseId));
+    setExercises(exercises.filter(ex => ex._id !== exerciseId));
   };
 
   return (
     <AdminLayout>
-    <div style={styles.container}>
-      <h2 style={styles.heading}>💪 Manage Exercises</h2>
+      <div style={styles.container}>
+        <h2 style={styles.heading}>🏋️ Manage Exercises</h2>
 
-      <div style={styles.card}>
-        <AddExercise onExerciseAdded={handleExerciseAdded} />
-      </div>
-
-      {selectedExercise && (
+        {/* Add Exercise Form */}
         <div style={styles.card}>
-          <h3 style={styles.subHeading}>Editing: {selectedExercise.name}</h3>
-          <UpdateExercise
-            exercise={selectedExercise}
-            onExerciseUpdated={handleExerciseUpdated}
-          />
+          <AddExercise onExerciseAdded={handleExerciseAdded} />
         </div>
-      )}
 
-      <div style={styles.card}>
-        <h3 style={styles.subHeading}>All Exercises</h3>
-        <table style={styles.table}>
-          <thead>
-            <tr style={styles.theadRow}>
-              <th style={styles.th}>Name</th>
-              <th style={styles.th}>Description</th>
-              <th style={styles.th}>Video</th>
-              <th style={styles.th}>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {exercises.length > 0 ? (
-              exercises.map((exercise) => (
-                <tr key={exercise._id} style={styles.tbodyRow}>
-                  <td style={styles.td}>{exercise.name}</td>
-                  <td style={styles.td}>{exercise.description}</td>
-                  <td style={styles.td}>
-                    {exercise.video ? (
-                      <a href={exercise.video} target="_blank" rel="noopener noreferrer">
-                        ▶️ Watch
-                      </a>
-                    ) : (
-                      'No video'
-                    )}
-                  </td>
-                  <td style={styles.td}>
-                    <button
-                      style={{ ...styles.button, ...styles.updateButton }}
-                      onClick={() => setSelectedExercise(exercise)}
-                    >
-                      ✏️ Update
-                    </button>
-                    <DeleteExercise
-                      exerciseId={exercise._id}
-                      onDelete={handleDeleteExercise}
-                    />
-                  </td>
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="4" style={styles.emptyMsg}>No exercises found.</td>
+        {/* Update Exercise Form */}
+        {selectedExercise && (
+          <div style={styles.card}>
+            <h3 style={styles.subHeading}>Editing: {selectedExercise.name}</h3>
+            <UpdateExercise exercise={selectedExercise} onExerciseUpdated={handleExerciseUpdated} />
+          </div>
+        )}
+
+        {/* Exercise Table */}
+        <div style={styles.card}>
+          <h3 style={styles.subHeading}>All Exercises</h3>
+          <table style={styles.table}>
+            <thead>
+              <tr style={styles.theadRow}>
+                <th style={styles.th}>Name</th>
+                <th style={styles.th}>URL Slug</th>
+                <th style={styles.th}>Video URL</th>
+                <th style={styles.th}>Description</th>
+                <th style={styles.th}>Actions</th>
               </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            <tbody>
+              {exercises.length > 0 ? (
+                exercises.map((exercise) => (
+                  <tr key={exercise._id} style={styles.tbodyRow}>
+                    <td style={styles.td}>{exercise.name}</td>
+                    <td style={styles.td}>{toKebabCase(exercise.name)}</td>
+                    <td style={styles.td}>{exercise.video || 'No video URL'}</td>
+                    <td style={styles.td}>{exercise.description || 'No description provided'}</td>
+                    <td style={styles.td}>
+                      <KebabMenu
+                        onEdit={() => setSelectedExercise(exercise)}
+                        onDelete={() => handleDeleteExercise(exercise._id)}
+                      />
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="5" style={styles.emptyMsg}>No exercises found.</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
 
-      {message && <p style={styles.message}>{message}</p>}
-    </div>
+        {message && <p style={styles.message}>{message}</p>}
+      </div>
     </AdminLayout>
   );
 };
@@ -118,14 +106,14 @@ const ManageExercises = () => {
 const styles = {
   container: {
     padding: '2rem',
-    backgroundColor: '#eef2f7',
+    backgroundColor: '#f4f6f9',
     minHeight: '100vh',
     fontFamily: 'Segoe UI, sans-serif',
   },
   heading: {
     fontSize: '2rem',
     marginBottom: '1.5rem',
-    color: '#2d2d2d',
+    color: '#333',
     textAlign: 'center',
   },
   subHeading: {
@@ -163,20 +151,6 @@ const styles = {
   td: {
     padding: '12px',
     verticalAlign: 'top',
-  },
-  button: {
-    padding: '8px 12px',
-    fontSize: '0.85rem',
-    borderRadius: '6px',
-    border: 'none',
-    cursor: 'pointer',
-    fontWeight: 'bold',
-    marginRight: '8px',
-    transition: 'box-shadow 0.2s',
-  },
-  updateButton: {
-    backgroundColor: '#0fa74c',
-    color: '#fff',
   },
   emptyMsg: {
     textAlign: 'center',

@@ -110,6 +110,7 @@ h1 {
   font-size: 1.2em; /* Slightly increase the size for emphasized text */
 }
 
+
 /* Adjustments for smaller screens */
 @media (max-width: 768px) {
   .panic-section {

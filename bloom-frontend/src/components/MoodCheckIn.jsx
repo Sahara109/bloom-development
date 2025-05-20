@@ -1,8 +1,15 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useAuth } from '../context/AuthContext'; // ✅ import your context
+import { useAuth } from '../context/AuthContext';
 
-const moods = ['😊', '😌', '😐', '😞', '😡', '😴'];
+const moodOptions = [
+  { emoji: '😊', label: 'Happy' },
+  { emoji: '😌', label: 'Calm' },
+  { emoji: '😐', label: 'Neutral' },
+  { emoji: '😞', label: 'Sad' },
+  { emoji: '😡', label: 'Angry' },
+  { emoji: '😴', label: 'Sleepy' },
+];
 
 const MoodCheckIn = () => {
   const { auth } = useAuth();
@@ -10,29 +17,26 @@ const MoodCheckIn = () => {
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
 
-  console.log(auth);
-
   const handleCheckIn = async () => {
-    console.log(auth.user);
-
     if (!selectedMood) {
-      setMessage("Please select a mood.");
+      setMessage('Please select a mood.');
       return;
     }
 
     if (!auth.user?.id) {
-      setMessage("Please log in and select a mood.");
+      setMessage('Please log in to check in your mood.');
       return;
     }
 
     setLoading(true);
+    setMessage('');
 
     try {
       await axios.post(
         '/api/mood/checkin',
         {
           userId: auth.user.id,
-          mood: selectedMood,
+          mood: selectedMood.emoji,
         },
         {
           headers: {
@@ -41,9 +45,13 @@ const MoodCheckIn = () => {
         }
       );
 
-      setMessage('Mood logged successfully!');
+      setMessage(`Mood "${selectedMood.label}" logged successfully!`);
     } catch (err) {
-      setMessage(err.response?.data?.msg || 'Error logging mood.');
+      const errorMsg =
+        err.response?.data?.msg ||
+        err.message ||
+        'An error occurred while logging your mood.';
+      setMessage(errorMsg);
     } finally {
       setLoading(false);
     }
@@ -57,13 +65,15 @@ const MoodCheckIn = () => {
         <h3>How are you feeling today?</h3>
 
         <div className="mood-buttons">
-          {moods.map((mood, i) => (
+          {moodOptions.map((moodObj, index) => (
             <button
-              key={i}
-              className={`mood-button ${selectedMood === mood ? 'selected' : ''}`}
-              onClick={() => setSelectedMood(mood)}
+              key={index}
+              aria-label={`Mood ${moodObj.label}`}
+              className={`mood-button ${selectedMood?.emoji === moodObj.emoji ? 'selected' : ''}`}
+              onClick={() => setSelectedMood(moodObj)}
             >
-              {mood}
+              <div>{moodObj.emoji}</div>
+              <span className="mood-label">{moodObj.label}</span>
             </button>
           ))}
         </div>
@@ -80,19 +90,19 @@ const MoodCheckIn = () => {
         {message && <p className="message">{message}</p>}
       </div>
 
-      {/* Style block inside the main return */}
+      {/* Inline styling */}
       <style jsx>{`
         .mood-checkin-container {
           padding: 20px;
           background-color: #fff;
           box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
           border-radius: 10px;
-          width: 400px;
+          width: 500px;
           margin: 20px auto;
           text-align: center;
         }
 
-        .mood-checkin-container h3 {
+        .mood-card h3 {
           font-size: 1.5rem;
           margin-bottom: 20px;
           font-weight: bold;
@@ -101,27 +111,38 @@ const MoodCheckIn = () => {
 
         .mood-buttons {
           display: flex;
-          justify-content: center;
+          justify-content: space-around;
+          flex-wrap: wrap;
           gap: 10px;
           margin-bottom: 20px;
         }
 
         .mood-button {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
           font-size: 2rem;
-          padding: 10px 20px;
+          padding: 10px;
+          width: 70px;
+          height: 90px;
           border: 2px solid transparent;
           background-color: #f0f0f0;
           cursor: pointer;
-          border-radius: 50%;
-          transition: background-color 0.3s ease, transform 0.2s ease;
+          border-radius: 10px;
+          transition: all 0.3s ease;
           color: #333;
+        }
+
+        .mood-label {
+          font-size: 0.9rem;
+          margin-top: 5px;
         }
 
         .mood-button.selected {
           background-color: #6c74f7;
           color: white;
           border-color: #6c74f7;
-          transform: scale(1.1);
+          transform: scale(1.05);
         }
 
         .mood-button:hover {

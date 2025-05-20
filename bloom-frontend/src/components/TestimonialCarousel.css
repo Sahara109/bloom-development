@@ -1,0 +1,60 @@
+.testimonial-carousel {
+  max-width: 700px;
+  margin: 3rem auto;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  user-select: none;
+}
+
+.testimonial-card {
+  background: white;
+  padding: 2rem 3rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  max-width: 600px;
+  min-height: 150px;
+  transition: transform 0.6s ease, opacity 0.6s ease;
+  color: #333;
+}
+
+.testimonial-quote {
+  font-size: 1.3rem;
+  font-style: italic;
+  margin-bottom: 1rem;
+}
+
+.testimonial-author {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #888;
+}
+
+/* Navigation arrows */
+
+.nav-arrow {
+  background-color: #56b8ff;
+  border: none;
+  color: white;
+  font-size: 2rem;
+  font-weight: bold;
+  padding: 0.4rem 1rem;
+  border-radius: 50%;
+  cursor: pointer;
+  margin: 0 15px;
+  box-shadow: 0 4px 12px rgba(86, 184, 255, 0.5);
+  transition: background-color 0.3s ease;
+  user-select: none;
+}
+
+.nav-arrow:hover {
+  background-color: #3399ff;
+}
+
+.left-arrow {
+  transform: rotate(180deg);
+}
+
