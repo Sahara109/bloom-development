@@ -26,8 +26,9 @@ import StoryFeed from "./components/CommunitySupport/StoryFeed";
 import StoryForm from "./components/CommunitySupport/StoryForm";
 import StoryDetail from './components/CommunitySupport/StoryDetail'; 
 import Chatbot from "./components/Chatbot-AI/Chatbot_bl";
-import MoodCheckIn from './components/MoodCheckIn';
-import MoodDashboard from './components/MoodDashboard';
+import MoodCheckIn from './components/MoodTracker/MoodCheckIn';
+import MoodDashboard from './components/MoodTracker/MoodDashboard';
+
 
 // Import admin components from components/Admin folder
 import AdminDashboard from './components/Admin/AdminDashboard';

@@ -247,3 +247,147 @@
     text-align: center;
   }
 }
+/* For tablets and small desktops (between 768px and 1024px) */
+@media (max-width: 1024px) {
+  .navbar {
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 16px;
+  }
+
+  .navbar-logo {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+
+  .navbar-middle {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+  }
+
+  .search-bar {
+    width: 90%;
+    max-width: 400px;
+  }
+
+  .nav-links {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+
+  .logout-btn {
+    padding: 8px 16px;
+  }
+}
+
+/* For mobile (≤768px) */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: center;
+    padding: 14px;
+  }
+
+  .navbar-logo {
+    margin-bottom: 12px;
+    justify-content: center;
+  }
+
+  .navbar-middle {
+    margin-bottom: 12px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .search-bar {
+    width: 90%;
+    max-width: 320px;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    margin-top: 12px;
+  }
+
+  .logout-btn {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .dropdown {
+    width: 100%;
+  }
+
+  .dropbtn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .dropdown-content {
+    position: static;
+    width: 100%;
+    box-shadow: none;
+    margin-top: 8px;
+  }
+
+  .dropdown-content a {
+    text-align: center;
+    padding: 10px;
+  }
+}
+/* For mid-sized screens (1024px - 1366px) */
+@media (max-width: 1366px) and (min-width: 1024px) {
+  .navbar {
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .navbar-logo {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+
+  .navbar-middle {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+
+  .nav-links {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .dropdown-content {
+    left: 50%;
+    transform: translateX(-50%);
+    top: 100%;
+    z-index: 1001;
+  }
+
+  .logout-btn {
+    width: auto;
+    margin-top: 8px;
+  }
+}
+
+

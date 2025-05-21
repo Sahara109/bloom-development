@@ -37,9 +37,20 @@ const ManageExercises = () => {
     setSelectedExercise(null);
   };
 
-  const handleDeleteExercise = (exerciseId) => {
+  const handleDeleteExercise = async (exerciseId) => {
+  const confirmDelete = window.confirm('Are you sure you want to delete this exercise?');
+  if (!confirmDelete) return;
+
+  try {
+    await axiosInstance.delete(`/exercises/${exerciseId}`);
     setExercises(exercises.filter(ex => ex._id !== exerciseId));
-  };
+    setMessage('✅ Exercise deleted successfully.');
+  } catch (error) {
+    console.error('Error deleting exercise:', error);
+    setMessage('❌ Failed to delete exercise.');
+  }
+};
+
 
   return (
     <AdminLayout>

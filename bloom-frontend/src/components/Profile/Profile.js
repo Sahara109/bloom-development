@@ -16,32 +16,33 @@ const Profile = () => {
   const [profilePicture, setProfilePicture] = useState(auth.user?.profilePicture || '');
 
   useEffect(() => {
-    const fetchUserProfile = async () => {
-      if (!auth.isLoggedIn) {
-        return;
-      }
+  const fetchUserProfile = async () => {
+    if (!auth.isLoggedIn || auth.user) {
+      return;
+    }
 
-      try {
-        const token = localStorage.getItem('authToken');
-        console.log('Token retrieved:', token);
-        const response = await axios.get('http://localhost:5001/api/users/profile', {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setAuth((prev) => ({
-          ...prev,
-          user: response.data,
-        }));
-        setProfilePicture(response.data.profilePicture);
-      } catch (error) {
-        console.error('Error fetching profile:', error.response?.data?.message || error.message);
-        logout();
-      }
-    };
+    try {
+      const token = localStorage.getItem('authToken');
+      console.log('Token retrieved:', token);
+      const response = await axios.get('http://localhost:5001/api/users/profile', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setAuth((prev) => ({
+        ...prev,
+        user: response.data,
+      }));
+      setProfilePicture(response.data.profilePicture);
+    } catch (error) {
+      console.error('Error fetching profile:', error.response?.data?.message || error.message);
+      logout();
+    }
+  };
 
-    fetchUserProfile();
-  }, [auth.isLoggedIn, setAuth, logout]);
+  fetchUserProfile();
+}, [auth.isLoggedIn, auth.user, setAuth, logout]);
+
 
   const handleProfilePictureChange = async (event) => {
     const file = event.target.files[0];

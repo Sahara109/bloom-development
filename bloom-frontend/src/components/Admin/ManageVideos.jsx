@@ -4,8 +4,8 @@ import AddVideo from './AddVideo';
 import UpdateVideo from './UpdateVideo';
 import AdminLayout from "./AdminLayout";
 import axiosInstance from '../../utils/axiosInstance';
-import { toKebabCase } from '../../utils/utils';  // import kebab-case utility
-import KebabMenu from './KebabMenu';  // <-- Import KebabMenu
+import { toKebabCase } from '../../utils/utils';
+import KebabMenu from './KebabMenu';
 
 axios.defaults.baseURL = 'http://localhost:5001';
 
@@ -34,11 +34,34 @@ const ManageVideos = () => {
 
   const handleVideoUpdated = (updatedVideo) => {
     setVideos(videos.map(video => video._id === updatedVideo._id ? updatedVideo : video));
-    setSelectedVideo(null); // Deselect video after update
+    setSelectedVideo(null);
   };
 
-  const handleDeleteVideo = (videoId) => {
-    setVideos(videos.filter(video => video._id !== videoId));
+  // <-- UPDATED delete handler that calls backend API
+  const handleDeleteVideo = async (videoId) => {
+    const confirmDelete = window.confirm('Are you sure you want to delete this video?');
+    if (!confirmDelete) return;
+
+    const token = localStorage.getItem('authToken');
+    if (!token) {
+      alert('❌ You must be logged in to delete a video.');
+      return;
+    }
+
+    try {
+      await axiosInstance.delete(`/videos/${videoId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      // Only update UI after successful delete
+      setVideos(videos.filter(video => video._id !== videoId));
+      alert('✅ Video deleted successfully!');
+    } catch (error) {
+      console.error('Error deleting video:', error);
+      alert('❌ Error deleting video. Please try again later.');
+    }
   };
 
   return (
@@ -46,12 +69,10 @@ const ManageVideos = () => {
       <div style={styles.container}>
         <h2 style={styles.heading}>📹 Manage Videos</h2>
 
-        {/* Add Video Form */}
         <div style={styles.card}>
           <AddVideo onVideoAdded={handleVideoAdded} />
         </div>
 
-        {/* Update Video Form */}
         {selectedVideo && (
           <div style={styles.card}>
             <h3 style={styles.subHeading}>Editing: {selectedVideo.title}</h3>
@@ -59,14 +80,13 @@ const ManageVideos = () => {
           </div>
         )}
 
-        {/* Video Table */}
         <div style={styles.card}>
           <h3 style={styles.subHeading}>All Videos</h3>
           <table style={styles.table}>
             <thead>
               <tr style={styles.theadRow}>
                 <th style={styles.th}>Title</th>
-                <th style={styles.th}>URL Slug</th> {/* New column for kebab-case slug */}
+                <th style={styles.th}>URL Slug</th>
                 <th style={styles.th}>URL</th>
                 <th style={styles.th}>Description</th>
                 <th style={styles.th}>Actions</th>
@@ -77,13 +97,13 @@ const ManageVideos = () => {
                 videos.map((video) => (
                   <tr key={video._id} style={styles.tbodyRow}>
                     <td style={styles.td}>{video.title}</td>
-                    <td style={styles.td}>{toKebabCase(video.title)}</td> {/* Show kebab-case slug */}
+                    <td style={styles.td}>{toKebabCase(video.title)}</td>
                     <td style={styles.td}>{video.url}</td>
                     <td style={styles.td}>{video.description || 'No description provided'}</td>
                     <td style={styles.td}>
                       <KebabMenu
                         onEdit={() => setSelectedVideo(video)}
-                        onDelete={() => handleDeleteVideo(video._id)}
+                        onDelete={() => handleDeleteVideo(video._id)}  // Use new delete handler here
                       />
                     </td>
                   </tr>

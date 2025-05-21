@@ -1,70 +1,82 @@
-/* Footer Styles */
 .footer {
-  background-color: #333;
-  color: #fff;
-  padding: 40px 0;
-  font-size: 14px;
+  background-color: #1a1a1a;
+  color: #e0e0e0;
+  padding: 40px 20px;
+  font-family: 'Segoe UI', sans-serif;
 }
 
 .footer-container {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 30px;
   max-width: 1200px;
   margin: 0 auto;
 }
 
-.footer-branding {
-  margin-bottom: 20px;
-  text-align: center;
+.footer-section {
+  flex: 1;
+  min-width: 250px;
 }
 
-.footer-branding p {
-  font-size: 16px;
-  color: #ddd;
+.footer-section h3,
+.footer-section h4 {
+  color: #ff9fcb;
+  margin-bottom: 10px;
 }
 
-.social-links {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  margin-bottom: 20px;
+.footer-section p {
+  line-height: 1.6;
 }
 
-.social-links a {
-  color: #fff;
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-section ul li {
+  margin-bottom: 10px;
+}
+
+.footer-section ul li a {
+  color: #e0e0e0;
+  text-decoration: none;
+}
+
+.footer-section ul li a:hover {
+  color: #ff9fcb;
+}
+
+.social-icons a {
+  margin-right: 15px;
+  color: #e0e0e0;
   font-size: 20px;
+  transition: color 0.3s;
+}
+
+.social-icons a:hover {
+  color: #ff9fcb;
+}
+
+.footer .copyright {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: #aaa;
+}
+
+.footer-section .contact-info {
+  margin-top: 15px;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #e0e0e0;
+}
+
+.footer-section .contact-info a {
+  color: #e0e0e0;
   text-decoration: none;
 }
 
-.social-links a:hover {
-  color: #4CAF50; /* Change to your desired hover color */
+.footer-section .contact-info a:hover {
+  color: #ff9fcb;
 }
 
-.footer-links {
-  display: flex;
-  gap: 30px;
-  justify-content: center;
-}
-
-.footer-links a {
-  color: #ddd;
-  text-decoration: none;
-  font-size: 16px;
-}
-
-.footer-links a:hover {
-  color: #4CAF50; /* Change to your desired hover color */
-}
-
-@media (max-width: 768px) {
-  .footer-links {
-    flex-direction: column;
-    gap: 15px;
-  }
-
-  .social-links {
-    gap: 15px;
-  }
-}

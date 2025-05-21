@@ -1,4 +1,9 @@
 /* Story Form Styles */
+
+* {
+  box-sizing: border-box;
+}
+
 .story-form {
   max-width: 600px;
   margin: 30px auto;
@@ -89,8 +94,121 @@
   background-color: #e9ecef;
 }
 
-@media (max-width: 768px) {
+/* --- Responsive Breakpoints --- */
+
+/* 1440px and up (large desktops) */
+@media (min-width: 1440px) {
   .story-form {
-    padding: 20px;
+    max-width: 700px;
+    padding: 35px 60px;
+  }
+
+  .story-form h2 {
+    font-size: 2rem;
+  }
+
+  .story-form button {
+    font-size: 1.3rem;
   }
 }
+
+/* 1024px to 1439px (laptops/tablets landscape) */
+@media (max-width: 1439px) and (min-width: 1024px) {
+  .story-form {
+    max-width: 600px;
+    padding: 30px 40px;
+  }
+
+  .story-form h2 {
+    font-size: 1.8rem;
+  }
+
+  .story-form button {
+    font-size: 1.2rem;
+  }
+}
+
+/* 768px to 1023px (tablets) */
+@media (max-width: 1023px) and (min-width: 728px) {
+  .story-form {
+    max-width: 90%;
+    padding: 25px 30px;
+  }
+
+  .story-form h2 {
+    font-size: 1.6rem;
+  }
+
+  .story-form label,
+  .story-form input,
+  .story-form textarea {
+    font-size: 1rem;
+  }
+
+  .story-form button {
+    font-size: 1.1rem;
+    padding: 13px;
+  }
+}
+
+/* ≤ 727px (mobile phones) */
+@media (max-width: 727px) {
+  .story-form {
+    max-width: 95%;
+    padding: 20px;
+  }
+
+  .story-form h2 {
+    font-size: 1.4rem;
+  }
+
+  .story-form label,
+  .story-form input,
+  .story-form textarea {
+    font-size: 0.95rem;
+  }
+
+  .story-form button {
+    font-size: 1rem;
+    padding: 12px;
+  }
+}
+
+/* ≤ 428px (small phones) */
+/* Fix for 428px and smaller screens */
+@media (max-width: 428px) {
+  .story-form {
+    width: 90%;
+    padding: 15px 10px;
+    margin: 20px auto;
+    border-radius: 8px;
+  }
+
+  .story-form h2 {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+  }
+
+  .story-form label {
+    font-size: 0.9rem;
+    margin-bottom: 4px;
+  }
+
+  .story-form input[type="text"],
+  .story-form textarea,
+  .story-form input[type="file"] {
+    font-size: 0.9rem;
+    padding: 10px;
+    margin-bottom: 15px;
+  }
+
+  .story-form button {
+    font-size: 0.95rem;
+    padding: 12px;
+  }
+
+  .story-form .message {
+    font-size: 0.95rem;
+  }
+}
+

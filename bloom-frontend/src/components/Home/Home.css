@@ -4,7 +4,7 @@
 }
 
 h1 {
-  font-size: 2em;  /* Default font size for desktops */
+  font-size: 2em;
   color: #8646e1;
   text-align: center;
   margin-top: 50px;
@@ -55,76 +55,55 @@ h1 {
   background-color: #4CAF50;
 }
 
-
 .hero-image img {
   width: 100%;
   height: auto;
   border-radius: 10px;
 }
 
-/* da da */
-
 /* Circular image */
 .panic-img {
-  width: 500px; /* Adjust size to your preference */
+  width: 500px;
   height: 500px;
-  border-radius: 50%; /* Makes the image circular */
-  object-fit: cover; /* Ensures the image is properly cropped inside the circle */
-  border: 5px solid #8646e1; /* Optional border for emphasis */
-  margin: 0 auto; /* Center the image if needed */
+  border-radius: 50%;
+  object-fit: cover;
+  border: 5px solid #8646e1;
+  margin: 0 auto;
 }
 
-/* Spacious section */
 .panic-section {
   display: flex;
   align-items: center;
   justify-content: space-between;
   background-color: #f7f7f7;
-  padding: 60px; /* Increased padding */
-  margin-top: 40px; /* More space above the section */
-  gap: 20px; /* Add spacing between flex items */
+  padding: 60px;
+  margin-top: 40px;
+  gap: 20px;
 }
 
-/* Adjust the content area for better spacing */
 .panic-content {
   flex: 2;
-  padding: 20px; /* Add padding inside the content */
+  padding: 20px;
 }
 
 .panic-content h2 {
-  font-size: 2.4em; /* Increase the size of the heading */
-  color:#4CAF50;
-  margin-bottom: 20px; /* Add some extra space below the heading */
+  font-size: 2.4em;
+  color: #4CAF50;
+  margin-bottom: 20px;
 }
 
 .panic-content p {
-  font-size: 1.3em; /* Increase the size of the paragraph text */
-  line-height: 1.8; /* Adjust line spacing for better readability */
+  font-size: 1.3em;
+  line-height: 1.8;
   color: #333;
-  margin-bottom: 15px; /* Add space between paragraphs */
+  margin-bottom: 15px;
 }
 
 .panic-content em {
   font-style: italic;
   color: #555;
-  font-size: 1.2em; /* Slightly increase the size for emphasized text */
+  font-size: 1.2em;
 }
-
-
-/* Adjustments for smaller screens */
-@media (max-width: 768px) {
-  .panic-section {
-    flex-direction: column; /* Stack items vertically on smaller screens */
-    padding: 30px; /* Reduced padding for smaller screens */
-    gap: 10px; /* Adjust gap for smaller space */
-  }
-
-  .panic-img {
-    margin-bottom: 20px; /* Add spacing below the image */
-  }
-}
-
-/* da da */
 
 .about-section,
 .features-section {
@@ -134,7 +113,7 @@ h1 {
 
 .features-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* Two-column grid */
+  grid-template-columns: repeat(2, 1fr);
   gap: 20px;
 }
 
@@ -149,10 +128,9 @@ h1 {
   margin-top: 0;
 }
 
-
 .important-message-section {
-  background-color: #ffe5e5; /* Light red for emphasis */
-  border: 2px solid #ff0000; /* Red border for importance */
+  background-color: #ffe5e5;
+  border: 2px solid #ff0000;
   border-radius: 10px;
   padding: 20px;
   margin: 40px auto;
@@ -162,7 +140,7 @@ h1 {
 }
 
 .important-message-section h2 {
-  color: #d32f2f; /* Bold red for the title */
+  color: #d32f2f;
   margin-bottom: 10px;
 }
 
@@ -171,8 +149,6 @@ h1 {
   font-size: 1rem;
   line-height: 1.6;
 }
-
-
 
 .footer {
   background: #333;
@@ -193,18 +169,29 @@ h1 {
   text-decoration: underline;
 }
 
-
 /* --- Media Queries for Responsiveness --- */
 
-/* Tablet Screen (max-width: 1024px) */
+/* Desktop large (max-width: 1440px) */
+@media (max-width: 1440px) {
+  .hero-content {
+    max-width: 55%;
+  }
+
+  .panic-img {
+    width: 400px;
+    height: 400px;
+  }
+}
+
+/* Tablet (max-width: 1024px) */
 @media (max-width: 1024px) {
   h1 {
-    font-size: 1.8em;  /* Slightly smaller font size */
+    font-size: 1.8em;
   }
 
   .hero-section {
-    flex-direction: column;  /* Stack hero content vertically */
-    padding: 30px;  /* Reduced padding for tablet */
+    flex-direction: column;
+    padding: 30px;
   }
 
   .hero-content {
@@ -218,44 +205,99 @@ h1 {
   }
 
   .features-grid {
-    grid-template-columns: 1fr 1fr;  /* 2-column grid for tablet */
+    grid-template-columns: 1fr 1fr;
   }
 
-  .footer {
-    padding: 15px;  /* Adjusted footer padding for tablet */
-  }
-}
-
-/* Mobile Screen (max-width: 768px) */
-@media (max-width: 768px) {
-  h1 {
-    font-size: 1.5em;  /* Further reduced font size for mobile */
-  }
-
-  .hero-section {
-    padding: 20px;  /* Reduced padding for mobile */
-  }
-
-  .hero-content {
-    max-width: 100%;
+  .panic-section {
+    flex-direction: column;
     text-align: center;
   }
 
-  .hero-buttons .btn {
-    padding: 8px 16px;  /* Smaller button padding */
-    font-size: 14px;    /* Adjusted font size for mobile */
-  }
-
-  .features-grid {
-    grid-template-columns: 1fr;  /* Single column layout for mobile */
+  .panic-img {
+    margin-bottom: 20px;
   }
 
   .footer {
-    padding: 10px;  /* Adjusted footer padding for mobile */
+    padding: 15px;
+  }
+}
+
+/* Large Mobile (max-width: 768px) */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 1.5em;
+  }
+
+  .hero-section {
+    padding: 20px;
+  }
+
+  .hero-buttons .btn {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .footer {
+    padding: 10px;
   }
 
   .social-links a,
   .footer-links a {
-    margin: 0 5px;  /* Reduced spacing for mobile */
+    margin: 0 5px;
+  }
+
+  .panic-img {
+    width: 300px;
+    height: 300px;
+  }
+
+  .panic-content p,
+  .panic-content em {
+    font-size: 1.1em;
+  }
+}
+
+/* Small Mobile (max-width: 480px) */
+@media (max-width: 480px) {
+  h1 {
+    font-size: 1.3em;
+  }
+
+  .hero-section {
+    padding: 15px;
+  }
+
+  .hero-buttons .btn {
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+
+  .panic-img {
+    width: 250px;
+    height: 250px;
+  }
+
+  .panic-content h2 {
+    font-size: 1.6em;
+  }
+
+  .panic-content p {
+    font-size: 1em;
+  }
+
+  .important-message-section {
+    padding: 15px;
+  }
+
+  .feature-card {
+    padding: 15px;
+  }
+
+  .footer {
+    font-size: 0.9em;
   }
 }

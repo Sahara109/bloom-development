@@ -164,3 +164,119 @@ iframe {
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
+/* --- MEDIA QUERIES FOR RESPONSIVENESS --- */
+
+/* 1440px and above (large desktop) */
+@media (min-width: 1440px) {
+  .mental-health-education-container {
+    max-width: 1300px;
+    padding: 50px 80px;
+  }
+}
+
+/* 1024px to 1439px (laptop/tablet landscape) */
+@media (max-width: 1439px) {
+  .mental-health-education-container {
+    padding: 40px;
+  }
+
+  .article h3,
+  .video h3 {
+    font-size: 1.5em;
+  }
+
+  .article p,
+  .video p {
+    font-size: 0.95rem;
+  }
+
+  .read-more-btn {
+    font-size: 0.9rem;
+  }
+}
+
+/* 768px to 1023px (tablets) */
+@media (max-width: 1023px) {
+  .mental-health-education-container {
+    padding: 30px 20px;
+  }
+
+  .articles-container,
+  .videos-container {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  h1 {
+    font-size: 2em;
+  }
+
+  h2 {
+    font-size: 1.4em;
+  }
+}
+
+/* 428px to 767px (phones) */
+@media (max-width: 767px) {
+  .mental-health-education-container {
+    padding: 20px 16px;
+  }
+
+  .articles-container,
+  .videos-container {
+    grid-template-columns: 1fr;
+  }
+
+  h1 {
+    font-size: 1.6em;
+  }
+
+  h2 {
+    font-size: 1.2em;
+  }
+
+  .article h3,
+  .video h3 {
+    font-size: 1.3em;
+  }
+
+  .article p,
+  .video p {
+    font-size: 0.9rem;
+  }
+
+  .read-more-btn {
+    font-size: 0.85rem;
+    padding: 8px 12px;
+  }
+
+  .video iframe,
+  .video video {
+    max-height: 220px;
+  }
+}
+
+/* Very small devices (≤ 428px) */
+@media (max-width: 428px) {
+  .mental-health-education-container {
+    padding: 16px 10px;
+  }
+
+  h1 {
+    font-size: 1.4em;
+  }
+
+  h2 {
+    font-size: 1.1em;
+  }
+
+  .article,
+  .video {
+    padding: 15px;
+  }
+
+  .video iframe,
+  .video video {
+    max-height: 200px;
+  }
+}

@@ -64,20 +64,27 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 // Profile Image Upload Route
-app.post("/uploadProfileImage", upload.single("profileImage"), (req, res) => {
-  if (!req.file) {
-    return res.status(400).json({ error: "No file uploaded." });
-  }
+app.post(
+  "/uploadProfileImage",
+  authMiddleware, // ✅ this makes req.user available
+  upload.single("profileImage"),
+  (req, res) => {
+    if (!req.file) {
+      return res.status(400).json({ error: "No file uploaded." });
+    }
 
-  // Assuming req.user contains the user ID
-  User.findByIdAndUpdate(
-    req.user?._id,
-    { profileImage: `/uploads/${req.file.filename}` },
-    { new: true }
-  )
-    .then(user => res.json(user))
-    .catch(err => res.status(500).json({ error: "Error updating profile image" }));
-});
+    User.findByIdAndUpdate(
+      req.user._id, // ✅ Now req.user is defined
+      { profileImage: `/uploads/${req.file.filename}` },
+      { new: true }
+    )
+      .then(user => res.json({ profileImage: user.profileImage }))
+      .catch(err =>
+        res.status(500).json({ error: "Error updating profile image" })
+      );
+  }
+);
+
 
 // ✅ Serve static videos BEFORE auth middleware!
 app.use("/videos", express.static(path.join(__dirname, "public/videos")));
@@ -88,48 +95,6 @@ app.use("/api/search", searchRoutes);
 app.use('/videos2', express.static(path.join(__dirname, 'videos2')));
 
 const fs = require('fs');
-
-// Route to get the list of available video files
-// app.get('/api/videos', (req, res) => {
-//   // Change the directory to the 'videos2' folder inside your backend
-//   const videoDir = path.join(__dirname, 'videos2');
-  
-//   // Read files in the videos2 directory
-//   fs.readdir(videoDir, (err, files) => {
-//     if (err) {
-//       return res.status(500).json({ error: 'Error reading video directory' });
-//     }
-    
-//     // Filter to only return video files (you can add additional checks here)
-//     const videoFiles = files.filter(file => file.endsWith('.mp4') || file.endsWith('.avi'));
-    
-//     res.json(videoFiles);  // Return the list of video file names
-//   });
-// });
-
-// Serve the video files from the 'videos2' folder
-// app.use('/videos2', express.static(path.join(__dirname, 'videos2')));
-
-// Route to send the list of video files (with titles and URLs)
-// app.get('/api/videos', (req, res) => {
-//   const videoFiles = [
-//     "Mental_health_school.mp4",
-//     "Stop_stigma.mp4",
-//     "depression_cope.mp4",
-//     "manage_anxiety.mp4",
-//     "mental_health.mp4",
-//     "reduce_anxiety.mp4",
-//     "self_care.mp4"
-//   ];
-
-//   const videoPaths = videoFiles.map(file => ({
-//     title: file.replace('.mp4', '').replace(/_/g, ' '),  // Format the title
-//     description: `Watch the video on ${file.replace('.mp4', '')}`,  // Example description
-//     url: `/videos2/${file}`  // Full URL to access the video
-//   }));
-
-//   res.json(videoPaths);  // Send the video details with the full URL
-// });
 
 // Use Routes
 app.use("/api/users", userRoutes);

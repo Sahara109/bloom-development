@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../../context/AuthContext';
+import './MoodCheckIn.css';
+
 
 const moodOptions = [
   { emoji: '😊', label: 'Happy' },
@@ -89,94 +91,6 @@ const MoodCheckIn = () => {
         {loading && <div className="loading-text">Loading...</div>}
         {message && <p className="message">{message}</p>}
       </div>
-
-      {/* Inline styling */}
-      <style jsx>{`
-        .mood-checkin-container {
-          padding: 20px;
-          background-color: #fff;
-          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-          border-radius: 10px;
-          width: 500px;
-          margin: 20px auto;
-          text-align: center;
-        }
-
-        .mood-card h3 {
-          font-size: 1.5rem;
-          margin-bottom: 20px;
-          font-weight: bold;
-          color: #333;
-        }
-
-        .mood-buttons {
-          display: flex;
-          justify-content: space-around;
-          flex-wrap: wrap;
-          gap: 10px;
-          margin-bottom: 20px;
-        }
-
-        .mood-button {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          font-size: 2rem;
-          padding: 10px;
-          width: 70px;
-          height: 90px;
-          border: 2px solid transparent;
-          background-color: #f0f0f0;
-          cursor: pointer;
-          border-radius: 10px;
-          transition: all 0.3s ease;
-          color: #333;
-        }
-
-        .mood-label {
-          font-size: 0.9rem;
-          margin-top: 5px;
-        }
-
-        .mood-button.selected {
-          background-color: #6c74f7;
-          color: white;
-          border-color: #6c74f7;
-          transform: scale(1.05);
-        }
-
-        .mood-button:hover {
-          background-color: #ddd;
-        }
-
-        .submit-button {
-          padding: 12px 20px;
-          background-color: #6c74f7;
-          color: white;
-          font-size: 1rem;
-          border-radius: 5px;
-          cursor: pointer;
-          border: none;
-          transition: background-color 0.3s ease;
-        }
-
-        .submit-button:disabled {
-          background-color: #ddd;
-          cursor: not-allowed;
-        }
-
-        .loading-text {
-          margin-top: 10px;
-          font-size: 1rem;
-          color: #777;
-        }
-
-        .message {
-          margin-top: 10px;
-          font-size: 1rem;
-          color: #333;
-        }
-      `}</style>
     </div>
   );
 };
