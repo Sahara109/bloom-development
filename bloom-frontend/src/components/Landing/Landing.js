@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios"; // Don't forget to install axios
+import axios from "axios"; 
 import { Link } from "react-router-dom"; // Import Link for routing
-import "./Landing.css"; // Optional CSS file for styling
+import "./Landing.css"; 
 
 const Landing = () => {
   const [articles, setArticles] = useState([]); // Store articles in state
 
   // Fetch articles from the backend when the component mounts
   useEffect(() => {
-    // Change the URL if your backend is hosted somewhere else
+    
     axios
       .get("http://localhost:5001/api/articles")
       .then((response) => {

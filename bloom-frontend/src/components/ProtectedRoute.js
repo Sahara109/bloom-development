@@ -7,7 +7,7 @@ const ProtectedRoute = ({ Component, isAdminRoute, ...rest }) => {
   const location = useLocation();
 
   if (loading) {
-    return <div>Loading...</div>; // You can replace this with a spinner or custom loader
+    return <div>Loading...</div>; 
   }
 
   if (!auth.isLoggedIn) {

@@ -31,7 +31,6 @@ const app = express();
 // ✅ Define allowed origins
 const allowedOrigins = [
   "http://localhost:3000",
-  // "https://6fcd-110-44-124-75.ngrok-free.app",
 ];
 
 // ✅ Apply CORS before all routes

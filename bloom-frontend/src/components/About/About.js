@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import React from "react";
 import { FaRegSmile, FaBook, FaMusic, FaHandshake, FaRobot, FaBrain } from 'react-icons/fa'; // Import icons
 import 'font-awesome/css/font-awesome.min.css';
-import "./About.css";  // Create a separate CSS file for About Page styling
+import "./About.css";  // CSS file for About Page styling
 import aboutImage from "../../assets/images/about-image.png";
 import storyImage from "../../assets/images/stories.png";
 import teamMember1 from "../../assets/images/team-member1.jpg";
@@ -115,7 +115,7 @@ const About = () => {
             <h3>Selena Gomez</h3>
             <p>Lead Developer</p>
           </div>
-          {/* Add more team members as needed */}
+          {/* I will later add more team members if needed */}
         </div>
       </section>
       {/* Call to Action Section */}

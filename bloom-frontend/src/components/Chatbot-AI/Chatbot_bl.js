@@ -9,7 +9,7 @@ const Chatbot = () => {
 
     const script = document.createElement("script");
     script.src = "https://www.chatbase.co/embed.min.js";
-    script.id = "b2pHVilN9qmmY4tv0mW-j"; // Your chatbot ID
+    script.id = "b2pHVilN9qmmY4tv0mW-j"; // chatbot ID
     script.domain = "www.chatbase.co";
     document.body.appendChild(script);
 

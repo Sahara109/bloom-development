@@ -35,7 +35,7 @@ router.delete("/:id", protect, deleteUser);
 // Mock user data for demonstration purposes
 const userData = {
   profileImage: 'http://localhost:5001/uploads/default-avatar.png', // Default image path
-  // Add other user data fields as needed
+  
 };
 
 // Route to fetch user data

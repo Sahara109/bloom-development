@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import "./MentalHealthEducation.css"; // Optional CSS file for styling
+import "./MentalHealthEducation.css"; 
 import bannerImage from "../../assets/images/mental-health-banner.png";
 
 const MentalHealthEducation = () => {
@@ -10,7 +10,7 @@ const MentalHealthEducation = () => {
   const [visibleArticles, setVisibleArticles] = useState(3); // Show 3 articles by default
   const [visibleVideos, setVisibleVideos] = useState(3); // Show 3 videos by default
   const [loadingArticles, setLoadingArticles] = useState(true);
-  const [loadingVideos, setLoadingVideos] = useState(true); // Add this line
+  const [loadingVideos, setLoadingVideos] = useState(true); 
 
 
   useEffect(() => {

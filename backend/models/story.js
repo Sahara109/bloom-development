@@ -5,7 +5,7 @@ const storySchema = new mongoose.Schema({
     title: { type: String, required: true },
     content: { type: String, required: true },
     image: { type: String },
-    approved: { type: Boolean, default: false }, // Add this line
+    approved: { type: Boolean, default: false }, 
     createdAt: { type: Date, default: Date.now }
   });
   

@@ -1,6 +1,6 @@
 const express = require('express');
 const { createVideo, getVideos, getVideoById, updateVideo, deleteVideo } = require('../controllers/videoController');
-const upload = require('../middleware/videoUpload');  // <-- new upload middleware
+const upload = require('../middleware/videoUpload');  
 const {protect} = require('../middleware/authMiddleware');
 
 const router = express.Router();

@@ -1,6 +1,6 @@
 const express = require('express');
 const { createArticle, getArticles, getArticleById, updateArticle, deleteArticle } = require('../controllers/articleController');
-const { protect } = require('../middleware/authMiddleware'); // Destructure protect
+const { protect } = require('../middleware/authMiddleware'); 
 const isAdmin = require('../middleware/adminMiddleware');
 
 const router = express.Router();

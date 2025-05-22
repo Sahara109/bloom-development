@@ -37,7 +37,7 @@ const ManageVideos = () => {
     setSelectedVideo(null);
   };
 
-  // <-- UPDATED delete handler that calls backend API
+  // UPDATED delete handler that calls backend API
   const handleDeleteVideo = async (videoId) => {
     const confirmDelete = window.confirm('Are you sure you want to delete this video?');
     if (!confirmDelete) return;
@@ -103,7 +103,7 @@ const ManageVideos = () => {
                     <td style={styles.td}>
                       <KebabMenu
                         onEdit={() => setSelectedVideo(video)}
-                        onDelete={() => handleDeleteVideo(video._id)}  // Use new delete handler here
+                        onDelete={() => handleDeleteVideo(video._id)}  
                       />
                     </td>
                   </tr>
