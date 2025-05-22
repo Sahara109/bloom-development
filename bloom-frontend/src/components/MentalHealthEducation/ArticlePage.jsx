@@ -53,7 +53,7 @@ const ArticlePage = () => {
 
 
 
-      <style jsx>{`
+      <style>{`
         .article-page-container {
           max-width: 900px;
           margin: auto;

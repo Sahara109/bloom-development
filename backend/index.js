@@ -17,6 +17,8 @@ const profileRoutes = require("./routes/profileRoutes");
 const moodRoutes = require('./routes/mood');
 const adminRoutes = require("./routes/adminRoutes");
 const searchRoutes = require("./routes/searchRoutes");
+const goalsRouter = require('./routes/goals');
+
 
 const { protect: authMiddleware } = require("./middleware/authMiddleware");
 const updateLastActive = require("./middleware/updateLastActive");
@@ -112,6 +114,7 @@ app.use("/api/exercises", exerciseRoutes);
 app.use("/api", communitySupportRoutes);
 app.use("/api/profile", profileRoutes);
 app.use('/api/mood', moodRoutes);
+app.use('/api/goals', goalsRouter);
 app.use("/api/admin", adminRoutes);
 
 

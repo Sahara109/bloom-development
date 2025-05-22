@@ -28,6 +28,8 @@ import StoryDetail from './components/CommunitySupport/StoryDetail';
 import Chatbot from "./components/Chatbot-AI/Chatbot_bl";
 import MoodCheckIn from './components/MoodTracker/MoodCheckIn';
 import MoodDashboard from './components/MoodTracker/MoodDashboard';
+import GoalTracker from './components/GoalTracker';
+
 
 
 // Import admin components from components/Admin folder
@@ -82,9 +84,8 @@ const AppContent = () => {
           <Route path="/community-support" element={<CommunitySupport />} />
           <Route path="/mood-check-in" element={<MoodCheckIn />} />  
           <Route path="/dashboard" element={<MoodDashboard />} />
-          
-          
-        
+          <Route path="/goals" element={<GoalTracker />} />
+
 
           {/* Routes for Community Stories */}
           <Route

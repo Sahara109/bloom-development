@@ -102,7 +102,7 @@ const ArticlesList = () => {
         ))}
       </div>
 
-      <style jsx>{`
+      <style>{`
         .articles-list-container {
           padding: 2rem;
           max-width: 1100px;

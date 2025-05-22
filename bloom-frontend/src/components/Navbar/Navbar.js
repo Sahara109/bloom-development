@@ -160,6 +160,9 @@ const Navbar = () => {
                   <div className="dropdown-content">
                     <Link to="/mood-check-in">Mood Check-In</Link>
                     <Link to="/dashboard">Mood Dashboard</Link>
+                    <Link to="/goals">Goals</Link>
+
+
                   </div>
                 </div>
 

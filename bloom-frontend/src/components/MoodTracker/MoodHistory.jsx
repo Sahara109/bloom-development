@@ -48,12 +48,25 @@ const MoodHistory = () => {
     );
 
   return (
-    <div className="p-4 bg-white shadow rounded mt-4 max-w-md mx-auto">
-      <h2 className="text-xl mb-4 text-center" style={{ color: 'black' }}>
-        Mood History 🫶🏻
-      </h2>
-      <div>
-        {history.map((entry, idx) => {
+    <div className="p-6 bg-white shadow-md rounded-lg mt-6 max-w-3xl mx-auto">
+  {/* Big, bold, cute title */}
+  <div className="w-full text-center my-4">
+   <h2 style={{ color: "rgb(8, 11, 8)" }}>Mood History 🫶🏻</h2>
+</div>
+
+
+  {/* Table container */}
+  <div className="overflow-x-auto">
+    <table className="min-w-full border-separate border-spacing-y-2">
+      <thead>
+        <tr className="bg-pink-100 text-pink-800 text-left">
+          <th className="py-3 px-5 rounded-l-lg">📅 Date</th>
+          <th className="py-3 px-5">Mood</th>
+          <th className="py-3 px-5 rounded-r-lg">Label</th>
+        </tr>
+      </thead>
+      <tbody>
+        {history.map((entry) => {
           const dateStr = new Date(entry.date).toLocaleDateString(undefined, {
             year: 'numeric',
             month: 'short',
@@ -63,23 +76,27 @@ const MoodHistory = () => {
           const moodLabel = moodDetails[moodEmoji] || 'Unknown';
 
           return (
-            <div
+            <tr
               key={entry._id}
-              className={`flex justify-between items-center py-3 ${
-                idx < history.length - 1 ? 'border-b border-gray-200' : ''
-              } hover:bg-gray-50 transition-colors`}
-              style={{ fontFamily: 'Arial, sans-serif' }}
+              className="bg-white shadow hover:shadow-lg transition duration-300 rounded-lg"
             >
-              <div style={{ color: '#555', fontWeight: '500' }}>{dateStr}</div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                <span style={{ fontSize: '1.5rem' }}>{moodEmoji}</span>
-                <span style={{ color: '#777', fontStyle: 'italic' }}>{moodLabel}</span>
-              </div>
-            </div>
+              <td className="py-3 px-5 rounded-l-lg text-gray-700 font-medium">
+                {dateStr}
+              </td>
+              <td className="py-3 px-5 text-2xl">{moodEmoji}</td>
+              <td className="py-3 px-5 rounded-r-lg text-gray-500 italic">
+                {moodLabel}
+              </td>
+            </tr>
           );
         })}
-      </div>
-    </div>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+
   );
 };
 
