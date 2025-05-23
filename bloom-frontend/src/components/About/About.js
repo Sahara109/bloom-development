@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import React from "react";
-import { FaRegSmile, FaBook, FaMusic, FaHandshake, FaRobot, FaBrain } from 'react-icons/fa'; // Import icons
+import { FaRegSmile, FaBook, FaList, FaHandshake, FaRobot, FaBrain } from 'react-icons/fa'; // Import icons
 import 'font-awesome/css/font-awesome.min.css';
 import "./About.css";  // CSS file for About Page styling
 import aboutImage from "../../assets/images/about-image.png";
@@ -60,11 +60,6 @@ const About = () => {
             <p>Get to learn more about your mental health.</p>
           </div>
           <div className="feature-card">
-            <FaMusic className="feature-icon" />
-            <h3>Music</h3>
-            <p>Exclusive music to help you focus, relax, and sleep.</p>
-          </div>
-          <div className="feature-card">
             <FaHandshake className="feature-icon" />
             <h3>Community Support</h3>
             <p>Share your stories to inspire other people.</p>
@@ -79,6 +74,11 @@ const About = () => {
           <h3>Mood Tracker</h3>
           <p>Track your mood and see your progress over time.</p>
         </div>
+        <div className="feature-card">
+            <FaList className="feature-icon" />
+            <h3>Track your Goals</h3>
+            <p>Track your goals and progress everyday.</p>
+          </div>
 
         </div>
       </section>
